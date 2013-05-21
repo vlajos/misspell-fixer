@@ -3,19 +3,19 @@ Misspell Fixer
 
 Utility to fix common misspellings in source codes.
 
-It is based on the next common misspellings sources:
+It is based on the following common misspellings sources:
 * http://www.how-do-you-spell.com/
 * http://en.wikipedia.org/wiki/Commonly_misspelled_words
 * http://www.wrongspelled.com/
 
-Depends on the next unix tools:
+Depends on the following unix tools:
 * find
 * sed
 
 It works in the current work directory.
-Actually it doesnt support extra parameters.
+Actually it does not support extra parameters.
 
-WARNING: It overwrites original files! Thus make a backup before running it!
+WARNING: It will overwrite original files! Thus make a backup before running it!
 
 Sample usage:
 
