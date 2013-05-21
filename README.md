@@ -18,6 +18,7 @@ Actually it doesnt support extra parameters.
 WARNING: It overwrites original files! Thus make a backup before running it!
 
 Sample usage:
+
     cd /some/directory/which/contains/text/files
     # make a backup for safety
     misspell_fixer.sh
