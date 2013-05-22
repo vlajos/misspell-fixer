@@ -31,7 +31,6 @@ s/fullfil/fulfil/g
 s/absense/absence/g
 s/accidentaly/accidentally/g
 s/aquire/acquire/g
-s/adress/address/g
 s/Agression/Aggression/g
 s/algorythm/algorithm/g
 s/begining/beginning/g
@@ -85,7 +84,6 @@ s/supress/suppress/g
 s/truely/truly/g
 s/unfortunatly/unfortunately/g
 s/extention/extension/g
-s/difer/differ/g
 s/forseeable/foreseeable/g
 s/Compoents/Components/g
 s/seqence/sequence/g
