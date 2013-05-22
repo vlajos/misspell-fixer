@@ -1,22 +1,25 @@
 #!/bin/bash
 
-#ignore list, cwd, wait
+#cwd, wait
 
 export opt_verbose=0
 export opt_show_diff=0
 export opt_fast_mode=0
 export opt_real_run=0
 export opt_backup=1
+export opt_ignore_scm_dirs=1
 
 rules_safe=$(echo $0|sed 's/\.sh$/_safe.sed/')
 rules_not_so_safe=$(echo $0|sed 's/\.sh$/_not_so_safe.sed/')
 export cmd_part_rules="-f $rules_safe"
 
+export cmd_part_ignore=" ! -wholename *.git* ! -wholename *.svn* "
+
 function warning {
-	echo "misspell_fixer: $1">&2
+	echo "misspell_fixer: $@">&2
 }
 
-while getopts ":vrfdnuh" opt; do
+while getopts ":vrfdinuh" opt; do
 	case $opt in
 		v)
 			warning "enabling verbose mode"
@@ -33,6 +36,11 @@ while getopts ":vrfdnuh" opt; do
 		d)
 			warning "enabling showing of diffs"
 			opt_show_diff=1
+		;;
+		d)
+			warning "disable scm dir ignoring"
+			opt_ignore_scm_dirs=1
+			cmd_part_ignore=''
 		;;
 		n)
 			warning "disabling backups"
@@ -52,6 +60,15 @@ while getopts ":vrfdnuh" opt; do
 		;;
 	esac
 done
+
+shift $((OPTIND-1))
+
+if [[ "$@" = "" ]]
+then
+	warning "not enought arguments. (target directory not found) => Exiting"
+	exit
+fi
+warning "target directories: $@"
 
 if [[ $opt_fast_mode = 1 ]]
 then
@@ -76,10 +93,9 @@ then
 	then
 		set -x
 	fi
-	find .\
+	find "$@"\
 		-type f\
-		! -wholename '*.git*'\
-		! -wholename '*.svn*'\
+		$cmd_part_ignore \
 		-exec sed -i $cmd_part_rules {} +
 	set +x
 	warning "done"
@@ -122,8 +138,7 @@ if [[ $opt_verbose = 1 ]]
 then
 	set -x
 fi
-find .\
+find "$@"\
 	-type f\
-	! -wholename '*.git*'\
-	! -wholename '*.svn*'\
+	$cmd_part_ignore \
 	-exec bash -c 'loop_core "$0"' {} \;
