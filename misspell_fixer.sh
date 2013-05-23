@@ -1,7 +1,5 @@
 #!/bin/bash
 
-#cwd, wait
-
 export opt_debug=0
 export opt_verbose=0
 export opt_show_diff=0
