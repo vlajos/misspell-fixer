@@ -9,13 +9,13 @@ Synopsis:
 Options:
 * -d Debug mode: shows the core logics all steps
 * -v Verbose mode: shows the iterated files
-* -r Real run mode: Overwrite the original files with the fixed one. Without this option the originals will be untouched.
+* -r Real run mode: Overwrites the original files with the fixed one. Without this option the originals will be untouched.
 * -f Fast mode: Faster mode with limited options. (-v, -s options are not supported) Works only with real run mode (-r). This mode cannot make backups. (-n is also needed)
-* -s Show diffs of changes
-* -i Walk throught source code management systems internal directories. (dont ignore *.svn*, *.git*)
+* -s Shows diffs of changes.
+* -i Walk through source code management systems internal directories. (don't ignore *.svn*, *.git*)
 * -n Disabling backups. (By default the modified files originals will be saved with the .$$.BAK suffix.)
 * -u Enabling less safe rules. (Manual revise's need will be more probable.)
-* -h Help. Display this page
+* -h Help. Displays this page.
 
 Sample usages:
 
@@ -31,7 +31,7 @@ Sample usages:
 
     $ misspell_fixer.sh -r -v targetdir
 
-	Show only the diff, dont modify the files:
+	Show only the diff, don't modify the files:
 
     $ misspell_fixer.sh -s -v targetdir
 
