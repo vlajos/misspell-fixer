@@ -73,8 +73,6 @@ s/functin/function/g
 s/functionon/function/g
 s/spcecified/specified/g
 s/presense/presence/g
-s/addresse /address /g
-s/addresse</address</g
 s/langauge/language/g
 s/apprently/apparently/g
 s/threshhold/threshold/g
