@@ -43,7 +43,7 @@ Show everything and fix the files:
 
 Fast mode example:
 
-    $ misspell_fixer/misspell_fixer.sh -r -f -n .
+    $ misspell_fixer.sh -r -f -n targetdir
 
 It is based on the following common misspellings sources:
 
