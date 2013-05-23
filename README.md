@@ -2,15 +2,15 @@ Misspell Fixer
 ==============
 
 Utility to fix common misspellings in source codes. There are lots of typical misspellings in program codes.
-Typicaly they are more eye-catching in the living code but they can easily hide in comments, examples, samples, notes, documentations.
+Typicaly they are more eye-catching in the living code but they can easily hide in comments, examples, samples, notes and documentations.
 With this utility you can fix a bigger part of them very quickly.
 
-Be ware that the utility does not check or fix file names. It can easily happen that a misspell is fixed in a file name in a program code, but
+Be aware that the utility does not check or fix file names. It can easily happen that a misspell is fixed in a file name in a program code, but
 the file itself will not be renamed by this utility.
 
 And also important to note to be extra careful when fixing public APIs!
 
-A manual review is always needed to verify that nothing is broken.
+A manual review is always needed to verify that nothing has been broken.
 
 ### Synopsis
     
