@@ -58,3 +58,5 @@ Veres Lajos
 
 Original source:
 https://github.com/vlajos/misspell_fixer
+
+Feel free to use.
