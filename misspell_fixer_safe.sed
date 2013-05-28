@@ -25,7 +25,6 @@ s/\(l\)ower then/\1ower than/gI
 s/\(s\)eraliz/\1erializ/gI
 s/\(s\)eriliz/\1erializ/gI
 s/\(l\)ibary/\1ibrary/gI
-s/\(a\)lot/\1 lot/gI
 s/\(f\)ullfil/\1ulfil/gI
 s/\(a\)bsense/\1bsence/gI
 s/\(a\)ccidentaly/\1ccidentally/gI
