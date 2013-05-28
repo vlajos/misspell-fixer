@@ -81,3 +81,5 @@ s/\(e\)xtention/\1xtension/gI
 s/\(f\)orseeable/\1oreseeable/gI
 s/\(c\)ompoents/\1omponents/gI
 s/\(s\)eqence/\1equence/gI
+s/\(t\)ypicall /\1ypical /gI
+s/\(r\)ealy/\1eally/gI
