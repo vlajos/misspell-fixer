@@ -53,7 +53,7 @@ s/\(s\)uccesful/\1uccessful/gI
 s/\(s\)ucesss/\1uccess/gI
 s/\(s\)ucess/\1uccess/gI
 s/\(s\)upercede/\1upersede/gI
-s/\(u\)ntill/\1ntil/gI
+s/\(u\)ntill /\1ntil /gI
 s/\(u\)sualy/\1sually/gI
 s/\(w\)ether/\1hether/gI
 s/\(w\)ierd/\1eird/gI
