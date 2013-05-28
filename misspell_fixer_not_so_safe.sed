@@ -1,5 +1,6 @@
 #!/bin/sed
-s/adress/address/g
-s/difer/differ/g
-s/addresse /address /g
-s/addresse</address</g
+s/\(a\)dress/\1ddress/gI
+s/\(d\)ifer/\1iffer/gI
+s/\(a\)ddresse /\1ddress /gI
+s/\(a\)ddresse</\1ddress</gI
+
