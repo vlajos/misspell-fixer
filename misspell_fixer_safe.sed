@@ -46,6 +46,7 @@ s/\(o\)ccured/\1ccurred/gI
 s/\(o\)rignal/\1riginal/gI
 s/\(p\)receed/\1reced/gI
 s/\(p\)reced /\1recede /gI
+s/\(p\)receds/\1recede/gI
 s/\(r\)ecieve/\1eceive/gI
 s/ \(r\)efered/ \1eferred/gI
 s/\(s\)eperate/\1eparate/gI
