@@ -29,6 +29,3 @@ s/Diagnostic's/Diagnostics/g
 s/does't/doesn't/g
 s/DOES'T/DOESN'T/g
 s/Does't/Doesn't/g
-s/doesnot/doesn't/g
-s/DOESNOT/DOESN'T/g
-s/Doesnot/Doesn't/g

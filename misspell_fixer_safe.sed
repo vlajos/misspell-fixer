@@ -110,9 +110,6 @@ s/Acess/Access/g
 s/achive/archive/g
 s/ACHIVE/ARCHIVE/g
 s/Achive/Archive/g
-s/acknowledgements/acknowledgments/g
-s/ACKNOWLEDGEMENTS/ACKNOWLEDGMENTS/g
-s/Acknowledgements/Acknowledgments/g
 s/actuall\b/actual/g
 s/ACTUALL\b/ACTUAL/g
 s/Actuall\b/Actual/g
@@ -443,12 +440,12 @@ s/Asthetics/Aesthetics/g
 s/asumption/assumption/g
 s/ASUMPTION/ASSUMPTION/g
 s/Asumption/Assumption/g
-s/aswell/as_well/g
-s/ASWELL/AS_WELL/g
-s/Aswell/As_well/g
-s/atleast/at_least/g
-s/ATLEAST/AT_LEAST/g
-s/Atleast/At_least/g
+s/aswell/as well/g
+s/ASWELL/AS WELL/g
+s/Aswell/As well/g
+s/atleast/at least/g
+s/ATLEAST/AT LEAST/g
+s/Atleast/At least/g
 s/atomicly/atomically/g
 s/ATOMICLY/ATOMICALLY/g
 s/Atomicly/Atomically/g
@@ -470,18 +467,18 @@ s/Autmatically/Automatically/g
 s/automtically/automatically/g
 s/AUTOMTICALLY/AUTOMATICALLY/g
 s/Automtically/Automatically/g
-s/auxilary/auxiliary/g
-s/AUXILARY/AUXILIARY/g
-s/Auxilary/Auxiliary/g
-s/auxiliar/auxiliary/g
-s/AUXILIAR/AUXILIARY/g
-s/Auxiliar/Auxiliary/g
-s/auxillary/auxiliary/g
-s/AUXILLARY/AUXILIARY/g
-s/Auxillary/Auxiliary/g
-s/auxilliary/auxiliary/g
-s/AUXILLIARY/AUXILIARY/g
-s/Auxilliary/Auxiliary/g
+s/auxilary\b/auxiliary/g
+s/AUXILARY\b/AUXILIARY/g
+s/Auxilary\b/Auxiliary/g
+s/auxiliar\b/auxiliary/g
+s/AUXILIAR\b/AUXILIARY/g
+s/Auxiliar\b/Auxiliary/g
+s/auxillary\b/auxiliary/g
+s/AUXILLARY\b/AUXILIARY/g
+s/Auxillary\b/Auxiliary/g
+s/auxilliary\b/auxiliary/g
+s/AUXILLIARY\b/AUXILIARY/g
+s/Auxilliary\b/Auxiliary/g
 s/avaiable/available/g
 s/AVAIABLE/AVAILABLE/g
 s/Avaiable/Available/g
@@ -869,9 +866,6 @@ s/Compnent/Component/g
 s/compoents/components/g
 s/COMPOENTS/COMPONENTS/g
 s/Compoents/Components/g
-s/composited/composed/g
-s/COMPOSITED/COMPOSED/g
-s/Composited/Composed/g
 s/compuatation/computation/g
 s/COMPUATATION/COMPUTATION/g
 s/Compuatation/Computation/g
@@ -1079,9 +1073,6 @@ s/Counsellor/Counselor/g
 s/counterpoart/counterpart/g
 s/COUNTERPOART/COUNTERPART/g
 s/Counterpoart/Counterpart/g
-s/couse/course/g
-s/COUSE/COURSE/g
-s/Couse/Course/g
 s/coverd/covered/g
 s/COVERD/COVERED/g
 s/Coverd/Covered/g
@@ -1106,9 +1097,6 @@ s/Curently/Currently/g
 s/curent/current/g
 s/CURENT/CURRENT/g
 s/Curent/Current/g
-s/curren\b/current/g
-s/CURREN\b/CURRENT/g
-s/Curren\b/Current/g
 s/currenty/currently/g
 s/CURRENTY/CURRENTLY/g
 s/Currenty/Currently/g
@@ -1619,9 +1607,6 @@ s/Logrithm/Logarithm/g
 s/lower then/lower than/g
 s/LOWER THEN/LOWER THAN/g
 s/Lower then/Lower than/g
-s/matchers/marchers/g
-s/MATCHERS/MARCHERS/g
-s/Matchers/Marchers/g
 s/mathod/method/g
 s/MATHOD/METHOD/g
 s/Mathod/Method/g
@@ -1685,9 +1670,9 @@ s/Ouput/Output/g
 s/overridding/overriding/g
 s/OVERRIDDING/OVERRIDING/g
 s/Overridding/Overriding/g
-s/paches/patches/g
-s/PACHES/PATCHES/g
-s/Paches/Patches/g
+s/\bpaches/patches/g
+s/\bPACHES/PATCHES/g
+s/\bPaches/Patches/g
 s/paramater/parameter/g
 s/PARAMATER/PARAMETER/g
 s/Paramater/Parameter/g
@@ -1832,9 +1817,6 @@ s/Spcecified/Specified/g
 s/specfied/specified/g
 s/SPECFIED/SPECIFIED/g
 s/Specfied/Specified/g
-s/specialised/specialized/g
-s/SPECIALISED/SPECIALIZED/g
-s/Specialised/Specialized/g
 s/specifyed/specified/g
 s/SPECIFYED/SPECIFIED/g
 s/Specifyed/Specified/g
@@ -1889,9 +1871,9 @@ s/Utilised/Utilized/g
 s/vaues/values/g
 s/VAUES/VALUES/g
 s/Vaues/Values/g
-s/wellformed/well_formed/g
-s/WELLFORMED/WELL_FORMED/g
-s/Wellformed/Well_formed/g
+s/wellformed/well formed/g
+s/WELLFORMED/WELL FORMED/g
+s/Wellformed/Well formed/g
 s/wether/whether/g
 s/WETHER/WHETHER/g
 s/Wether/Whether/g

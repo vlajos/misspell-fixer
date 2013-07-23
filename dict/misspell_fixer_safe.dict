@@ -35,7 +35,6 @@ acessable|accessible
 acessors|accesors
 acess|access
 achive|archive
-acknowledgements|acknowledgments
 actuall\b|actual
 actullay|actually
 acual|actual
@@ -146,8 +145,8 @@ assupmption|assumption
 asterices|asterisks
 asthetics|aesthetics
 asumption|assumption
-aswell|as_well
-atleast|at_least
+aswell|as well
+atleast|at least
 atomicly|atomically
 atributes|attributes
 atrribute|attribute
@@ -155,10 +154,10 @@ attemps|attempts
 attibute|attribute
 autmatically|automatically
 automtically|automatically
-auxilary|auxiliary
-auxiliar|auxiliary
-auxillary|auxiliary
-auxilliary|auxiliary
+auxilary\b|auxiliary
+auxiliar\b|auxiliary
+auxillary\b|auxiliary
+auxilliary\b|auxiliary
 avaiable|available
 availablity|availability
 avoidpaste|avoid_paste
@@ -288,7 +287,6 @@ completelly|completely
 complette|complete
 compnent|component
 compoents|components
-composited|composed
 compuatation|computation
 compuation|computation
 computaton|computation
@@ -358,7 +356,6 @@ cosntructed|constructed
 costant|constant
 counsellor|counselor
 counterpoart|counterpart
-couse|course
 coverd|covered
 cpecial|special
 criticised|criticized
@@ -367,7 +364,6 @@ curefuly|carefully
 cureful|careful
 curently|currently
 curent|current
-curren\b|current
 currenty|currently
 curretly|currently
 customising|customizing
@@ -538,7 +534,6 @@ langauge|language
 libary|library
 logrithm|logarithm
 lower then|lower than
-matchers|marchers
 mathod|method
 matris|matrix
 measurments|measurements
@@ -560,7 +555,7 @@ origional|original
 orignal|original
 ouput|output
 overridding|overriding
-paches|patches
+\bpaches|patches
 paramater|parameter
 paramter|parameter
 parantheses|parentheses
@@ -609,7 +604,6 @@ sligthly|slightly
 sligtly|slightly
 spcecified|specified
 specfied|specified
-specialised|specialized
 specifyed|specified
 succesful|successful
 sucesss|success
@@ -628,7 +622,7 @@ untill\b|until
 usualy|usually
 utilised|utilized
 vaues|values
-wellformed|well_formed
+wellformed|well formed
 wether|whether
 wierd|weird
 writting|writing
