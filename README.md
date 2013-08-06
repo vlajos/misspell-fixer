@@ -59,6 +59,7 @@ It is based on the following sources for common misspellings:
 * http://www.how-do-you-spell.com/
 * http://en.wikipedia.org/wiki/Commonly_misspelled_words
 * http://www.wrongspelled.com/
+* https://github.com/neleai/stylepp
 
 ### Dependencies
 
