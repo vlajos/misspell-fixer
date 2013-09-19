@@ -30,7 +30,7 @@ A manual review is always needed to verify that nothing has been broken.
 
 ### Sample usages
 
-By default nothing import will happen
+By default nothing important will happen
 
     $ misspell_fixer.sh targetdir
 
