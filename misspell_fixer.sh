@@ -86,6 +86,10 @@ while getopts ":dvrfsinuhN:" opt; do
 	esac
 done
 
+if [ -n "$opt_name_filter" ]; then
+	opt_name_filter='-true'
+fi
+
 shift $((OPTIND-1))
 
 if [[ "$@" = "" ]]
