@@ -86,7 +86,7 @@ while getopts ":dvrfsinuhN:" opt; do
 	esac
 done
 
-if [ -n "$opt_name_filter" ]; then
+if [ -z "$opt_name_filter" ]; then
 	opt_name_filter='-true'
 fi
 
