@@ -16,6 +16,8 @@ export cmd_part_rules="-f $rules_safe"
 
 export cmd_part_ignore=" ! -wholename *.git* ! -wholename *.svn* "
 
+export opt_name_filter=''
+
 function warning {
 	echo "misspell_fixer: $@">&2
 }
@@ -26,7 +28,7 @@ function verbose {
 	fi
 }
 
-while getopts ":dvrfsinuh" opt; do
+while getopts ":dvrfsinuhN:" opt; do
 	case $opt in
 		d)
 			warning "-d Enabling debug mode"
@@ -61,6 +63,14 @@ while getopts ":dvrfsinuh" opt; do
 			warning "-u Enabling unsafe rules"
 			cmd_part_rules="$cmd_part_rules -f $rules_not_so_safe"
 		;;
+		N)
+			warning "-N Enabling name filter: $OPTARG"
+			if [ -n "$opt_name_filter" ]; then
+				opt_name_filter="$opt_name_filter -or -name $OPTARG"
+			else
+				opt_name_filter="-name $OPTARG"
+			fi
+		;;
 		h)
 			cat $(dirname $0)/README.md
 			exit
@@ -69,8 +79,16 @@ while getopts ":dvrfsinuh" opt; do
 			warning "Invalid option: -$OPTARG"
 			exit
 		;;
+		:)
+			warning "Option -$OPTARG requires an argument."
+			exit
+		;;
 	esac
 done
+
+if [ -n "$opt_name_filter" ]; then
+	opt_name_filter='-true'
+fi
 
 shift $((OPTIND-1))
 
@@ -112,7 +130,8 @@ then
 	find "$@"\
 		-type f\
 		$cmd_part_ignore \
-		-exec sed -i $cmd_part_rules {} +
+		-and \( $opt_name_filter \) \
+		-exec sed -i -b $cmd_part_rules {} +
 	set +x
 	warning "Done."
 	exit;
@@ -161,5 +180,6 @@ warning "Starting script"
 find "$@"\
 	-type f\
 	$cmd_part_ignore \
+	-and \( $opt_name_filter \) \
 	-exec bash -c 'loop_core "$0"' {} \;
 warning "Done."
