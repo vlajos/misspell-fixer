@@ -25,6 +25,7 @@ A manual review is always needed to verify that nothing has been broken.
 * `-s` Shows diffs of changes.
 * `-i` Walk through source code management system's internal directories. (don't ignore `*.svn*`, `*.git*`)
 * `-n` Disabling backups. (By default the modified files' originals will be saved with the `.$$.BAK` suffix.)
+* `-N` Enable file name filtering. For example: `-N '*.cpp' -N '*.h'`
 * `-u` Enabling less safe rules. (Manual revise's need will be more probable.)
 * `-h` Help. Displays this page.
 
