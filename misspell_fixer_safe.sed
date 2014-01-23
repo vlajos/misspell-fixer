@@ -1778,9 +1778,9 @@ s/Satelitte/Satellite/g
 s/sendign/sending/g
 s/SENDIGN/SENDING/g
 s/Sendign/Sending/g
-s/seperate/peparate/g
-s/SEPERATE/PEPARATE/g
-s/Seperate/Peparate/g
+s/seperate/separate/g
+s/SEPERATE/SEPARATE/g
+s/Seperate/Separate/g
 s/seperator/separator/g
 s/SEPERATOR/SEPARATOR/g
 s/Seperator/Separator/g
