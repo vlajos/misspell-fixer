@@ -752,9 +752,6 @@ s/Coloringh/Coloring/g
 s/colouring/coloring/g
 s/COLOURING/COLORING/g
 s/Colouring/Coloring/g
-s/combinatoric/combinatorics/g
-s/COMBINATORIC/COMBINATORICS/g
-s/Combinatoric/Combinatorics/g
 s/combinine/combine/g
 s/COMBININE/COMBINE/g
 s/Combinine/Combine/g
@@ -1868,6 +1865,9 @@ s/Usualy/Usually/g
 s/utilised/utilized/g
 s/UTILISED/UTILIZED/g
 s/Utilised/Utilized/g
+s/unkown/unknown/g
+s/UNKOWN/UNKNOWN/g
+s/Unkown/Unknown/g
 s/vaues/values/g
 s/VAUES/VALUES/g
 s/Vaues/Values/g
