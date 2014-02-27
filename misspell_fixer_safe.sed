@@ -1181,9 +1181,6 @@ s/Depdendence/Dependence/g
 s/depedent/dependent/g
 s/DEPEDENT/DEPENDENT/g
 s/Depedent/Dependent/g
-s/dependant/dependent/g
-s/DEPENDANT/DEPENDENT/g
-s/Dependant/Dependent/g
 s/dependecies/dependencies/g
 s/DEPENDECIES/DEPENDENCIES/g
 s/Dependecies/Dependencies/g
