@@ -1049,9 +1049,6 @@ s/Coverd/Covered/g
 s/cpecial/special/g
 s/CPECIAL/SPECIAL/g
 s/Cpecial/Special/g
-s/criticised/criticized/g
-s/CRITICISED/CRITICIZED/g
-s/Criticised/Criticized/g
 s/curefully/carefully/g
 s/CUREFULLY/CAREFULLY/g
 s/Curefully/Carefully/g
