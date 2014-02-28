@@ -284,9 +284,9 @@ s/Apilogue/Epilogue/g
 s/aplications/applications/g
 s/APLICATIONS/APPLICATIONS/g
 s/Aplications/Applications/g
-s/aply/apply/g
-s/APLY/APPLY/g
-s/Aply/Apply/g
+s/\baply/apply/g
+s/\bAPLY/APPLY/g
+s/\bAply/Apply/g
 s/appearantly/apparently/g
 s/APPEARANTLY/APPARENTLY/g
 s/Appearantly/Apparently/g
