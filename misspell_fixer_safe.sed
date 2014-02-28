@@ -671,9 +671,6 @@ s/Characeters/Characters/g
 s/characte\b/character/g
 s/CHARACTE\b/CHARACTER/g
 s/Characte\b/Character/g
-s/characterised/characterized/g
-s/CHARACTERISED/CHARACTERIZED/g
-s/Characterised/Characterized/g
 s/characts/characters/g
 s/CHARACTS/CHARACTERS/g
 s/Characts/Characters/g
@@ -731,9 +728,6 @@ s/Colleection/Collection/g
 s/coloringh/coloring/g
 s/COLORINGH/COLORING/g
 s/Coloringh/Coloring/g
-s/colouring/coloring/g
-s/COLOURING/COLORING/g
-s/Colouring/Coloring/g
 s/combinine/combine/g
 s/COMBININE/COMBINE/g
 s/Combinine/Combine/g
@@ -1046,9 +1040,6 @@ s/Cosntructed/Constructed/g
 s/costant/constant/g
 s/COSTANT/CONSTANT/g
 s/Costant/Constant/g
-s/counsellor/counselor/g
-s/COUNSELLOR/COUNSELOR/g
-s/Counsellor/Counselor/g
 s/counterpoart/counterpart/g
 s/COUNTERPOART/COUNTERPART/g
 s/Counterpoart/Counterpart/g
@@ -1595,9 +1586,6 @@ s/Measurments/Measurements/g
 s/mechnanism/mechanism/g
 s/MECHNANISM/MECHANISM/g
 s/Mechnanism/Mechanism/g
-s/minimise/minimize/g
-s/MINIMISE/MINIMIZE/g
-s/Minimise/Minimize/g
 s/muliple/multiple/g
 s/MULIPLE/MULTIPLE/g
 s/Muliple/Multiple/g
