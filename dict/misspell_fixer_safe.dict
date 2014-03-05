@@ -85,7 +85,6 @@ alway\b|always
 amendement|amendment
 ammendment|amendment
 ammend|amend
-amortised|amortized
 amout|amount
 analagous|analogous
 analoguous|analogous
@@ -443,7 +442,6 @@ elment|element
 elsehwere|elsewhere
 elsewere|elsewhere
 embeded|embedded
-emphasised|emphasized
 empiricaly|empirically
 emptry|empty
 entires|entries
@@ -606,7 +604,6 @@ unfortunatly|unfortunately
 unnecssary|unnecessary
 untill\b|until
 usualy|usually
-utilised|utilized
 unkown|unknown
 vaues|values
 wellformed|well formed
@@ -621,7 +618,7 @@ aquired|acquired
 lenght|length
 garantie|guarantie
 explictly|explicitly
-usefull |useful 
+usefull\b|useful
 defered|deferred
 transfered|transferred
 destoyed|destroyed

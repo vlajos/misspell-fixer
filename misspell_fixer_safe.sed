@@ -260,9 +260,6 @@ s/Ammendment/Amendment/g
 s/ammend/amend/g
 s/AMMEND/AMEND/g
 s/Ammend/Amend/g
-s/amortised/amortized/g
-s/AMORTISED/AMORTIZED/g
-s/Amortised/Amortized/g
 s/amout/amount/g
 s/AMOUT/AMOUNT/g
 s/Amout/Amount/g
@@ -1334,9 +1331,6 @@ s/Elsewere/Elsewhere/g
 s/embeded/embedded/g
 s/EMBEDED/EMBEDDED/g
 s/Embeded/Embedded/g
-s/emphasised/emphasized/g
-s/EMPHASISED/EMPHASIZED/g
-s/Emphasised/Emphasized/g
 s/empiricaly/empirically/g
 s/EMPIRICALY/EMPIRICALLY/g
 s/Empiricaly/Empirically/g
@@ -1823,9 +1817,6 @@ s/Untill\b/Until/g
 s/usualy/usually/g
 s/USUALY/USUALLY/g
 s/Usualy/Usually/g
-s/utilised/utilized/g
-s/UTILISED/UTILIZED/g
-s/Utilised/Utilized/g
 s/unkown/unknown/g
 s/UNKOWN/UNKNOWN/g
 s/Unkown/Unknown/g
@@ -1868,9 +1859,9 @@ s/Garantie/Guarantie/g
 s/explictly/explicitly/g
 s/EXPLICTLY/EXPLICITLY/g
 s/Explictly/Explicitly/g
-s/usefull /useful /g
-s/USEFULL /USEFUL /g
-s/Usefull /Useful /g
+s/usefull\b/useful/g
+s/USEFULL\b/USEFUL/g
+s/Usefull\b/Useful/g
 s/defered/deferred/g
 s/DEFERED/DEFERRED/g
 s/Defered/Deferred/g

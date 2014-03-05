@@ -27,6 +27,7 @@ A manual review is always needed to verify that nothing has been broken.
 * `-n` Disabling backups. (By default the modified files' originals will be saved with the `.$$.BAK` suffix.)
 * `-N` Enable file name filtering. For example: `-N '*.cpp' -N '*.h'`
 * `-u` Enabling less safe rules. (Manual revise's need will be more probable.)
+* `-g` Enabling rules to convert British English to US English. (These rules aren't exactly typos but sometimes they can be useful.)
 * `-h` Help. Displays this page.
 
 ### Sample usages

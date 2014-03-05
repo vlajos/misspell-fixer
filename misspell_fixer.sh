@@ -12,6 +12,7 @@ export opt_ignore_scm_dirs=1
 
 rules_safe=$(echo $0|sed 's/\.sh$/_safe.sed/')
 rules_not_so_safe=$(echo $0|sed 's/\.sh$/_not_so_safe.sed/')
+rules_gb_to_us=$(echo $0|sed 's/\.sh$/_gb_to_us.sed/')
 export cmd_part_rules="-f $rules_safe"
 
 export cmd_part_ignore=" ! -wholename *.git* ! -wholename *.svn* "
@@ -28,7 +29,7 @@ function verbose {
 	fi
 }
 
-while getopts ":dvrfsinuhN:" opt; do
+while getopts ":dvrfsinughN:" opt; do
 	case $opt in
 		d)
 			warning "-d Enabling debug mode"
@@ -62,6 +63,10 @@ while getopts ":dvrfsinuhN:" opt; do
 		u)
 			warning "-u Enabling unsafe rules"
 			cmd_part_rules="$cmd_part_rules -f $rules_not_so_safe"
+		;;
+		g)
+			warning "-g Enabling GB to US rules"
+			cmd_part_rules="$cmd_part_rules -f $rules_gb_to_us"
 		;;
 		N)
 			warning "-N Enabling name filter: $OPTARG"
