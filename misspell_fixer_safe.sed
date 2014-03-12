@@ -1175,12 +1175,6 @@ s/Derrived/Derived/g
 s/derrive/derive/g
 s/DERRIVE/DERIVE/g
 s/Derrive/Derive/g
-s/descendents/descendants/g
-s/DESCENDENTS/DESCENDANTS/g
-s/Descendents/Descendants/g
-s/descendent/descendant/g
-s/DESCENDENT/DESCENDANT/g
-s/Descendent/Descendant/g
 s/desciptors/descriptors/g
 s/DESCIPTORS/DESCRIPTORS/g
 s/Desciptors/Descriptors/g
