@@ -1,7 +1,7 @@
 Misspell Fixer
 ==============
 
-Utility to fix common misspellings in source codes. There are lots of typical misspellings in program codes.
+Utility to fix common misspellings, typos in source codes. There are lots of typical misspellings in program codes.
 Typically they are more eye-catching in the living code but they can easily hide in comments, examples, samples, notes and documentations.
 With this utility you can fix a large number of them very quickly.
 
