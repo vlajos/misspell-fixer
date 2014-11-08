@@ -1517,9 +1517,6 @@ s/Greater then/Greater than/g
 s/guarenteed/guaranteed/g
 s/GUARENTEED/GUARANTEED/g
 s/Guarenteed/Guaranteed/g
-s/homogenous/homogeneous/g
-s/HOMOGENOUS/HOMOGENEOUS/g
-s/Homogenous/Homogeneous/g
 s/hundredsof/hundreds_of/g
 s/HUNDREDSOF/HUNDREDS_OF/g
 s/Hundredsof/Hundreds_of/g
@@ -1715,9 +1712,6 @@ s/Returing/Returning/g
 s/rigourous/rigorous/g
 s/RIGOUROUS/RIGOROUS/g
 s/Rigourous/Rigorous/g
-s/rumoured/rumored/g
-s/RUMOURED/RUMORED/g
-s/Rumoured/Rumored/g
 s/satelitte/satellite/g
 s/SATELITTE/SATELLITE/g
 s/Satelitte/Satellite/g
@@ -1880,3 +1874,6 @@ s/Appproach/Approach/g
 s/funtion/function/g
 s/FUNTION/FUNCTION/g
 s/Funtion/Function/g
+s/unecessary/unnecessary/g
+s/UNECESSARY/UNNECESSARY/g
+s/Unecessary/Unnecessary/g
