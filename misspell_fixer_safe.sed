@@ -1763,6 +1763,12 @@ s/Specifyed/Specified/g
 s/succesful/successful/g
 s/SUCCESFUL/SUCCESSFUL/g
 s/Succesful/Successful/g
+s/successfull/successful/g
+s/SUCCESSFULL/SUCCESSFUL/g
+s/Successfull/Successful/g
+s/successfuly/successfully/g
+s/SUCCESSFULY/SUCCESSFULLY/g
+s/Successfuly/Successfully/g
 s/sucesss/success/g
 s/SUCESSS/SUCCESS/g
 s/Sucesss/Success/g
