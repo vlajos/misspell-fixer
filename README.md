@@ -67,6 +67,7 @@ It is based on the following sources for common misspellings:
 * http://en.wikipedia.org/wiki/Commonly_misspelled_words
 * http://www.wrongspelled.com/
 * https://github.com/neleai/stylepp
+* http://en.wikipedia.org/wiki/Wikipedia:Lists_of_common_misspellings/For_machines
 
 ### Dependencies
 
