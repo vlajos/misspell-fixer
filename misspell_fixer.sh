@@ -9,6 +9,7 @@ export opt_fast_mode=0
 export opt_real_run=0
 export opt_backup=1
 export opt_ignore_scm_dirs=1
+export opt_parallelism=0
 
 rules_safe=$(echo $0|sed 's/\.sh$/_safe.sed/')
 rules_not_so_safe=$(echo $0|sed 's/\.sh$/_not_so_safe.sed/')
@@ -29,7 +30,7 @@ function verbose {
 	fi
 }
 
-while getopts ":dvrfsinughN:" opt; do
+while getopts ":dvrfsinughN:P:" opt; do
 	case $opt in
 		d)
 			warning "-d Enabling debug mode"
@@ -75,6 +76,10 @@ while getopts ":dvrfsinughN:" opt; do
 			else
 				opt_name_filter="-name $OPTARG"
 			fi
+		;;
+		P)
+			warning "-P Enabling parallelism: $OPTARG"
+			opt_parallelism=$OPTARG
 		;;
 		h)
 			cat $(dirname $0)/README.md
@@ -132,11 +137,12 @@ then
 	then
 		set -x
 	fi
-	find "$@"\
-		-type f\
-		$cmd_part_ignore \
-		-and \( $opt_name_filter \) \
-		-exec sed -i -b $cmd_part_rules {} +
+	if [[ $opt_parallelism = 0 ]]
+	then
+		find "$@" -type f $cmd_part_ignore -and \( $opt_name_filter \) -exec sed -i -b $cmd_part_rules {} +
+	else
+		find "$@" -type f $cmd_part_ignore -and \( $opt_name_filter \) -print0|xargs -0 -P $opt_parallelism -n 100 sed -i -b $cmd_part_rules
+	fi
 	set +x
 	warning "Done."
 	exit;

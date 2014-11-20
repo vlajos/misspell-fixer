@@ -26,6 +26,7 @@ A manual review is always needed to verify that nothing has been broken.
 * `-i` Walk through source code management system's internal directories. (don't ignore `*.svn*`, `*.git*`)
 * `-n` Disabling backups. (By default the modified files' originals will be saved with the `.$$.BAK` suffix.)
 * `-N` Enable file name filtering. For example: `-N '*.cpp' -N '*.h'`
+* `-P` Enable parallelism. For example: `-P 4` processes the files in 4 thread. (Supported only in fast mode.)
 * `-u` Enabling less safe rules. (Manual revise's need will be more probable.)
 * `-g` Enabling rules to convert British English to US English. (These rules aren't exactly typos but sometimes they can be useful.)
 * `-h` Help. Displays this page.
@@ -56,6 +57,10 @@ Fast mode example:
 
     $ misspell_fixer.sh -r -f -n targetdir
 
+Fast mode example with mass processing:
+
+    $ misspell_fixer.sh -frn -P4 targetdir
+
 It is based on the following sources for common misspellings:
 
 * http://www.how-do-you-spell.com/
@@ -69,6 +74,7 @@ It is based on the following sources for common misspellings:
 * find
 * sed
 * diff
+* xargs (for parallelism)
 
 ### Author
 
