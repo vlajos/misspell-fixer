@@ -27,9 +27,16 @@ A manual review is always needed to verify that nothing has been broken.
 * `-n` Disabling backups. (By default the modified files' originals will be saved with the `.$$.BAK` suffix.)
 * `-N` Enable file name filtering. For example: `-N '*.cpp' -N '*.h'`
 * `-P` Enable parallelism. For example: `-P 4` processes the files in 4 thread. (Supported only in fast mode.)
-* `-u` Enabling less safe rules. (Manual revise's need will be more probable.)
-* `-g` Enabling rules to convert British English to US English. (These rules aren't exactly typos but sometimes they can be useful.)
 * `-h` Help. Displays this page.
+
+By default only a subset of rules are enabled (around 100). You can enable more rules with the following options:
+
+* `-u` Enabling less safe rules. (Manual revise's need will be more probable.) (Around ten rules.)
+* `-g` Enabling rules to convert British English to US English. (These rules aren't exactly typos but sometimes they can be useful.) (Around ten rules.)
+* `-R` Enabling rare rules. (Few hundred rules.)
+* `-V` Enabling very rare rules. (Mostly from the wikipedia article.) (More than four thousand rules.)
+
+The processing speed decreases as you activate more rules.
 
 ### Sample usages
 
@@ -59,7 +66,7 @@ Fast mode example:
 
 Fast mode example with mass processing:
 
-    $ misspell_fixer.sh -frn -P4 targetdir
+    $ misspell_fixer.sh -frnR -P4 targetdir
 
 It is based on the following sources for common misspellings:
 

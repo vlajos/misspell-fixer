@@ -11,10 +11,12 @@ export opt_backup=1
 export opt_ignore_scm_dirs=1
 export opt_parallelism=0
 
-rules_safe=$(echo $0|sed 's/\.sh$/_safe.sed/')
+rules_safe0=$(echo $0|sed 's/\.sh$/_safe.0.sed/')
+rules_safe1=$(echo $0|sed 's/\.sh$/_safe.1.sed/')
+rules_safe2=$(echo $0|sed 's/\.sh$/_safe.2.sed/')
 rules_not_so_safe=$(echo $0|sed 's/\.sh$/_not_so_safe.sed/')
 rules_gb_to_us=$(echo $0|sed 's/\.sh$/_gb_to_us.sed/')
-export cmd_part_rules="-f $rules_safe"
+export cmd_part_rules="-f $rules_safe0"
 
 export cmd_part_ignore=" ! -wholename *.git* ! -wholename *.svn* "
 
@@ -30,43 +32,51 @@ function verbose {
 	fi
 }
 
-while getopts ":dvrfsinughN:P:" opt; do
+while getopts ":dvrfsinRVughN:P:" opt; do
 	case $opt in
 		d)
-			warning "-d Enabling debug mode"
+			warning "-d Enabling debug mode."
 			opt_debug=1
 		;;
 		v)
-			warning "-v Enabling verbose mode"
+			warning "-v Enabling verbose mode."
 			opt_verbose=1
 		;;
 		r)
-			warning "-r Enabling real run. overwrite original files!"
+			warning "-r Enabling real run. Overwrite original files!"
 			opt_real_run=1
 		;;
 		f)
-			warning "-f Enabling fast mode"
+			warning "-f Enabling fast mode."
 			opt_fast_mode=1
 		;;
 		s)
-			warning "-s Enabling showing of diffs"
+			warning "-s Enabling showing of diffs."
 			opt_show_diff=1
 		;;
 		i)
-			warning "-i Disable scm dir ignoring"
+			warning "-i Disable scm dir ignoring."
 			opt_ignore_scm_dirs=1
 			cmd_part_ignore=''
 		;;
 		n)
-			warning "-n Disabling backups"
+			warning "-n Disabling backups."
 			opt_backup=0
 		;;
 		u)
-			warning "-u Enabling unsafe rules"
+			warning "-u Enabling unsafe rules."
 			cmd_part_rules="$cmd_part_rules -f $rules_not_so_safe"
 		;;
+		R)
+			warning "-R Enabling rare rules."
+			cmd_part_rules="$cmd_part_rules -f $rules_safe1"
+		;;
+		V)
+			warning "-V Enabling very-rare rules."
+			cmd_part_rules="$cmd_part_rules -f $rules_safe2"
+		;;
 		g)
-			warning "-g Enabling GB to US rules"
+			warning "-g Enabling GB to US rules."
 			cmd_part_rules="$cmd_part_rules -f $rules_gb_to_us"
 		;;
 		N)
@@ -104,7 +114,7 @@ shift $((OPTIND-1))
 
 if [[ "$@" = "" ]]
 then
-	warning "Not enought arguments. (target directory not found) => Exiting"
+	warning "Not enought arguments. (target directory not found) => Exiting."
 	exit
 fi
 warning "Target directories: $@"
@@ -113,22 +123,22 @@ if [[ $opt_fast_mode = 1 ]]
 then
 	if [[ $opt_real_run = 0 ]]
 	then
-		warning "Fast mode works only with real run. Real run is not switched on. => Exiting"
+		warning "Fast mode works only with real run. Real run is not switched on. => Exiting."
 		exit
 	fi
 	if [[ $opt_backup = 1 ]]
 	then
-		warning "Fast mode cannot make backups. Backups are enabled. => Exiting"
+		warning "Fast mode cannot make backups. Backups are enabled. => Exiting."
 		exit
 	fi
 	if [[ $opt_show_diff = 1 ]]
 	then
-		warning "Fast mode cannot show diffs. Showing diffs is turned on. => Exiting"
+		warning "Fast mode cannot show diffs. Showing diffs is turned on. => Exiting."
 		exit
 	fi
 	if [[ $opt_verbose = 1 ]]
 	then
-		warning "Fast mode cannot be verbose. Verbose mode is turned on. => Exiting"
+		warning "Fast mode cannot be verbose. Verbose mode is turned on. => Exiting."
 		exit
 	fi
 

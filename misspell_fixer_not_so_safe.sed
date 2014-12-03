@@ -29,3 +29,6 @@ s/Diagnostic's/Diagnostics/g
 s/does't/doesn't/g
 s/DOES'T/DOESN'T/g
 s/Does't/Doesn't/g
+s/\bwanna\b/want to/g
+s/\bWANNA\b/WANT TO/g
+s/\bWanna\b/Want to/g
