@@ -263,9 +263,9 @@ s/Seperat/Separat/g
 s/succesful/successful/g
 s/SUCCESFUL/SUCCESSFUL/g
 s/Succesful/Successful/g
-s/successfull/successful/g
-s/SUCCESSFULL/SUCCESSFUL/g
-s/Successfull/Successful/g
+s/successfull\b/successful/g
+s/SUCCESSFULL\b/SUCCESSFUL/g
+s/Successfull\b/Successful/g
 s/sucess/success/g
 s/SUCESS/SUCCESS/g
 s/Sucess/Success/g
