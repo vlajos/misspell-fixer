@@ -1,5 +1,7 @@
 #!/usr/bin/make
 
+.PHONY: test
+
 all: misspell_fixer_safe.0.sed misspell_fixer_safe.1.sed misspell_fixer_safe.2.sed misspell_fixer_not_so_safe.sed misspell_fixer_gb_to_us.sed
 
 misspell_fixer_safe.0.sed: dict/misspell_fixer_safe.0.dict
@@ -23,3 +25,6 @@ lint_dicts:
 	comm -23 misspell_fixer_safe.dict.su misspell_fixer_not_so_safe.dict.su >./dict/misspell_fixer_safe.dict
 	mv misspell_fixer_not_so_safe.dict.su ./dict/misspell_fixer_not_so_safe.dict
 	rm misspell_fixer_safe.dict.su
+
+test:
+	test/tests.sh
