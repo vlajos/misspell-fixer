@@ -1,4 +1,4 @@
-Misspell Fixer
+Misspell Fixer [![Build Status](https://travis-ci.org/vlajos/misspell_fixer.svg?branch=master)](https://travis-ci.org/vlajos/misspell_fixer)
 ==============
 
 Utility to fix common misspellings, typos in source codes. There are lots of typical misspellings in program codes.

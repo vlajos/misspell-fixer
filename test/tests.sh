@@ -19,7 +19,6 @@ testNoArg(){
     assertEquals "misspell_fixer: Not enought arguments. (target directory not found) => Exiting." "$(./misspell_fixer.sh 2>&1)"
 }
 
-
 runAndCompare(){
     ./misspell_fixer.sh $1 $TEMP/work
     while [ "$2" != "" ]
