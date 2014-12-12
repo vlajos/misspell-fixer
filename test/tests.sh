@@ -57,6 +57,15 @@ testFastg(){
 testFastRVug(){
     runAndCompare '-frnRVug' '0' 'R' 'V' 'u' 'g'
 }
+testSpaceInFileName(){
+    mv $TEMP/work/0.txt "$TEMP/work/0 0.txt"
+    rm $TEMP/expected/0.txt
+    cp -a test/expecteds/0.txt "$TEMP/expected/0 0.txt"
+    ./misspell_fixer.sh -rn $TEMP/work
+    diff -ruwb $TEMP/expected/ $TEMP/work/
+    assertTrue 'Expected output differs.' $?
+}
+
 
 # load shunit2
 . shunit2-2.1.6/src/shunit2
