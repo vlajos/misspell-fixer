@@ -1,0 +1,9 @@
+--- /tmp/misspell_fixer_test/X/work/X.txt	X-X-X X:X:X.X +X
++++ /tmp/misspell_fixer_test/X/work/X.txt.X	X-X-X X:X:X.X +X
+@@ -X,X +X,X @@
+-succesful
+-succesfully
+\ No newline at end of file
++successful
++successfully
+\ No newline at end of file
