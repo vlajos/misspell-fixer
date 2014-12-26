@@ -23,7 +23,6 @@ function init_variables {
 	export opt_fast_mode=0
 	export opt_real_run=0
 	export opt_backup=1
-	export opt_ignore_scm_dirs=1
 	export opt_parallelism=0
 
 	rules_safe0=${BASH_SOURCE/%.sh/_safe.0.sed}
@@ -33,7 +32,9 @@ function init_variables {
 	rules_gb_to_us=${BASH_SOURCE/%.sh/_gb_to_us.sed}
 	export cmd_part_rules="-f $rules_safe0"
 
-	export cmd_part_ignore=" ! -wholename *.git* ! -wholename *.svn* "
+	export cmd_part_ignore_scm=" ! -wholename *.git* ! -wholename *.svn* "
+	export cmd_part_ignore_bin=" ! -iwholename *.gif ! -iwholename *.jpg ! -iwholename *.png ! -iwholename *.zip ! -iwholename *.gz ! -iwholename *.bz2 ! -iwholename *.rar "
+	export cmd_part_ignore
 
 	export opt_name_filter=''
 
@@ -42,7 +43,7 @@ function init_variables {
 
 function parse_basic_options {
 	local OPTIND
-	while getopts ":dvrfsinRVughN:P:" opt; do
+	while getopts ":dvrfsibnRVughN:P:" opt; do
 		case $opt in
 			d)
 				warning "-d Enabling debug mode."
@@ -66,8 +67,11 @@ function parse_basic_options {
 			;;
 			i)
 				warning "-i Disable scm dir ignoring."
-				opt_ignore_scm_dirs=1
-				cmd_part_ignore=''
+				cmd_part_ignore_scm=''
+			;;
+			b)
+				warning "-i Disable binary ignoring."
+				cmd_part_ignore_bin=''
 			;;
 			n)
 				warning "-n Disabling backups."
@@ -129,6 +133,7 @@ function parse_basic_options {
 	fi
 
 	directories="$@"
+	cmd_part_ignore="$cmd_part_ignore_scm $cmd_part_ignore_bin"
 	warning "Target directories: $directories"
 
 	return 0

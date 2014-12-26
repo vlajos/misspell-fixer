@@ -27,6 +27,7 @@ A manual review is always needed to verify that nothing has been broken.
 * `-f` Fast mode: Faster mode with limited options. (`-v`, `-s` options are not supported) Works only with real run mode `-r`. This mode cannot make backups. (`-n` is also needed)
 * `-s` Shows diffs of changes.
 * `-i` Walk through source code management system's internal directories. (don't ignore `*.svn*`, `*.git*`)
+* `-b` Process binary files. (don't ignore `*.gif`, `*.jpg`, `*.png`, `*.zip`, `*.gz`, `*.bz2`, `*.rar`)
 * `-n` Disabling backups. (By default the modified files' originals will be saved with the `.$$.BAK` suffix.)
 * `-N` Enable file name filtering. For example: `-N '*.cpp' -N '*.h'`
 * `-P` Enable parallelism. For example: `-P 4` processes the files in 4 thread. (Supported only in fast mode.)

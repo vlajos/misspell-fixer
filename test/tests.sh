@@ -161,6 +161,27 @@ testKeepPermissionsFast(){
 	assertTrue 'Expected output differs.' $?
 }
 
+testIgnoreBinary(){
+	tests=(gif jpg png gz zip rar)
+	for i in ${tests[*]}
+	do
+		cp test/stubs/0.txt $TEMP/work/0.$i
+	done
+	$RUN -rn $TEMP/work
+	for i in ${tests[*]}
+	do
+		diff -uwb test/stubs/0.txt $TEMP/work/0.$i
+		assertTrue "Binary files changed:$i" $?
+	done
+	$RUN -rnb $TEMP/work
+	for i in ${tests[*]}
+	do
+		diff -uwb test/expecteds/0.txt $TEMP/work/0.$i
+		assertTrue "Binary files unchanged:$i" $?
+		rm $TEMP/work/0.$i
+	done
+}
+
 suite(){
 	suite_addTest testErrors
 	suite_addTest testOnlyDir
@@ -173,6 +194,7 @@ suite(){
 	suite_addTest testNamefilter
 	suite_addTest testKeepPermissionsNormal
 	suite_addTest testKeepPermissionsFast
+	suite_addTest testIgnoreBinary
 	for i in '' R V u g 'R V u g'
 	do
 		allarg=${i// }
