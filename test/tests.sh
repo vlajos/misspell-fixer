@@ -63,6 +63,7 @@ testSpaceInFileName(){
 	$RUN -rn $TEMP/work
 	diff -ruwb $TEMP/expected/ $TEMP/work/
 	assertTrue 'Expected output differs.' $?
+	rm "$TEMP/work/0 0.txt" "$TEMP/expected/0 0.txt"
 }
 
 testShowDiff(){
@@ -127,6 +128,40 @@ testNamefilter(){
 	rm -rf $TEMP/work/0.xxx $TEMP/work/0.yyy
 }
 
+testKeepPermissionsNormal(){
+	tests=(0000 777u 444g 222R 111V)
+	for i in ${tests[*]}
+	do
+		chmod ${i:0:3} $TEMP/work/${i:3}.txt
+	done
+	$RUN -fnuVG $TEMP/work
+	for i in ${tests[*]}
+	do
+		chmod ${i:0:3} $TEMP/work/${i:3}.txt |grep -q changed
+		assertFalse "Permissions broken:$i" $?
+		chmod 644 $TEMP/work/${i:3}.txt
+	done
+	diff -ruwb $TEMP/expected/ $TEMP/work/
+	assertTrue 'Expected output differs.' $?
+}
+
+testKeepPermissionsFast(){
+	tests=(0000 777u 444g 222R 111V)
+	for i in ${tests[*]}
+	do
+		chmod ${i:0:3} $TEMP/work/${i:3}.txt
+	done
+	$RUN -frnuVG $TEMP/work
+	for i in ${tests[*]}
+	do
+		chmod ${i:0:3} $TEMP/work/${i:3}.txt |grep -q changed
+		assertFalse "Permissions broken:$i" $?
+		chmod 644 $TEMP/work/${i:3}.txt
+	done
+	diff -ruwb $TEMP/expected/ $TEMP/work/
+	assertTrue 'Expected output differs.' $?
+}
+
 suite(){
 	suite_addTest testErrors
 	suite_addTest testOnlyDir
@@ -137,6 +172,8 @@ suite(){
 	suite_addTest testSCMdirsuntouched
 	suite_addTest testSCMdirstouched
 	suite_addTest testNamefilter
+	suite_addTest testKeepPermissionsNormal
+	suite_addTest testKeepPermissionsFast
 	for i in '' R V u g 'R V u g'
 	do
 		allarg=$(echo $i|sed 's/ //g')

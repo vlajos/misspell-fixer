@@ -1,4 +1,6 @@
-Misspell Fixer [![Build Status](https://travis-ci.org/vlajos/misspell_fixer.svg?branch=master)](https://travis-ci.org/vlajos/misspell_fixer)[![Coverage Status](https://img.shields.io/coveralls/vlajos/misspell_fixer.svg)](https://coveralls.io/r/vlajos/misspell_fixer?branch=master)
+Misspell Fixer
+
+[![Build Status](https://travis-ci.org/vlajos/misspell_fixer.svg?branch=master)](https://travis-ci.org/vlajos/misspell_fixer)[![Coverage Status](https://img.shields.io/coveralls/vlajos/misspell_fixer.svg)](https://coveralls.io/r/vlajos/misspell_fixer?branch=master)
 
 ==============
 

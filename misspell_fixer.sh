@@ -187,8 +187,8 @@ function loop_core {
 	verbose "actual file: $1"
 	tmpfile=$1.$$
 	verbose "temp file: $tmpfile"
-	cp --attributes-only "$1" "$tmpfile"
-	sed $cmd_part_rules "$1" >"$tmpfile"
+	cp -a "$1" "$tmpfile"
+	sed -i $cmd_part_rules "$tmpfile"
 	IFS=''
 	diff=$(diff -uwb $1 $tmpfile)
 	if [[ $? = 0 ]]
