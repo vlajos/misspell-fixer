@@ -187,7 +187,7 @@ function main_work_fast {
 	return 0
 }
 
-function loop_core {
+function main_work_normal_one {
 	if [[ $opt_debug = 1 ]]
 	then
 		set -x
@@ -197,31 +197,29 @@ function loop_core {
 	verbose "temp file: $tmpfile"
 	cp -a "$1" "$tmpfile"
 	sed -i $cmd_part_rules "$tmpfile"
-	IFS=''
 	diff=$(diff -uwb $1 $tmpfile)
 	if [[ $? = 0 ]]
 	then
 		verbose "nothing changed"
-		rm $tmpfile
+		rm "$tmpfile"
 	else
 		verbose "misspells are fixed!"
 		if [[ $opt_show_diff = 1 ]]
 		then
-			echo $diff
+			echo "$diff"
 		fi
 		if [[ $opt_real_run = 1 ]]
 		then
 			if [[ $opt_backup = 1 ]]
 			then
-				mv $1 $tmpfile.BAK
+				mv "$1" "$tmpfile.BAK"
 			fi
-			mv $tmpfile $1
+			mv "$tmpfile" "$1"
 		else
-			rm $tmpfile
+			rm "$tmpfile"
 		fi
 	fi
 }
-export -f loop_core verbose warning
 
 function main_work_normal {
 	if [[ $opt_debug = 1 ]]
@@ -233,7 +231,11 @@ function main_work_normal {
 		-type f\
 		$cmd_part_ignore \
 		-and \( $opt_name_filter \) \
-		-exec bash -c 'loop_core "$0"' {} \;
+		-print0 |\
+		while IFS="" read -r -d "" file
+		do
+			main_work_normal_one "$file"
+		done
 	warning "Done."
 	return 0
 }

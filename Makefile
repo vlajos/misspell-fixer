@@ -1,30 +1,14 @@
 #!/usr/bin/make
 
-.PHONY: test
+.PHONY: test prepare_environment coveralls
 
-all: misspell_fixer_safe.0.sed misspell_fixer_safe.1.sed misspell_fixer_safe.2.sed misspell_fixer_not_so_safe.sed misspell_fixer_gb_to_us.sed
+all: lint_dicts $(wildcard *.sed)
 
-misspell_fixer_safe.0.sed: dict/misspell_fixer_safe.0.dict
-	./dict/misspell_convert_dict_to_sed.pl <dict/misspell_fixer_safe.0.dict >./misspell_fixer_safe.0.sed
-
-misspell_fixer_safe.1.sed: dict/misspell_fixer_safe.1.dict
-	./dict/misspell_convert_dict_to_sed.pl <dict/misspell_fixer_safe.1.dict >./misspell_fixer_safe.1.sed
-
-misspell_fixer_safe.2.sed: dict/misspell_fixer_safe.2.dict
-	./dict/misspell_convert_dict_to_sed.pl <dict/misspell_fixer_safe.2.dict >./misspell_fixer_safe.2.sed
-
-misspell_fixer_not_so_safe.sed: dict/misspell_fixer_not_so_safe.dict
-	./dict/misspell_convert_dict_to_sed.pl <dict/misspell_fixer_not_so_safe.dict >./misspell_fixer_not_so_safe.sed
-
-misspell_fixer_gb_to_us.sed: dict/misspell_fixer_gb_to_us.dict
-	./dict/misspell_convert_dict_to_sed.pl <dict/misspell_fixer_gb_to_us.dict >./misspell_fixer_gb_to_us.sed
+%.sed: dict/%.dict
+	./dict/misspell_convert_dict_to_sed.pl <$< >./$@
 
 lint_dicts:
-	sort -u ./dict/misspell_fixer_safe.dict >misspell_fixer_safe.dict.su
-	sort -u ./dict/misspell_fixer_not_so_safe.dict >misspell_fixer_not_so_safe.dict.su
-	comm -23 misspell_fixer_safe.dict.su misspell_fixer_not_so_safe.dict.su >./dict/misspell_fixer_safe.dict
-	mv misspell_fixer_not_so_safe.dict.su ./dict/misspell_fixer_not_so_safe.dict
-	rm misspell_fixer_safe.dict.su
+	cd dict;./misspell_lint_dicts.sh
 
 test:
 	/usr/local/bin/kcov --include-pattern=misspell_fixer.sh --path-strip-level=1 /tmp/coverage/ test/tests.sh
