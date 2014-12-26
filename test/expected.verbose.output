@@ -1,27 +1,27 @@
-misspell_fixer: -v Enabling verbose mode.
-misspell_fixer: Target directories: /tmp/misspell_fixer_test/X/work
-misspell_fixer: Starting script
-misspell_fixer: actual file: /tmp/misspell_fixer_test/X/work/R.txt
-misspell_fixer: temp file: /tmp/misspell_fixer_test/X/work/R.txt.X
-misspell_fixer: nothing changed
-misspell_fixer: actual file: /tmp/misspell_fixer_test/X/work/X.txt
-misspell_fixer: temp file: /tmp/misspell_fixer_test/X/work/X.txt.X
 +++ /tmp/misspell_fixer_test/X/work/X.txt.X	X-X-X X:X:X.X +X
-@@ -X,X +X,X @@
--succesful
--succesfully
-\ No newline at end of file
 +successful
 +successfully
-\ No newline at end of file'
-misspell_fixer: misspells are fixed!
-misspell_fixer: actual file: /tmp/misspell_fixer_test/X/work/u.txt
-misspell_fixer: temp file: /tmp/misspell_fixer_test/X/work/u.txt.X
-misspell_fixer: nothing changed
-misspell_fixer: actual file: /tmp/misspell_fixer_test/X/work/V.txt
-misspell_fixer: temp file: /tmp/misspell_fixer_test/X/work/V.txt.X
-misspell_fixer: nothing changed
+-succesful
+-succesfully
+@@ -X,X +X,X @@
+misspell_fixer: -v Enabling verbose mode.
 misspell_fixer: actual file: /tmp/misspell_fixer_test/X/work/g.txt
-misspell_fixer: temp file: /tmp/misspell_fixer_test/X/work/g.txt.X
-misspell_fixer: nothing changed
+misspell_fixer: actual file: /tmp/misspell_fixer_test/X/work/R.txt
+misspell_fixer: actual file: /tmp/misspell_fixer_test/X/work/u.txt
+misspell_fixer: actual file: /tmp/misspell_fixer_test/X/work/V.txt
+misspell_fixer: actual file: /tmp/misspell_fixer_test/X/work/X.txt
 misspell_fixer: Done.
+misspell_fixer: misspells are fixed!
+misspell_fixer: nothing changed
+misspell_fixer: nothing changed
+misspell_fixer: nothing changed
+misspell_fixer: nothing changed
+misspell_fixer: Starting script
+misspell_fixer: Target directories: /tmp/misspell_fixer_test/X/work
+misspell_fixer: temp file: /tmp/misspell_fixer_test/X/work/g.txt.X
+misspell_fixer: temp file: /tmp/misspell_fixer_test/X/work/R.txt.X
+misspell_fixer: temp file: /tmp/misspell_fixer_test/X/work/u.txt.X
+misspell_fixer: temp file: /tmp/misspell_fixer_test/X/work/V.txt.X
+misspell_fixer: temp file: /tmp/misspell_fixer_test/X/work/X.txt.X
+\ No newline at end of file
+\ No newline at end of file'

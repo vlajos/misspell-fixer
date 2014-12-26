@@ -2,6 +2,7 @@
 
 export TEMP=/tmp/misspell_fixer_test/$$
 export RUN=". misspell_fixer.sh"
+export LC_ALL=C
 
 oneTimeSetUp(){
 	mkdir -p $TEMP $TEMP/work/ $TEMP/expected/
@@ -183,7 +184,7 @@ testIgnoreBinary(){
 }
 
 testVerbose(){
-	$RUN -v $TEMP/work 2>&1|sed 's/[0-9]\+/X/g'|grep -v kcov >/tmp/verboseoutput
+	$RUN -v $TEMP/work 2>&1|sed 's/[0-9]\+/X/g'|grep -v kcov |sort -f >/tmp/verboseoutput
 	diff -ruwb test/stubs/ $TEMP/work/
 	assertTrue 'Expected output differs.' $?
 	diff -ruwb /tmp/verboseoutput test/expected.verbose.output
