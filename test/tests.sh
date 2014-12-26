@@ -182,6 +182,14 @@ testIgnoreBinary(){
 	done
 }
 
+testVerbose(){
+	$RUN -v $TEMP/work 2>&1|sed 's/[0-9]\+/X/g'|grep -v kcov >/tmp/verboseoutput
+	diff -ruwb test/stubs/ $TEMP/work/
+	assertTrue 'Expected output differs.' $?
+	diff -ruwb /tmp/verboseoutput test/expected.verbose.output
+	assertTrue 'Expected output differs.' $?
+}
+
 suite(){
 	suite_addTest testErrors
 	suite_addTest testOnlyDir
@@ -195,6 +203,7 @@ suite(){
 	suite_addTest testKeepPermissionsNormal
 	suite_addTest testKeepPermissionsFast
 	suite_addTest testIgnoreBinary
+	suite_addTest testVerbose
 	for i in '' R V u g 'R V u g'
 	do
 		allarg=${i// }

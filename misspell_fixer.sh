@@ -188,10 +188,6 @@ function main_work_fast {
 }
 
 function main_work_normal_one {
-	if [[ $opt_debug = 1 ]]
-	then
-		set -x
-	fi
 	verbose "actual file: $1"
 	tmpfile=$1.$$
 	verbose "temp file: $tmpfile"
