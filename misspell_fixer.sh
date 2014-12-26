@@ -14,6 +14,9 @@ function verbose {
 function init_variables {
 	set -f
 
+	export LC_CTYPE=C
+	export LANG=C
+
 	export opt_debug=0
 	export opt_verbose=0
 	export opt_show_diff=0
