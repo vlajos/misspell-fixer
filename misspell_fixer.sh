@@ -26,11 +26,11 @@ function init_variables {
 	export opt_ignore_scm_dirs=1
 	export opt_parallelism=0
 
-	rules_safe0=$(echo $1|sed 's/\.sh$/_safe.0.sed/')
-	rules_safe1=$(echo $1|sed 's/\.sh$/_safe.1.sed/')
-	rules_safe2=$(echo $1|sed 's/\.sh$/_safe.2.sed/')
-	rules_not_so_safe=$(echo $1|sed 's/\.sh$/_not_so_safe.sed/')
-	rules_gb_to_us=$(echo $1|sed 's/\.sh$/_gb_to_us.sed/')
+	rules_safe0=${BASH_SOURCE/%.sh/_safe.0.sed}
+	rules_safe1=${BASH_SOURCE/%.sh/_safe.1.sed}
+	rules_safe2=${BASH_SOURCE/%.sh/_safe.2.sed}
+	rules_not_so_safe=${BASH_SOURCE/%.sh/_not_so_safe.sed}
+	rules_gb_to_us=${BASH_SOURCE/%.sh/_gb_to_us.sed}
 	export cmd_part_rules="-f $rules_safe0"
 
 	export cmd_part_ignore=" ! -wholename *.git* ! -wholename *.svn* "
@@ -233,14 +233,7 @@ function main_work_normal {
 	return 0
 }
 
-if [[ $UNDERSHUNIT = 1 ]]
-then
-	main_executable=./misspell_fixer.sh
-else
-	main_executable=$0
-fi
-
-init_variables $main_executable
+init_variables
 
 parse_basic_options "$@"
 retval=$?
@@ -251,9 +244,9 @@ then
 	retval=$?
 fi
 
-if [[ $UNDERSHUNIT = 1 ]]
+if [[ "$SHUNIT_VERSION" = "" ]]
 then
-	return $retval
-else
 	exit $retval
+else
+	return $retval
 fi

@@ -2,7 +2,6 @@
 
 export TEMP=/tmp/misspell_fixer_test/$$
 export RUN=". misspell_fixer.sh"
-export UNDERSHUNIT=1
 
 oneTimeSetUp(){
 	mkdir -p $TEMP $TEMP/work/ $TEMP/expected/
@@ -176,7 +175,7 @@ suite(){
 	suite_addTest testKeepPermissionsFast
 	for i in '' R V u g 'R V u g'
 	do
-		allarg=$(echo $i|sed 's/ //g')
+		allarg=${i// }
 		eval "testMainNormal$allarg(){ runAndCompare -rn$allarg 0 $i; }"
 		suite_addTest testMainNormal$allarg
 		eval "testMainFast$allarg(){ runAndCompare -frn$allarg 0 $i; }"
