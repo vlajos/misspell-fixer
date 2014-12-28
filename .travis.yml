@@ -2,4 +2,3 @@ language: bash
 
 before_script: make prepare_environment
 script: make test
-after_script: make coveralls
