@@ -15,7 +15,7 @@ test:
 
 prepare_environment:
 	sudo apt-get update -qq
-	sudo apt-get install -y libdw-dev libelf-dev elfutils libcurl4-openssl-dev
+	sudo apt-get install -y elfutils libdw1/precise libasm1/precise libdw-dev/precise libelf-dev libcurl4-openssl-dev
 	curl -L "https://shunit2.googlecode.com/files/shunit2-2.1.6.tgz" | tar zx
 	cd /tmp;git clone https://github.com/SimonKagstrom/kcov
 	cd /tmp/kcov;cmake ./;make;sudo make install
