@@ -106,7 +106,7 @@ function parse_basic_options {
 				opt_parallelism=$OPTARG
 			;;
 			h)
-				cat $(dirname $0)/README.md
+				cat $(dirname $BASH_SOURCE)/README.md
 				return 1
 			;;
 			\?)
