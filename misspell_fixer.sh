@@ -128,7 +128,7 @@ function parse_basic_options {
 	
 	if [[ "$@" = "" ]]
 	then
-		warning "Not enought arguments. (target directory not found) => Exiting."
+		warning "Not enough arguments. (target directory not found) => Exiting."
 		return 1
 	fi
 
