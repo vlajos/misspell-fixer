@@ -34,7 +34,7 @@ runAndCompare(){
 testErrors(){
 	TMP=$($RUN 2>&1)
 	assertFalse $?
-	echo $TMP|grep -q "misspell_fixer: Not enought arguments. (target directory not found) => Exiting."
+	echo $TMP|grep -q "misspell_fixer: Not enough arguments. (target directory not found) => Exiting."
 	assertTrue 'No argument handling problem.' $?
 	$RUN -h
 	assertFalse $?
