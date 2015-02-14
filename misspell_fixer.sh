@@ -192,7 +192,7 @@ function main_work_normal_one {
 	tmpfile=$1.$$
 	verbose "temp file: $tmpfile"
 	cp -a "$1" "$tmpfile"
-	sed -i $cmd_part_rules "$tmpfile"
+	sed -i -b $cmd_part_rules "$tmpfile"
 	diff=$(diff -uwb $1 $tmpfile)
 	if [[ $? = 0 ]]
 	then
