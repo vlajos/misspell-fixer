@@ -5630,6 +5630,9 @@ s/\bInitation\b/Initiation/g
 s/\binitiaitive\b/initiative/g
 s/\bINITIAITIVE\b/INITIATIVE/g
 s/\bInitiaitive\b/Initiative/g
+s/\binitilized\b/initialized/g
+s/\bINITILIZED\b/INITIALIZED/g
+s/\bInitilized\b/Initialized/g
 s/\binlcuding\b/including/g
 s/\bINLCUDING\b/INCLUDING/g
 s/\bInlcuding\b/Including/g
