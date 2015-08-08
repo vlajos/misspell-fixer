@@ -19,11 +19,11 @@ A manual review is always needed to verify that nothing has been broken.
 
 ### Synopsis
     
-    misspell_fixer	[OPTION] ...targets...
+    misspell_fixer	[OPTION] target
 
 ### Options, Arguments
 
-`targets` can be any files or directories.
+`target` can be any file or directory.
 
 * `-d` Debug mode: shows the core logics all steps
 * `-v` Verbose mode: shows the iterated files
@@ -50,31 +50,31 @@ The processing speed decreases as you activate more rules.
 
 By default nothing important will happen
 
-    $ misspell_fixer.sh targets
+    $ misspell_fixer.sh target
 
 What you can track with -v
 
-    $ misspell_fixer.sh -v targets
+    $ misspell_fixer.sh -v target
 
 A real usage:
 
-    $ misspell_fixer.sh -r -v targets
+    $ misspell_fixer.sh -r -v target
 
 Show only the diff, don't modify the files:
 
-    $ misspell_fixer.sh -s -v targets
+    $ misspell_fixer.sh -s -v target
 
 Show everything and fix the files:
 
-    $ misspell_fixer.sh -r -s -v targets
+    $ misspell_fixer.sh -r -s -v target
 
 Fast mode example:
 
-    $ misspell_fixer.sh -r -f -n targets
+    $ misspell_fixer.sh -r -f -n target
 
 Fast mode example with mass processing:
 
-    $ misspell_fixer.sh -frnR -P4 targets
+    $ misspell_fixer.sh -frnR -P4 target
 
 It is based on the following sources for common misspellings:
 
