@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 function warning {
 	echo "misspell_fixer: $@">&2
