@@ -6122,6 +6122,9 @@ s/\bLivley\b/Lively/g
 s/\blmits\b/limits/g
 s/\bLMITS\b/LIMITS/g
 s/\bLmits\b/Limits/g
+s/\blocla\b/local/g
+s/\bLOCLA\b/LOCAL/g
+s/\bLocla\b/Local/g
 s/\bloev\b/love/g
 s/\bLOEV\b/LOVE/g
 s/\bLoev\b/Love/g
