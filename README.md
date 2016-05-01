@@ -44,6 +44,7 @@ By default only a subset of rules are enabled (around 100). You can enable more 
 * `-g` Enabling rules to convert British English to US English. (These rules aren't exactly typos but sometimes they can be useful.) (Around ten rules.)
 * `-R` Enabling rare rules. (Few hundred rules.)
 * `-V` Enabling very rare rules. (Mostly from the wikipedia article.) (More than four thousand rules.)
+* `-D` Enabling rules based on lintian.debian.org  ( git:ebac9a7, ~2300 )
 
 The processing speed decreases as you activate more rules.
 
@@ -84,6 +85,7 @@ It is based on the following sources for common misspellings:
 * http://www.wrongspelled.com/
 * https://github.com/neleai/stylepp
 * http://en.wikipedia.org/wiki/Wikipedia:Lists_of_common_misspellings/For_machines
+* https://anonscm.debian.org/git/lintian/lintian.git ( /data/spelling/corrections)
 
 ### Dependencies
 
@@ -95,7 +97,7 @@ It is based on the following sources for common misspellings:
 
 ### Author
 
-Veres Lajos
+Veres Lajos 
 
 ### Original source
 

@@ -28,6 +28,7 @@ function init_variables {
 	rules_safe0=${BASH_SOURCE/%.sh/_safe.0.sed}
 	rules_safe1=${BASH_SOURCE/%.sh/_safe.1.sed}
 	rules_safe2=${BASH_SOURCE/%.sh/_safe.2.sed}
+	rules_safe3=${BASH_SOURCE/%.sh/_safe.3.sed}
 	rules_not_so_safe=${BASH_SOURCE/%.sh/_not_so_safe.sed}
 	rules_gb_to_us=${BASH_SOURCE/%.sh/_gb_to_us.sed}
 	export cmd_part_rules="-f $rules_safe0"
@@ -43,7 +44,7 @@ function init_variables {
 
 function parse_basic_options {
 	local OPTIND
-	while getopts ":dvrfsibnRVughN:P:" opt; do
+	while getopts ":dvrfsibnRVDughN:P:" opt; do
 		case $opt in
 			d)
 				warning "-d Enabling debug mode."
@@ -88,6 +89,10 @@ function parse_basic_options {
 			V)
 				warning "-V Enabling very-rare rules."
 				cmd_part_rules="$cmd_part_rules -f $rules_safe2"
+			;;
+			D)
+				warning "-D Enabling rules from linter.debian.org / spelling."
+				cmd_part_rules="$cmd_part_rules -f $rules_safe3"
 			;;
 			g)
 				warning "-g Enabling GB to US rules."

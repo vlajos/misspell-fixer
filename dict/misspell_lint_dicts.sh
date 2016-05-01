@@ -12,7 +12,7 @@ function remove_duplications {
 sort -u misspell_fixer_safe.0.dict >/tmp/already_processed.dict
 cp /tmp/already_processed.dict misspell_fixer_safe.0.dict
 
-for i in safe.1 safe.2 not_so_safe gb_to_us
+for i in safe.1 safe.2 safe.3 not_so_safe gb_to_us
 do
     remove_duplications $i
 done
