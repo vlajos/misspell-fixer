@@ -24,6 +24,7 @@ function init_variables {
 	export opt_real_run=0
 	export opt_backup=1
 	export opt_parallelism=0
+	export opt_dots=0
 
 	rules_safe0=${BASH_SOURCE/%.sh/_safe.0.sed}
 	rules_safe1=${BASH_SOURCE/%.sh/_safe.1.sed}
@@ -44,7 +45,7 @@ function init_variables {
 
 function parse_basic_options {
 	local OPTIND
-	while getopts ":dvrfsibnRVDughN:P:" opt; do
+	while getopts ":dvorfsibnRVDughN:P:" opt; do
 		case $opt in
 			d)
 				warning "-d Enabling debug mode."
@@ -53,6 +54,10 @@ function parse_basic_options {
 			v)
 				warning "-v Enabling verbose mode."
 				opt_verbose=1
+			;;
+			o)
+				warning "-o print dots for each file processed."
+				opt_dots=1
 			;;
 			r)
 				warning "-r Enabling real run. Overwrite original files!"
@@ -235,6 +240,10 @@ function main_work_normal {
 		-print0 |\
 		while IFS="" read -r -d "" file
 		do
+                        if [[ $opt_dots = 1 ]]
+                        then 
+                          echo -n "." >&2;
+                        fi
 			main_work_normal_one "$file"
 		done
 	warning "Done."
