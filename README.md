@@ -1,9 +1,9 @@
 # Misspell Fixer
 
-[![Build Status](https://travis-ci.org/vlajos/misspell_fixer.svg?branch=master)](https://travis-ci.org/vlajos/misspell_fixer)
-[![Coverage Status](https://img.shields.io/coveralls/vlajos/misspell_fixer.svg)](https://coveralls.io/r/vlajos/misspell_fixer?branch=master)
-[![Circle CI Build Status](https://circleci.com/gh/vlajos/misspell_fixer.svg?style=shield&circle-token=d5d85ed2985b507b547a98e2ace8c21a75395cc2)](https://circleci.com/gh/vlajos/misspell_fixer)
-[![Gratipay](https://img.shields.io/gratipay/JSFiddle.svg)](https://gratipay.com/~vlajos/)
+[![Build Status](https://travis-ci.org/ka7/misspell_fixer.svg?branch=master)](https://travis-ci.org/ka7/misspell_fixer)
+<!-- [![Coverage Status](https://img.shields.io/coveralls/vlajos/misspell_fixer.svg)](https://coveralls.io/r/vlajos/misspell_fixer?branch=master)
+[![Circle CI Build Status](https://circleci.com/gh/vlajos/misspell_fixer.svg?style=shield&circle-token=d5d85ed2985b507b547a98e2ace8c21a75395cc2)](https://circleci.com/gh/vlajos/misspell_fixer) -->
+[![Gratipay](https://img.shields.io/gratipay/JSFiddle.svg)](https://gratipay.com/~vlajos/) <-- original developer :)
 
 ==============
 
