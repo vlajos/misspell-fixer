@@ -28,6 +28,7 @@ A manual review is always needed to verify that nothing has been broken.
 
 * `-d` Debug mode: shows the core logics all steps
 * `-v` Verbose mode: shows the iterated files
+* `-o` Verbose mode: show progress (print a dot for each file processed)
 * `-r` Real run mode: Overwrites the original files with the fixed one. Without this option the originals will be untouched.
 * `-f` Fast mode: Faster mode with limited options. (`-v`, `-s` options are not supported) Works only with real run mode `-r`. This mode cannot make backups. (`-n` is also needed)
 * `-s` Shows diffs of changes.
