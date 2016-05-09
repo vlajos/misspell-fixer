@@ -96,7 +96,7 @@ function parse_basic_options {
 				cmd_part_rules="$cmd_part_rules -f $rules_safe2"
 			;;
 			D)
-				warning "-D Enabling rules from linter.debian.org / spelling."
+				warning "-D Enabling rules from lintian.debian.org / spelling."
 				cmd_part_rules="$cmd_part_rules -f $rules_safe3"
 			;;
 			g)
