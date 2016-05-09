@@ -1,7 +1,7 @@
 #!/bin/sed
-s/l\babandonned\b/abandoned/g
-s/L\BABANDONNED\b/ABANDONED/g
-s/L\babandonned\b/Abandoned/g
+s/\babandonned\b/abandoned/g
+s/\BABANDONNED\b/ABANDONED/g
+s/\babandonned\b/Abandoned/g
 s/\babandonning\b/abandoning/g
 s/\bABANDONNING\b/ABANDONING/g
 s/\bAbandonning\b/Abandoning/g
