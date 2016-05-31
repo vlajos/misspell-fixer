@@ -190,9 +190,9 @@ function main_work_fast {
 	fi
 	if [[ $opt_parallelism = 0 ]]
 	then
-		find "$directories" -type f $cmd_part_ignore -and \( $opt_name_filter \) -exec sed -i -b "$cmd_part_rules" {} +
+		find "$directories" -type f $cmd_part_ignore -and \( $opt_name_filter \) -exec sed -i -b $cmd_part_rules {} +
 	else
-		find "$directories" -type f $cmd_part_ignore -and \( $opt_name_filter \) -print0|xargs -0 -P "$opt_parallelism" -n 100 sed -i -b "$cmd_part_rules"
+		find "$directories" -type f $cmd_part_ignore -and \( $opt_name_filter \) -print0|xargs -0 -P "$opt_parallelism" -n 100 sed -i -b $cmd_part_rules
 	fi
 	warning "Done."
 	return 0
