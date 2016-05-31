@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 function warning {
-	echo "misspell_fixer: $@">&2
+	echo "misspell_fixer: $*">&2
 }
 
 function verbose {
@@ -116,7 +116,8 @@ function parse_basic_options {
 				opt_parallelism=$OPTARG
 			;;
 			h)
-				cat $(dirname $BASH_SOURCE)/README.md
+                                d="dirname ${BASH_SOURCE}"
+				cat "$($d)"/README.md
 				return 1
 			;;
 			\?)
@@ -142,7 +143,7 @@ function parse_basic_options {
 		return 1
 	fi
 
-	directories="$@"
+	directories="$*"
 	cmd_part_ignore="$cmd_part_ignore_scm $cmd_part_ignore_bin"
 	warning "Target directories: $directories"
 
@@ -189,9 +190,9 @@ function main_work_fast {
 	fi
 	if [[ $opt_parallelism = 0 ]]
 	then
-		find "$directories" -type f $cmd_part_ignore -and \( $opt_name_filter \) -exec sed -i -b $cmd_part_rules {} +
+		find "$directories" -type f "$cmd_part_ignore" -and \( $opt_name_filter \) -exec sed -i -b "$cmd_part_rules" {} +
 	else
-		find "$directories" -type f $cmd_part_ignore -and \( $opt_name_filter \) -print0|xargs -0 -P $opt_parallelism -n 100 sed -i -b $cmd_part_rules
+		find "$directories" -type f "$cmd_part_ignore" -and \( $opt_name_filter \) -print0|xargs -0 -P "$opt_parallelism" -n 100 sed -i -b "$cmd_part_rules"
 	fi
 	warning "Done."
 	return 0
@@ -203,7 +204,7 @@ function main_work_normal_one {
 	verbose "temp file: $tmpfile"
 	cp -a "$1" "$tmpfile"
 	sed -b $cmd_part_rules "$1" >"$tmpfile"
-	diff=$(diff -uwb $1 $tmpfile)
+	diff=$(diff -uwb "$1" "$tmpfile")
 	if [[ $? = 0 ]]
 	then
 		verbose "nothing changed"
