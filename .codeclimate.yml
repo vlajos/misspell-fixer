@@ -1,6 +1,7 @@
----
 engines:
   fixme:
+    enabled: true
+  shellcheck:
     enabled: true
 ratings:
   paths: []
