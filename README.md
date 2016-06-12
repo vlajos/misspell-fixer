@@ -1,7 +1,7 @@
 # Misspell Fixer
 
 [![Build Status](https://travis-ci.org/ka7/misspell_fixer.svg?branch=master)](https://travis-ci.org/ka7/misspell_fixer)
-<!-- [![Coverage Status](https://img.shields.io/coveralls/vlajos/misspell_fixer.svg)](https://coveralls.io/r/vlajos/misspell_fixer?branch=master)
+[![Coverage Status](https://coveralls.io/repos/github/ka7/misspell_fixer/badge.svg?branch=master)](https://coveralls.io/github/ka7/misspell_fixer?branch=master)
 [![Circle CI Build Status](https://circleci.com/gh/vlajos/misspell_fixer.svg?style=shield&circle-token=d5d85ed2985b507b547a98e2ace8c21a75395cc2)](https://circleci.com/gh/vlajos/misspell_fixer) -->
 [![Gratipay](https://img.shields.io/gratipay/JSFiddle.svg)](https://gratipay.com/~vlajos/) <-- original developer :)
 [![Issue Count](https://codeclimate.com/github/ka7/misspell_fixer/badges/issue_count.svg)](https://codeclimate.com/github/ka7/misspell_fixer)
