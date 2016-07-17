@@ -47,6 +47,7 @@ By default only a subset of rules are enabled (around 100). You can enable more 
 * `-R` Enabling rare rules. (Few hundred rules.)
 * `-V` Enabling very rare rules. (Mostly from the wikipedia article.) (More than four thousand rules.)
 * `-D` Enabling rules based on lintian.debian.org  ( git:ebac9a7, ~2300 )
+* `-m` disable file size checks. default is to ignore files > 1MB. (usually csv, compressed JS, ..)
 
 The processing speed decreases as you activate more rules.
 

@@ -25,7 +25,7 @@ function init_variables {
 	export opt_backup=1
 	export opt_parallelism=0
 	export opt_dots=0
-
+	
 	rules_safe0=${BASH_SOURCE/%.sh/_safe.0.sed}
 	rules_safe1=${BASH_SOURCE/%.sh/_safe.1.sed}
 	rules_safe2=${BASH_SOURCE/%.sh/_safe.2.sed}
@@ -39,13 +39,14 @@ function init_variables {
 	export cmd_part_ignore
 
 	export opt_name_filter=''
+        export cmd_size=" -and ( -size 1M ) "  # find will ignore files > 1MB
 
 	export directories
 }
 
 function parse_basic_options {
 	local OPTIND
-	while getopts ":dvorfsibnRVDughN:P:" opt; do
+	while getopts ":dvorfsibnRVDmughN:P:" opt; do
 		case $opt in
 			d)
 				warning "-d Enabling debug mode."
@@ -98,6 +99,10 @@ function parse_basic_options {
 			D)
 				warning "-D Enabling rules from lintian.debian.org / spelling."
 				cmd_part_rules="$cmd_part_rules -f $rules_safe3"
+			;;
+			m)
+				warning "-m disable max-size check. default is to ignore files > 1MB"
+				cmd_size=" "
 			;;
 			g)
 				warning "-g Enabling GB to US rules."
@@ -190,9 +195,9 @@ function main_work_fast {
 	fi
 	if [[ $opt_parallelism = 0 ]]
 	then
-		find "$directories" -type f $cmd_part_ignore -and \( $opt_name_filter \) -exec sed -i -b $cmd_part_rules {} +
+		find "$directories" -type f $cmd_part_ignore -and \( $opt_name_filter \) $cmd_size -exec sed -i -b $cmd_part_rules {} +
 	else
-		find "$directories" -type f $cmd_part_ignore -and \( $opt_name_filter \) -print0|xargs -0 -P $opt_parallelism -n 100 sed -i -b $cmd_part_rules
+		find "$directories" -type f $cmd_part_ignore -and \( $opt_name_filter \) $cmd_size -print0|xargs -0 -P $opt_parallelism -n 100 sed -i -b $cmd_part_rules
 	fi
 	warning "Done."
 	return 0
@@ -238,6 +243,7 @@ function main_work_normal {
 		-type f\
 		$cmd_part_ignore \
 		-and \( $opt_name_filter \) \
+                $cmd_size \
 		-print0 |\
 		while IFS="" read -r -d "" file
 		do
