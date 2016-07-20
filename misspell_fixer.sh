@@ -209,7 +209,7 @@ function main_work_normal_one {
 	verbose "temp file: $tmpfile"
 	cp -a "$1" "$tmpfile"
 	sed -b $cmd_part_rules "$1" >"$tmpfile"
-	diff=$(diff -uwb $1 $tmpfile)
+	diff=$(diff -uwb "$1" "$tmpfile")
 	if [[ $? = 0 ]]
 	then
 		verbose "nothing changed"
