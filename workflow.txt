@@ -1,0 +1,38 @@
+workflow
+
+1) find some project
+
+2) get the source
+
+2a) git clone whatever
+    git checkout -b spelling_fixes # make new branch
+
+2b) wget whatever.tar
+
+3) run misspellfixer 
+
+bash misspell_fixer.sh -s -v -D ../whatever/ > ../whatever/spelling.txt
+
+4) check the results
+
+5) (github) if fixes needed, clone.
+
+5b) set the remote-origin, so fixes will be pushed there.
+git remote set-url origin https://github.com/ka7/whatever 
+
+6) if happy, fix. ( all or selective )
+
+6a) 
+bash misspell_fixer.sh -s -v -r -D ../whatever/ > ../whatever/spelling.txt
+
+6b) first gitify.
+../whatever#   git init; git commit -m "initial commit"
+
+7) create patch
+git commit
+
+7a) git push origin master
+
+7b) git format-patch HEAD HEAD^
+send the file via ??? to ???
+
