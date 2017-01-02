@@ -16,6 +16,6 @@ test:
 prepare_environment:
 	sudo apt-get update -qq
 	sudo apt-get install -y elfutils libdw1/precise libasm1/precise libdw-dev/precise libelf-dev libcurl4-openssl-dev
-        curl -L "https://github.com/kward/shunit2/archive/master.zip" | gunzip
+	curl -L "https://github.com/kward/shunit2/archive/master.zip" | gunzip
 	cd /tmp;git clone https://github.com/SimonKagstrom/kcov
 	cd /tmp/kcov;cmake ./;make;sudo make install
