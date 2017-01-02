@@ -21,7 +21,7 @@ This was just some typo-fixing in documentation, not the hard-to-catch null-poin
 * check for *po files, which could lead to translation issues later
 * full respect. You did some fantastic piece of software. 
   I just don't have the time to add that super-feature or bugfix
-* fixing in the upstream (and some projects realy executes the `build on the shoulders of giants`), not do disti-specific patches - everybody profits.
+* fixing in the upstream (and some projects really executes the `build on the shoulders of giants`), not do disti-specific patches - everybody profits.
 * when on github, and your project has a .travis.yml, I activate and test if your tests still work.
 * when you have a easy-to-execute /test environment ( e.g. `make test` ) i run them also.
 * for the fancy rails, go, nodejs, ... dont force people to install tons of obscure libs. debian-stable-deb or nothing :)
