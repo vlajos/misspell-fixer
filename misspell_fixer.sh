@@ -215,7 +215,7 @@ function main_work_normal_one {
 		verbose "nothing changed"
 		rm "$tmpfile"
 	else
-		verbose "misspells are fixed!"
+		verbose "misspellings are fixed!"
 		if [[ $opt_show_diff = 1 ]]
 		then
 			echo "$diff"

@@ -5,7 +5,7 @@ misspell_fixer: actual file: /tmp/misspell_fixer_test/X/work/u.txt
 misspell_fixer: actual file: /tmp/misspell_fixer_test/X/work/V.txt
 misspell_fixer: actual file: /tmp/misspell_fixer_test/X/work/X.txt
 misspell_fixer: Done.
-misspell_fixer: misspells are fixed!
+misspell_fixer: misspellings are fixed!
 misspell_fixer: nothing changed
 misspell_fixer: nothing changed
 misspell_fixer: nothing changed
