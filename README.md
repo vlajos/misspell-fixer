@@ -8,8 +8,8 @@
 
 ==============
 
-Utility to fix common misspellings, typos in source codes. There are lots of typical misspellings in program codes.
-Typically they are more eye-catching in the living code but they can easily hide in comments, examples, samples, notes and documentations.
+Utility to fix common misspellings, typos in source code. There are lots of typical misspellings in program code.
+Typically they are more eye-catching in the living code but they can easily hide in comments, examples, samples, notes and documentation.
 With this utility you can fix a large number of them very quickly.
 
 Be aware that the utility does not check or fix file names. It can easily happen that a misspelled word is fixed in a file name in a program's code, but
@@ -27,31 +27,31 @@ A manual review is always needed to verify that nothing has been broken.
 
 `target` can be any file or directory.
 
-* `-d` Debug mode: shows the core logics all steps
+* `-d` Debug mode: shows all steps of the core logic
 * `-v` Verbose mode: shows the iterated files
-* `-o` Verbose mode: show progress (print a dot for each file processed)
+* `-o` Verbose mode: show progress (print a dot for each file being processed)
 * `-r` Real run mode: Overwrites the original files with the fixed one. Without this option the originals will be untouched.
 * `-f` Fast mode: Faster mode with limited options. (`-v`, `-s` options are not supported) Works only with real run mode `-r`. This mode cannot make backups. (`-n` is also needed)
 * `-s` Shows diffs of changes.
 * `-i` Walk through source code management system's internal directories. (don't ignore `*.svn*`, `*.git*`)
 * `-b` Process binary files. (don't ignore `*.gif`, `*.jpg`, `*.png`, `*.zip`, `*.gz`, `*.bz2`, `*.rar`)
-* `-n` Disabling backups. (By default the modified files' originals will be saved with the `.$$.BAK` suffix.)
+* `-n` Disale backups. (By default the modified files' originals will be saved with the `.$$.BAK` suffix.)
 * `-N` Enable file name filtering. For example: `-N '*.cpp' -N '*.h'`
-* `-P` Enable parallelism. For example: `-P 4` processes the files in 4 thread. (Supported only in fast mode.)
-* `-h` Help. Displays this page.
+* `-P` Enable parallelism. For example: `-P 4` processes the files in 4 threads. (Supported only in fast mode.)
+* `-h` Help. Displays this usage.
 
 By default only a subset of rules are enabled (around 100). You can enable more rules with the following options:
 
-* `-u` Enabling less safe rules. (Manual revise's need will be more probable.) (Around ten rules.)
-* `-g` Enabling rules to convert British English to US English. (These rules aren't exactly typos but sometimes they can be useful.) (Around ten rules.)
-* `-R` Enabling rare rules. (Few hundred rules.)
-* `-V` Enabling very rare rules. (Mostly from the wikipedia article.) (More than four thousand rules.)
-* `-D` Enabling rules based on lintian.debian.org  ( git:ebac9a7, ~2300 )
-* `-m` disable file size checks. default is to ignore files > 1MB. (usually csv, compressed JS, ..)
+* `-u` Enable less safe rules. (Manual revising is neededed to be more probable.) (Around ten rules.)
+* `-g` Enable rules to convert British English to US English. (These rules aren't exactly typos but sometimes they can be useful.) (Around ten rules.)
+* `-R` Enable rare rules. (Few hundred rules.)
+* `-V` Enable very rare rules. (Mostly from the wikipedia article.) (More than four thousand rules.)
+* `-D` Enable rules based on lintian.debian.org  ( git:ebac9a7, ~2300 )
+* `-m` Disable file size checks. default is to ignore files > 1MB. (usually csv, compressed JS, ..)
 
 The processing speed decreases as you activate more rules.
 
-### Sample usages
+### Sample usage
 
 By default nothing important will happen
 
