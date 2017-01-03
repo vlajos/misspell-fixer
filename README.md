@@ -51,7 +51,7 @@ By default only a subset of rules are enabled (around 100). You can enable more 
 
 The processing speed decreases as you activate more rules.
 
-### Sample usages
+### Sample usage
 
 By default nothing important will happen
 
