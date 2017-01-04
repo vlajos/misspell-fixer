@@ -24,7 +24,7 @@ This was just some typo-fixing in documentation, not the hard-to-catch null-poin
 * fixing in the upstream (and some projects really executes the `build on the shoulders of giants`), not do disti-specific patches - everybody profits.
 * when on github, and your project has a .travis.yml, I activate and test if your tests still work.
 * when you have a easy-to-execute /test environment ( e.g. `make test` ) i run them also.
-* for the fancy rails, go, nodejs, ... dont force people to install tons of obscure libs. debian-stable-deb or nothing :)
+* for the fancy rails, go, nodejs, ... don't force people to install tons of obscure libs. debian-stable-deb or nothing :)
 * if you want me to sign some kind of CLA.. well, if you can afford some lawyers.. :-P
 
 ### Here my motivation
