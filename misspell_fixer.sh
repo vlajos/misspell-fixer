@@ -35,7 +35,7 @@ function init_variables {
 	export cmd_part_rules="-f $rules_safe0"
 
 	export cmd_part_ignore_scm=" ! -wholename *.git* ! -wholename *.svn* ! -wholename *.hg* "
-	export cmd_part_ignore_bin=" ! -iwholename *.gif ! -iwholename *.jpg ! -iwholename *.png ! -iwholename *.zip ! -iwholename *.gz ! -iwholename *.bz2 ! -iwholename *.rar "
+	export cmd_part_ignore_bin=" ! -iwholename *.gif ! -iwholename *.jpg ! -iwholename *.png ! -iwholename *.zip ! -iwholename *.gz ! -iwholename *.bz2 ! -iwholename *.rar ! -iwholename *.po "
 	export cmd_part_ignore
 
 	export opt_name_filter=''
