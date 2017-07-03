@@ -99,8 +99,8 @@ It is based on the following sources for common misspellings:
 
 ### Authors
 
-Veres Lajos
-ka7
+* Veres Lajos
+* ka7
 
 ### Original source
 
