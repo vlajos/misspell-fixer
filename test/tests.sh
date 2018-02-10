@@ -217,4 +217,4 @@ suite(){
 
 
 # load shunit2
-. shunit2-2.1.6/src/shunit2
+. shunit2-2.1.7/shunit2
