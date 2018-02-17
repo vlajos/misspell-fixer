@@ -13,6 +13,9 @@ lint_dicts:
 test:
 	/usr/local/bin/kcov --include-pattern=misspell_fixer.sh --path-strip-level=1 --coveralls-id=$(TRAVIS_JOB_ID) /tmp/coverage/ test/tests.sh
 
+test_self:
+	test/self_spelling_test.sh
+
 prepare_environment:
 	sudo apt-get update -qq
 	sudo apt-get install -y elfutils libdw1 libasm1 libdw-dev libelf-dev libcurl4-openssl-dev

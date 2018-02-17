@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 function warning {
-	echo "misspell_fixer: $@">&2
+	echo "misspell_fixer: $*">&2
 }
 
 function verbose {
@@ -24,45 +24,52 @@ function init_variables {
 	export opt_real_run=0
 	export opt_backup=1
 	export opt_parallelism=0
-
+	export opt_dots=0
+	
 	rules_safe0=${BASH_SOURCE/%.sh/_safe.0.sed}
 	rules_safe1=${BASH_SOURCE/%.sh/_safe.1.sed}
 	rules_safe2=${BASH_SOURCE/%.sh/_safe.2.sed}
+	rules_safe3=${BASH_SOURCE/%.sh/_safe.3.sed}
 	rules_not_so_safe=${BASH_SOURCE/%.sh/_not_so_safe.sed}
 	rules_gb_to_us=${BASH_SOURCE/%.sh/_gb_to_us.sed}
 	export cmd_part_rules="-f $rules_safe0"
 
-	export cmd_part_ignore_scm=" ! -wholename *.git* ! -wholename *.svn* "
-	export cmd_part_ignore_bin=" ! -iwholename *.gif ! -iwholename *.jpg ! -iwholename *.png ! -iwholename *.zip ! -iwholename *.gz ! -iwholename *.bz2 ! -iwholename *.rar "
+	export cmd_part_ignore_scm=" ! -wholename *.git* ! -wholename *.svn* ! -wholename *.hg* "
+	export cmd_part_ignore_bin=" ! -iwholename *.gif ! -iwholename *.jpg ! -iwholename *.png ! -iwholename *.zip ! -iwholename *.gz ! -iwholename *.bz2 ! -iwholename *.rar ! -iwholename *.po "
 	export cmd_part_ignore
 
 	export opt_name_filter=''
+        export cmd_size=" -and ( -size 1M ) "  # find will ignore files > 1MB
 
 	export directories
 }
 
 function parse_basic_options {
 	local OPTIND
-	while getopts ":dvrfsibnRVughN:P:" opt; do
+	while getopts ":dvorfsibnRVDmughN:P:" opt; do
 		case $opt in
 			d)
-				warning "-d Enabling debug mode."
+				warning "-d Enable debug mode."
 				opt_debug=1
 			;;
 			v)
-				warning "-v Enabling verbose mode."
+				warning "-v Enable verbose mode."
 				opt_verbose=1
 			;;
+			o)
+				warning "-o Print dots for each file processed."
+				opt_dots=1
+			;;
 			r)
-				warning "-r Enabling real run. Overwrite original files!"
+				warning "-r Enable real run. Overwrite original files!"
 				opt_real_run=1
 			;;
 			f)
-				warning "-f Enabling fast mode."
+				warning "-f Enable fast mode."
 				opt_fast_mode=1
 			;;
 			s)
-				warning "-s Enabling showing of diffs."
+				warning "-s Enable showing of diffs."
 				opt_show_diff=1
 			;;
 			i)
@@ -74,27 +81,35 @@ function parse_basic_options {
 				cmd_part_ignore_bin=''
 			;;
 			n)
-				warning "-n Disabling backups."
+				warning "-n Disable backups."
 				opt_backup=0
 			;;
 			u)
-				warning "-u Enabling unsafe rules."
+				warning "-u Enable unsafe rules."
 				cmd_part_rules="$cmd_part_rules -f $rules_not_so_safe"
 			;;
 			R)
-				warning "-R Enabling rare rules."
+				warning "-R Enable rare rules."
 				cmd_part_rules="$cmd_part_rules -f $rules_safe1"
 			;;
 			V)
-				warning "-V Enabling very-rare rules."
+				warning "-V Enable very-rare rules."
 				cmd_part_rules="$cmd_part_rules -f $rules_safe2"
 			;;
+			D)
+				warning "-D Enable rules from lintian.debian.org / spelling."
+				cmd_part_rules="$cmd_part_rules -f $rules_safe3"
+			;;
+			m)
+				warning "-m Disable max-size check. Default is to ignore files > 1MB."
+				cmd_size=" "
+			;;
 			g)
-				warning "-g Enabling GB to US rules."
+				warning "-g Enable GB to US rules."
 				cmd_part_rules="$cmd_part_rules -f $rules_gb_to_us"
 			;;
 			N)
-				warning "-N Enabling name filter: $OPTARG"
+				warning "-N Enable name filter: $OPTARG"
 				if [ -n "$opt_name_filter" ]; then
 					opt_name_filter="$opt_name_filter -or -name $OPTARG"
 				else
@@ -102,11 +117,12 @@ function parse_basic_options {
 				fi
 			;;
 			P)
-				warning "-P Enabling parallelism: $OPTARG"
+				warning "-P Enable parallelism: $OPTARG"
 				opt_parallelism=$OPTARG
 			;;
 			h)
-				cat $(dirname $BASH_SOURCE)/README.md
+                                d="dirname ${BASH_SOURCE}"
+				cat "$($d)"/README.md
 				return 1
 			;;
 			\?)
@@ -132,7 +148,7 @@ function parse_basic_options {
 		return 1
 	fi
 
-	directories="$@"
+	directories="$*"
 	cmd_part_ignore="$cmd_part_ignore_scm $cmd_part_ignore_bin"
 	warning "Target directories: $directories"
 
@@ -179,9 +195,9 @@ function main_work_fast {
 	fi
 	if [[ $opt_parallelism = 0 ]]
 	then
-		find "$directories" -type f $cmd_part_ignore -and \( $opt_name_filter \) -exec sed -i -b $cmd_part_rules {} +
+		find "$directories" -type f $cmd_part_ignore -and \( $opt_name_filter \) $cmd_size -exec sed -i -b $cmd_part_rules {} +
 	else
-		find "$directories" -type f $cmd_part_ignore -and \( $opt_name_filter \) -print0|xargs -0 -P $opt_parallelism -n 100 sed -i -b $cmd_part_rules
+		find "$directories" -type f $cmd_part_ignore -and \( $opt_name_filter \) $cmd_size -print0|xargs -0 -P $opt_parallelism -n 100 sed -i -b $cmd_part_rules
 	fi
 	warning "Done."
 	return 0
@@ -193,13 +209,13 @@ function main_work_normal_one {
 	verbose "temp file: $tmpfile"
 	cp -a "$1" "$tmpfile"
 	sed -b $cmd_part_rules "$1" >"$tmpfile"
-	diff=$(diff -uwb $1 $tmpfile)
+	diff=$(diff -uwb "$1" "$tmpfile")
 	if [[ $? = 0 ]]
 	then
 		verbose "nothing changed"
 		rm "$tmpfile"
 	else
-		verbose "misspells are fixed!"
+		verbose "misspellings are fixed!"
 		if [[ $opt_show_diff = 1 ]]
 		then
 			echo "$diff"
@@ -227,9 +243,14 @@ function main_work_normal {
 		-type f\
 		$cmd_part_ignore \
 		-and \( $opt_name_filter \) \
+                $cmd_size \
 		-print0 |\
 		while IFS="" read -r -d "" file
 		do
+                        if [[ $opt_dots = 1 ]]
+                        then 
+                          echo -n "." >&2;
+                        fi
 			main_work_normal_one "$file"
 		done
 	warning "Done."
