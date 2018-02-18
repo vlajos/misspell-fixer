@@ -20,10 +20,8 @@ function init_variables {
 	export opt_debug=0
 	export opt_verbose=0
 	export opt_show_diff=0
-	export opt_fast_mode=0
 	export opt_real_run=0
 	export opt_backup=1
-	export opt_parallelism=0
 	export opt_dots=0
 	
 	rules_safe0=${BASH_SOURCE/%.sh/_safe.0.sed}
@@ -38,10 +36,16 @@ function init_variables {
 	export cmd_part_ignore_bin=" ! -iwholename *.gif ! -iwholename *.jpg ! -iwholename *.png ! -iwholename *.zip ! -iwholename *.gz ! -iwholename *.bz2 ! -iwholename *.xz ! -iwholename *.rar ! -iwholename *.po ! -iwholename *.pdf ! -iwholename *.woff ! -iwholename *yarn.lock  ! -iwholename *package-lock.json  ! -iwholename *composer.lock  ! -iwholename *.mo "
 	export cmd_part_ignore
 
+	export cmd_part_parallelism
+
+	export loop_function=loop_main_replace
+
 	export opt_name_filter=''
-        export cmd_size=" -and ( -size 1M ) "  # find will ignore files > 1MB
+	export cmd_size=" -and ( -size 1M ) "  # find will ignore files > 1MB
 
 	export directories
+
+	export tmpfile=.misspell_fixer.$$
 }
 
 function parse_basic_options {
@@ -57,7 +61,7 @@ function parse_basic_options {
 				opt_verbose=1
 			;;
 			o)
-				warning "-o Print dots for each file processed."
+				warning "-o Print dots for each file scanned, comma for each file fix iteration/file."
 				opt_dots=1
 			;;
 			r)
@@ -65,8 +69,8 @@ function parse_basic_options {
 				opt_real_run=1
 			;;
 			f)
-				warning "-f Enable fast mode."
-				opt_fast_mode=1
+				warning "-f Enable fast mode. (Equivalent with -P4)"
+				cmd_part_parallelism="-P 4"
 			;;
 			s)
 				warning "-s Enable showing of diffs."
@@ -118,7 +122,7 @@ function parse_basic_options {
 			;;
 			P)
 				warning "-P Enable parallelism: $OPTARG"
-				opt_parallelism=$OPTARG
+				cmd_part_parallelism="-P $OPTARG"
 			;;
 			h)
                                 d="dirname ${BASH_SOURCE}"
@@ -149,71 +153,132 @@ function parse_basic_options {
 	fi
 
 	directories="$*"
-	cmd_part_ignore="$cmd_part_ignore_scm $cmd_part_ignore_bin"
+	cmd_part_ignore=" ! -iwholename *$tmpfile* $cmd_part_ignore_scm $cmd_part_ignore_bin"
 	warning "Target directories: $directories"
 
 	return 0
 }
 
-function main_work {
-	if [[ $opt_fast_mode = 1 ]]
+function process_parameter_rules {
+	if [[ $opt_show_diff = 1 ]]
 	then
-		main_work_fast "$1"
-		return $?
-	else
-		main_work_normal "$1"
-		return $?
-	fi
-}
-
-function main_work_fast {
-	if [[ $opt_real_run = 0 ]]
-	then
-		warning "Fast mode works only with real run. Real run is not switched on. => Exiting."
-		return 1
+		main_loop=loop_decorated_mode
 	fi
 	if [[ $opt_backup = 1 ]]
 	then
-		warning "Fast mode cannot make backups. Backups are enabled. => Exiting."
-		return 1
+		main_loop=loop_decorated_mode
+	fi
+	if [[ $opt_real_run = 0 ]]
+	then
+		main_loop=loop_decorated_mode
+	fi
+	if [[ -z $cmd_part_parallelism ]]
+	then
+		return 0
 	fi
 	if [[ $opt_show_diff = 1 ]]
 	then
-		warning "Fast mode cannot show diffs. Showing diffs is turned on. => Exiting."
+		warning "Parallel mode cannot show diffs. Showing diffs is turned on. => Exiting."
 		return 1
 	fi
 	if [[ $opt_verbose = 1 ]]
 	then
-		warning "Fast mode cannot be verbose. Verbose mode is turned on. => Exiting."
+		warning "Parallel mode cannot be verbose. Verbose mode is turned on. => Exiting."
 		return 1
 	fi
+}
 
-	warning "Starting script"
-	if [[ $opt_debug = 1 ]]
+function preprocess_rules {
+	cat $(echo $cmd_part_rules|sed -e 's/-f//g')|grep -v 'bin/sed' > $tmpfile.prep.allsedrules
+	grep    '\\b' $tmpfile.prep.allsedrules|sed -e 's/^s\///g' -e 's/\/.*g//g' -e 's/\\b//g'	>$tmpfile.prep.grep.rules.w
+	grep -v '\\b' $tmpfile.prep.allsedrules|sed -e 's/^s\///g' -e 's/\/.*g//g'			>$tmpfile.prep.grep.rules
+}
+
+function prepare_prefilter_input_from_find {
+	find "$directories" -type f $cmd_part_ignore -and \( $opt_name_filter \) $cmd_size
+#@todo -print0 revert back and use -0 in xargs?
+}
+
+function prepare_prefilter_input_from_cat {
+	cat $1
+}
+
+function main_work {
+	local input_function=$1
+	local iteration=$2
+	local prev_matches=$3
+
+	warning "Iteration $iteration: prefiltering."
+	local itertmpfile=$tmpfile.$iteration
+	
+	$input_function $prev_matches|\
+	tee >(xargs $cmd_part_parallelism -n 100 grep -F -no    --null -f $tmpfile.prep.grep.rules   >$itertmpfile.combos)|\
+	        xargs $cmd_part_parallelism -n 100 grep -F -no -w --null -f $tmpfile.prep.grep.rules.w >$itertmpfile.combos.w
+
+	sort -u $itertmpfile.combos $itertmpfile.combos.w >$itertmpfile.combos.all
+
+	if [[ -s $itertmpfile.combos.all ]]
 	then
-		set -x
-	fi
-	if [[ $opt_parallelism = 0 ]]
-	then
-		find "$directories" -type f $cmd_part_ignore -and \( $opt_name_filter \) $cmd_size -exec sed -i -b $cmd_part_rules {} +
+		grep -f <(cut -d ':' -f 2 $itertmpfile.combos.all) $tmpfile.prep.allsedrules >$itertmpfile.rulesmatched
+		warning "Iteration $iteration: replacing."
+		cut -d '' -f 1 $itertmpfile.combos.all |sort -u >$itertmpfile.matchedfiles
+		xargs <$itertmpfile.matchedfiles $cmd_part_parallelism -n 1 -I '{}' bash -c "$loop_function $itertmpfile.combos.all $itertmpfile.rulesmatched '{}' -i"
+		rm $itertmpfile.rulesmatched
 	else
-		find "$directories" -type f $cmd_part_ignore -and \( $opt_name_filter \) $cmd_size -print0|xargs -0 -P $opt_parallelism -n 100 sed -i -b $cmd_part_rules
+		warning "Iteration $iteration: nothing to replace."
 	fi
-	warning "Done."
+	warning "Iteration $iteration: done."
+	if [[ $iteration -lt 5 && -s $itertmpfile.matchedfiles ]]
+	then
+		if diff -q $prev_matches $itertmpfile.matchedfiles >/dev/null
+		then
+			warning "Iteration $iteration: matchlist is the same as in previous iteration..."
+		else
+			main_work prepare_prefilter_input_from_cat $((iteration + 1)) $itertmpfile.matchedfiles
+		fi
+		rm $itertmpfile.matchedfiles
+	fi
+	rm $itertmpfile.combos $itertmpfile.combos.w $itertmpfile.combos.all
 	return 0
 }
 
-function main_work_normal_one {
-	verbose "actual file: $1"
-	tmpfile=$1.$$
-	verbose "temp file: $tmpfile"
-	cp -a "$1" "$tmpfile"
-	sed -b $cmd_part_rules "$1" >"$tmpfile"
-	diff=$(diff -uwb "$1" "$tmpfile")
+function loop_main_replace {
+	findresult=$1
+	rulesmatched=$2
+	filename=$3
+	inplaceflag=$4
+	
+	if [[ $opt_dots = 1 ]]
+	then
+		echo -n "," >&2
+	fi
+
+	sed $inplaceflag -b -f <(
+		for patternwithline in $(grep --text $filename $findresult|cut -d '' -f 2)
+		do
+			line=${patternwithline/:*/}
+			pattern=${patternwithline/*:/}
+			grep -e $pattern $rulesmatched|sed "s/^/$line/"
+		done
+	) $filename
+}
+export -f loop_main_replace
+
+function loop_decorated_mode {
+	findresult=$1
+	rulesmatched=$2
+	filename=$3
+
+	verbose "actual file: $filename"
+	workfile=$filename.$$
+	verbose "temp file: $workfile"
+	cp -a "$filename" "$workfile"
+	main_replace "$findresult" "$rulesmatched" "$filename" '' >"$workfile"
+	diff=$(diff -uwb "$filename" "$workfile")
 	if [[ $? = 0 ]]
 	then
 		verbose "nothing changed"
-		rm "$tmpfile"
+		rm "$workfile"
 	else
 		verbose "misspellings are fixed!"
 		if [[ $opt_show_diff = 1 ]]
@@ -224,38 +289,15 @@ function main_work_normal_one {
 		then
 			if [[ $opt_backup = 1 ]]
 			then
-				mv "$1" "$tmpfile.BAK"
+				mv "$filename" "$workfile.BAK"
 			fi
-			mv "$tmpfile" "$1"
+			mv "$workfile" "$filename"
 		else
-			rm "$tmpfile"
+			rm "$workfile"
 		fi
 	fi
 }
-
-function main_work_normal {
-	if [[ $opt_debug = 1 ]]
-	then
-		set -x
-	fi
-	warning "Starting script"
-	find "$directories"\
-		-type f\
-		$cmd_part_ignore \
-		-and \( $opt_name_filter \) \
-                $cmd_size \
-		-print0 |\
-		while IFS="" read -r -d "" file
-		do
-                        if [[ $opt_dots = 1 ]]
-                        then 
-                          echo -n "." >&2;
-                        fi
-			main_work_normal_one "$file"
-		done
-	warning "Done."
-	return 0
-}
+export -f loop_decorated_mode
 
 init_variables
 
@@ -264,8 +306,24 @@ retval=$?
 
 if [[ $retval == 0 ]]
 then
-	main_work "$directories"
+	process_parameter_rules
 	retval=$?
+fi
+
+if [[ $retval == 0 ]]
+then
+	if [[ $opt_debug = 1 ]]
+	then
+		set -x
+	fi
+	preprocess_rules
+	main_work prepare_prefilter_input_from_find 0 /dev/null
+	retval=$?
+	rm $tmpfile.prep.grep.rules $tmpfile.prep.grep.rules.w $tmpfile.prep.allsedrules
+	if [[ $opt_debug = 1 ]]
+	then
+		set +x
+	fi
 fi
 
 if [[ "$SHUNIT_VERSION" = "" ]]
