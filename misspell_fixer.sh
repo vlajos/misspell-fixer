@@ -224,6 +224,10 @@ function main_work {
 		cut -d '' -f 1 $itertmpfile.combos.all |sort -u >$itertmpfile.matchedfiles
 		xargs <$itertmpfile.matchedfiles $cmd_part_parallelism -n 1 -I '{}' bash -c "$loop_function $itertmpfile.combos.all $itertmpfile.rulesmatched '{}' -i"
 		rm $itertmpfile.rulesmatched
+		if [[ $opt_dots = 1 ]]
+		then
+			echo >&2
+		fi
 	else
 		warning "Iteration $iteration: nothing to replace."
 	fi
