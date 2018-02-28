@@ -152,7 +152,7 @@ function parse_basic_options {
 		return 1
 	fi
 
-	directories="$*"
+	directories="$@"
 	cmd_part_ignore=" ! -iwholename *$tmpfile* $cmd_part_ignore_scm $cmd_part_ignore_bin"
 	warning "Target directories: $directories"
 
@@ -195,7 +195,7 @@ function preprocess_rules {
 }
 
 function prepare_prefilter_input_from_find {
-	find "$directories" -type f $cmd_part_ignore -and \( $opt_name_filter \) $cmd_size
+	find $directories -type f $cmd_part_ignore -and \( $opt_name_filter \) $cmd_size
 #@todo -print0 revert back and use -0 in xargs?
 }
 
