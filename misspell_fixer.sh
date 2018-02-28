@@ -206,12 +206,13 @@ function prepare_prefilter_input_from_cat {
 function main_work {
 	local input_function=$1
 	local iteration=$2
-	local prev_matches=$3
+	local prev_matched_files=$3
+	local prev_matches=$4
 
 	warning "Iteration $iteration: prefiltering."
 	local itertmpfile=$tmpfile.$iteration
 	
-	$input_function $prev_matches|\
+	$input_function $prev_matched_files|\
 	tee >(xargs $cmd_part_parallelism -n 100 grep -F -no    --null -f $tmpfile.prep.grep.rules   >$itertmpfile.combos)|\
 	        xargs $cmd_part_parallelism -n 100 grep -F -no -w --null -f $tmpfile.prep.grep.rules.w >$itertmpfile.combos.w
 
@@ -232,13 +233,13 @@ function main_work {
 		warning "Iteration $iteration: nothing to replace."
 	fi
 	warning "Iteration $iteration: done."
-	if [[ $iteration -lt 5 && -s $itertmpfile.matchedfiles ]]
+	if [[ $iteration -lt 5 && -s $itertmpfile.combos.all ]]
 	then
-		if diff -q $prev_matches $itertmpfile.matchedfiles >/dev/null
+		if diff -q $prev_matches $itertmpfile.combos.all >/dev/null
 		then
 			warning "Iteration $iteration: matchlist is the same as in previous iteration..."
 		else
-			main_work prepare_prefilter_input_from_cat $((iteration + 1)) $itertmpfile.matchedfiles
+			main_work prepare_prefilter_input_from_cat $((iteration + 1)) $itertmpfile.matchedfiles $itertmpfile.combos.all
 		fi
 		rm $itertmpfile.matchedfiles
 	fi
@@ -321,7 +322,7 @@ then
 		set -x
 	fi
 	preprocess_rules
-	main_work prepare_prefilter_input_from_find 0 /dev/null
+	main_work prepare_prefilter_input_from_find 0 '' /dev/null
 	retval=$?
 	rm $tmpfile.prep.grep.rules $tmpfile.prep.grep.rules.w $tmpfile.prep.allsedrules
 	if [[ $opt_debug = 1 ]]
