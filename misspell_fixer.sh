@@ -195,12 +195,14 @@ function preprocess_rules {
 }
 
 function prepare_prefilter_input_from_find {
-	find $directories -type f $cmd_part_ignore -and \( $opt_name_filter \) $cmd_size
-#@todo -print0 revert back and use -0 in xargs?
+	find $directories -type f $cmd_part_ignore -and \( $opt_name_filter \) $cmd_size -print0
 }
 
 function prepare_prefilter_input_from_cat {
-	cat $1
+	for i in $(cat $1)
+	do
+		printf '%s\0' "$i"
+	done
 }
 
 function main_work {
@@ -213,8 +215,8 @@ function main_work {
 	local itertmpfile=$tmpfile.$iteration
 	
 	$input_function $prev_matched_files|\
-	tee >(xargs $cmd_part_parallelism -n 100 grep -F -no    --null -f $tmpfile.prep.grep.rules   >$itertmpfile.combos)|\
-	        xargs $cmd_part_parallelism -n 100 grep -F -no -w --null -f $tmpfile.prep.grep.rules.w >$itertmpfile.combos.w
+	tee >(xargs -0 $cmd_part_parallelism -n 100 grep -F -no    --null -f $tmpfile.prep.grep.rules   >$itertmpfile.combos)|\
+	        xargs -0 $cmd_part_parallelism -n 100 grep -F -no -w --null -f $tmpfile.prep.grep.rules.w >$itertmpfile.combos.w
 
 	sort -u $itertmpfile.combos $itertmpfile.combos.w >$itertmpfile.combos.all
 
