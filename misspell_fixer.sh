@@ -3,6 +3,7 @@
 function warning {
 	echo "misspell_fixer: $*">&2
 }
+export -f warning
 
 function verbose {
 	if [[ $opt_verbose = 1 ]]
@@ -10,6 +11,7 @@ function verbose {
 		warning "$@"
 	fi
 }
+export -f verbose
 
 function init_variables {
 	set -f
@@ -160,17 +162,12 @@ function parse_basic_options {
 }
 
 function process_parameter_rules {
-	if [[ $opt_show_diff = 1 ]]
+	if [[ 	$opt_show_diff = 1 ||\
+		$opt_backup = 1 ||\
+		$opt_real_run = 0 ||\
+		$opt_verbose = 1 ]]
 	then
-		main_loop=loop_decorated_mode
-	fi
-	if [[ $opt_backup = 1 ]]
-	then
-		main_loop=loop_decorated_mode
-	fi
-	if [[ $opt_real_run = 0 ]]
-	then
-		main_loop=loop_decorated_mode
+		loop_function=loop_decorated_mode
 	fi
 	if [[ -z $cmd_part_parallelism ]]
 	then
@@ -215,14 +212,14 @@ function main_work {
 	local itertmpfile=$tmpfile.$iteration
 	
 	$input_function $prev_matched_files|\
-	tee >(xargs -0 $cmd_part_parallelism -n 100 grep -F -no    --null -f $tmpfile.prep.grep.rules   >$itertmpfile.combos)|\
-	        xargs -0 $cmd_part_parallelism -n 100 grep -F -no -w --null -f $tmpfile.prep.grep.rules.w >$itertmpfile.combos.w
+	tee >(	xargs -0 $cmd_part_parallelism -n 100 grep --text -F -noH    --null -f $tmpfile.prep.grep.rules   >$itertmpfile.combos)|\
+		xargs -0 $cmd_part_parallelism -n 100 grep --text -F -noH -w --null -f $tmpfile.prep.grep.rules.w >$itertmpfile.combos.w
 
 	sort -u $itertmpfile.combos $itertmpfile.combos.w >$itertmpfile.combos.all
 
 	if [[ -s $itertmpfile.combos.all ]]
 	then
-		grep -f <(cut -d ':' -f 2 $itertmpfile.combos.all) $tmpfile.prep.allsedrules >$itertmpfile.rulesmatched
+		grep --text -f <(cut -d ':' -f 2 $itertmpfile.combos.all) $tmpfile.prep.allsedrules >$itertmpfile.rulesmatched
 		warning "Iteration $iteration: replacing."
 		cut -d '' -f 1 $itertmpfile.combos.all |sort -u >$itertmpfile.matchedfiles
 		xargs <$itertmpfile.matchedfiles $cmd_part_parallelism -n 1 -I '{}' bash -c "$loop_function $itertmpfile.combos.all $itertmpfile.rulesmatched '{}' -i"
@@ -237,14 +234,14 @@ function main_work {
 	warning "Iteration $iteration: done."
 	if [[ $iteration -lt 5 && -s $itertmpfile.combos.all ]]
 	then
-		if diff -q $prev_matches $itertmpfile.combos.all >/dev/null
+		if diff --text -q $prev_matches $itertmpfile.combos.all >/dev/null
 		then
 			warning "Iteration $iteration: matchlist is the same as in previous iteration..."
 		else
 			main_work prepare_prefilter_input_from_cat $((iteration + 1)) $itertmpfile.matchedfiles $itertmpfile.combos.all
 		fi
-		rm $itertmpfile.matchedfiles
 	fi
+	rm $itertmpfile.matchedfiles
 	rm $itertmpfile.combos $itertmpfile.combos.w $itertmpfile.combos.all
 	return 0
 }
@@ -261,11 +258,12 @@ function loop_main_replace {
 	fi
 
 	sed $inplaceflag -b -f <(
+		IFS=$'\n'
 		for patternwithline in $(grep --text $filename $findresult|cut -d '' -f 2)
 		do
 			line=${patternwithline/:*/}
 			pattern=${patternwithline/*:/}
-			grep -e $pattern $rulesmatched|sed "s/^/$line/"
+			grep --text -e "$pattern" $rulesmatched|sed "s/^/$line/"
 		done
 	) $filename
 }
@@ -280,7 +278,7 @@ function loop_decorated_mode {
 	workfile=$filename.$$
 	verbose "temp file: $workfile"
 	cp -a "$filename" "$workfile"
-	main_replace "$findresult" "$rulesmatched" "$filename" '' >"$workfile"
+	loop_main_replace "$findresult" "$rulesmatched" "$filename" '' >"$workfile"
 	diff=$(diff -uwb "$filename" "$workfile")
 	if [[ $? = 0 ]]
 	then
