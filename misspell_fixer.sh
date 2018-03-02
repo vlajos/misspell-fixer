@@ -129,7 +129,7 @@ function parse_basic_options {
 				cmd_part_parallelism="-P $OPTARG"
 			;;
 			h)
-                                d="dirname ${BASH_SOURCE}"
+				d="dirname ${BASH_SOURCE}"
 				cat "$($d)"/README.md
 				return 1
 			;;
@@ -279,7 +279,7 @@ function loop_decorated_mode {
 	verbose "temp file: $workfile"
 	cp -a "$filename" "$workfile"
 	loop_main_replace "$findresult" "$rulesmatched" "$filename" '' >"$workfile"
-	diff=$(diff -uwb "$filename" "$workfile")
+	diff=$(diff -u "$filename" "$workfile")
 	if [[ $? = 0 ]]
 	then
 		verbose "nothing changed"
