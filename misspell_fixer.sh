@@ -42,6 +42,7 @@ function init_variables {
 	export cmd_part_parallelism
 
 	export loop_function=loop_main_replace
+	export prefilter_progress_function=prefilter_progress_none
 
 	export opt_name_filter=''
 	export cmd_size=" -and ( -size 1M ) "  # find will ignore files > 1MB
@@ -67,6 +68,7 @@ function parse_basic_options {
 			o)
 				warning "-o Print dots for each file scanned, comma for each file fix iteration/file."
 				opt_dots=1
+				prefilter_progress_function=prefilter_progress_dots
 			;;
 			r)
 				warning "-r Enable real run. Overwrite original files!"
@@ -199,6 +201,17 @@ function prepare_prefilter_input_from_cat {
 	done
 }
 
+function prefilter_progress_none {
+	cat >/dev/null
+}
+
+function prefilter_progress_dots {
+	while IFS= read -r -d '' filename
+	do
+		echo -n "." >&2
+	done
+}
+
 function main_work {
 	local input_function=$1
 	local iteration=$2
@@ -209,8 +222,9 @@ function main_work {
 	warning "Iteration $iteration: prefiltering."
 	
 	$input_function $prev_matched_files|\
-	tee >(	xargs -0 $cmd_part_parallelism -n 100 grep --text -F -noH    --null -f $tmpfile.prep.grep.rules   >$itertmpfile.combos)|\
-		xargs -0 $cmd_part_parallelism -n 100 grep --text -F -noH -w --null -f $tmpfile.prep.grep.rules.w >$itertmpfile.combos.w
+	tee >($prefilter_progress_function) \
+		>(xargs -0 $cmd_part_parallelism -n 100 grep --text -F -noH    --null -f $tmpfile.prep.grep.rules   >$itertmpfile.combos)|\
+		  xargs -0 $cmd_part_parallelism -n 100 grep --text -F -noH -w --null -f $tmpfile.prep.grep.rules.w >$itertmpfile.combos.w
 
 	sort -u $itertmpfile.combos $itertmpfile.combos.w >$itertmpfile.combos.all
 
