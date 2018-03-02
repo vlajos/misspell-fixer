@@ -33,7 +33,7 @@ function init_variables {
 	rules_safe3=${BASH_SOURCE/%.sh/_safe.3.sed}
 	rules_not_so_safe=${BASH_SOURCE/%.sh/_not_so_safe.sed}
 	rules_gb_to_us=${BASH_SOURCE/%.sh/_gb_to_us.sed}
-	export cmd_part_rules="-f $rules_safe0"
+	export enabled_rules="$rules_safe0"
 
 	export cmd_part_ignore_scm=" ! -wholename *.git* ! -wholename *.svn* ! -wholename *.hg* "
 	export cmd_part_ignore_bin=" ! -iwholename *.gif ! -iwholename *.jpg ! -iwholename *.png ! -iwholename *.zip ! -iwholename *.gz ! -iwholename *.bz2 ! -iwholename *.xz ! -iwholename *.rar ! -iwholename *.po ! -iwholename *.pdf ! -iwholename *.woff ! -iwholename *yarn.lock  ! -iwholename *package-lock.json  ! -iwholename *composer.lock  ! -iwholename *.mo "
@@ -94,19 +94,19 @@ function parse_basic_options {
 			;;
 			u)
 				warning "-u Enable unsafe rules."
-				cmd_part_rules="$cmd_part_rules -f $rules_not_so_safe"
+				enabled_rules="$enabled_rules $rules_not_so_safe"
 			;;
 			R)
 				warning "-R Enable rare rules."
-				cmd_part_rules="$cmd_part_rules -f $rules_safe1"
+				enabled_rules="$enabled_rules $rules_safe1"
 			;;
 			V)
 				warning "-V Enable very-rare rules."
-				cmd_part_rules="$cmd_part_rules -f $rules_safe2"
+				enabled_rules="$enabled_rules $rules_safe2"
 			;;
 			D)
 				warning "-D Enable rules from lintian.debian.org / spelling."
-				cmd_part_rules="$cmd_part_rules -f $rules_safe3"
+				enabled_rules="$enabled_rules $rules_safe3"
 			;;
 			m)
 				warning "-m Disable max-size check. Default is to ignore files > 1MB."
@@ -114,7 +114,7 @@ function parse_basic_options {
 			;;
 			g)
 				warning "-g Enable GB to US rules."
-				cmd_part_rules="$cmd_part_rules -f $rules_gb_to_us"
+				enabled_rules="$enabled_rules $rules_gb_to_us"
 			;;
 			N)
 				warning "-N Enable name filter: $OPTARG"
@@ -183,7 +183,7 @@ function process_parameter_rules {
 }
 
 function preprocess_rules {
-	cat $(echo $cmd_part_rules|sed -e 's/-f//g')|grep -v 'bin/sed' > $tmpfile.prep.allsedrules
+	grep -vh 'bin/sed' $enabled_rules > $tmpfile.prep.allsedrules
 	grep    '\\b' $tmpfile.prep.allsedrules|sed -e 's/^s\///g' -e 's/\/.*g//g' -e 's/\\b//g'	>$tmpfile.prep.grep.rules.w
 	grep -v '\\b' $tmpfile.prep.allsedrules|sed -e 's/^s\///g' -e 's/\/.*g//g'			>$tmpfile.prep.grep.rules
 }
