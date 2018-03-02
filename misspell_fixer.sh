@@ -178,11 +178,6 @@ function process_parameter_rules {
 		warning "Parallel mode cannot show diffs. Showing diffs is turned on. => Exiting."
 		return 1
 	fi
-	if [[ $opt_verbose = 1 ]]
-	then
-		warning "Parallel mode cannot be verbose. Verbose mode is turned on. => Exiting."
-		return 1
-	fi
 }
 
 function preprocess_rules {
