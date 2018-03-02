@@ -202,9 +202,9 @@ function main_work {
 	local iteration=$2
 	local prev_matched_files=$3
 	local prev_matches=$4
+	local itertmpfile=$tmpfile.$iteration
 
 	warning "Iteration $iteration: prefiltering."
-	local itertmpfile=$tmpfile.$iteration
 	
 	$input_function $prev_matched_files|\
 	tee >(	xargs -0 $cmd_part_parallelism -n 100 grep --text -F -noH    --null -f $tmpfile.prep.grep.rules   >$itertmpfile.combos)|\
@@ -236,16 +236,19 @@ function main_work {
 			main_work prepare_prefilter_input_from_cat $((iteration + 1)) $itertmpfile.matchedfiles $itertmpfile.combos.all
 		fi
 	fi
-	rm $itertmpfile.matchedfiles
+	if [[ -f $itertmpfile.matchedfiles ]]
+	then
+		rm $itertmpfile.matchedfiles
+	fi
 	rm $itertmpfile.combos $itertmpfile.combos.w $itertmpfile.combos.all
 	return 0
 }
 
 function loop_main_replace {
-	findresult=$1
-	rulesmatched=$2
-	filename=$3
-	inplaceflag=$4
+	local findresult=$1
+	local rulesmatched=$2
+	local filename=$3
+	local inplaceflag=$4
 	
 	if [[ $opt_dots = 1 ]]
 	then
@@ -265,12 +268,12 @@ function loop_main_replace {
 export -f loop_main_replace
 
 function loop_decorated_mode {
-	findresult=$1
-	rulesmatched=$2
-	filename=$3
+	local findresult=$1
+	local rulesmatched=$2
+	local filename=$3
 
 	verbose "actual file: $filename"
-	workfile=$filename.$$
+	local workfile=$filename.$$
 	verbose "temp file: $workfile"
 	cp -a "$filename" "$workfile"
 	loop_main_replace "$findresult" "$rulesmatched" "$filename" '' >"$workfile"
