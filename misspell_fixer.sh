@@ -25,6 +25,7 @@ function init_variables {
 	export opt_real_run=0
 	export opt_backup=1
 	export opt_dots=0
+	export bash_arg
 	
 	rules_safe0=${BASH_SOURCE/%.sh/_safe.0.sed}
 	rules_safe1=${BASH_SOURCE/%.sh/_safe.1.sed}
@@ -57,6 +58,7 @@ function parse_basic_options {
 			d)
 				warning "-d Enable debug mode."
 				opt_debug=1
+				bash_arg=x
 			;;
 			v)
 				warning "-v Enable verbose mode."
@@ -217,7 +219,7 @@ function main_work {
 		grep --text -f <(cut -d ':' -f 2 $itertmpfile.combos.all) $tmpfile.prep.allsedrules >$itertmpfile.rulesmatched
 		warning "Iteration $iteration: replacing."
 		cut -d '' -f 1 $itertmpfile.combos.all |sort -u >$itertmpfile.matchedfiles
-		xargs <$itertmpfile.matchedfiles $cmd_part_parallelism -n 1 -I '{}' bash -c "$loop_function $itertmpfile.combos.all $itertmpfile.rulesmatched '{}' -i"
+		xargs <$itertmpfile.matchedfiles $cmd_part_parallelism -n 1 -I '{}' bash -c$bash_arg "$loop_function $itertmpfile.combos.all $itertmpfile.rulesmatched '{}' -i"
 		rm $itertmpfile.rulesmatched
 		if [[ $opt_dots = 1 ]]
 		then
