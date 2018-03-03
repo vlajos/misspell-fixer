@@ -35,8 +35,8 @@ function init_variables {
 	rules_gb_to_us=${BASH_SOURCE/%.sh/_gb_to_us.sed}
 	export enabled_rules="$rules_safe0"
 
-	export cmd_part_ignore_scm=" ! -wholename *.git* ! -wholename *.svn* ! -wholename *.hg* "
-	export cmd_part_ignore_bin=" ! -iwholename *.gif ! -iwholename *.jpg ! -iwholename *.png ! -iwholename *.zip ! -iwholename *.gz ! -iwholename *.bz2 ! -iwholename *.xz ! -iwholename *.rar ! -iwholename *.po ! -iwholename *.pdf ! -iwholename *.woff ! -iwholename *yarn.lock  ! -iwholename *package-lock.json  ! -iwholename *composer.lock  ! -iwholename *.mo "
+	export cmd_part_ignore_scm="-o -path *.git -o -path *.svn -o -path *.hg"
+	export cmd_part_ignore_bin="-o -ipath *.gif -o -ipath *.jpg -o -ipath *.png -o -ipath *.zip -o -ipath *.gz -o -ipath *.bz2 -o -ipath *.xz -o -ipath *.rar -o -ipath *.po -o -ipath *.pdf -o -ipath *.woff -o -ipath *yarn.lock  -o -ipath *package-lock.json  -o -ipath *composer.lock  -o -ipath *.mo"
 	export cmd_part_ignore
 
 	export cmd_part_parallelism
@@ -45,7 +45,7 @@ function init_variables {
 	export prefilter_progress_function=prefilter_progress_none
 
 	export opt_name_filter=''
-	export cmd_size=" -and ( -size 1M ) "  # find will ignore files > 1MB
+	export cmd_size="-and ( -size 1M )"  # find will ignore files > 1MB
 
 	export directories
 
@@ -159,7 +159,7 @@ function parse_basic_options {
 	fi
 
 	directories="$@"
-	cmd_part_ignore=" ! -iwholename *$tmpfile* $cmd_part_ignore_scm $cmd_part_ignore_bin"
+	cmd_part_ignore="( -ipath *$tmpfile* $cmd_part_ignore_scm $cmd_part_ignore_bin ) -prune -o "
 	warning "Target directories: $directories"
 
 	return 0
@@ -191,7 +191,7 @@ function preprocess_rules {
 }
 
 function prepare_prefilter_input_from_find {
-	find $directories -type f $cmd_part_ignore -and \( $opt_name_filter \) $cmd_size -print0
+	find $directories $cmd_part_ignore -type f -and \( $opt_name_filter \) $cmd_size -print0
 }
 
 function prepare_prefilter_input_from_cat {
