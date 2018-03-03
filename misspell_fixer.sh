@@ -182,6 +182,7 @@ function process_parameter_rules {
 		warning "Parallel mode cannot show diffs. Showing diffs is turned on. => Exiting."
 		return 1
 	fi
+	return 0
 }
 
 function preprocess_rules {
