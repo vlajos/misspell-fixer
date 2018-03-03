@@ -35,8 +35,8 @@ function init_variables {
 	rules_gb_to_us=${BASH_SOURCE/%.sh/_gb_to_us.sed}
 	export enabled_rules="$rules_safe0"
 
-	export cmd_part_ignore_scm="-o -path *.git -o -path *.svn -o -path *.hg"
-	export cmd_part_ignore_bin="-o -ipath *.gif -o -ipath *.jpg -o -ipath *.png -o -ipath *.zip -o -ipath *.gz -o -ipath *.bz2 -o -ipath *.xz -o -ipath *.rar -o -ipath *.po -o -ipath *.pdf -o -ipath *.woff -o -ipath *yarn.lock  -o -ipath *package-lock.json  -o -ipath *composer.lock  -o -ipath *.mo"
+	export cmd_part_ignore_scm="-o -iname .git -o -iname .svn -o -iname .hg -o -iname CVS"
+	export cmd_part_ignore_bin="-o -iname *.gif -o -iname *.jpg -o -iname *.png -o -iname *.zip -o -iname *.gz -o -iname *.bz2 -o -iname *.xz -o -iname *.rar -o -iname *.po -o -iname *.pdf -o -iname *.woff -o -iname yarn.lock  -o -iname package-lock.json  -o -iname composer.lock  -o -iname *.mo"
 	export cmd_part_ignore
 
 	export cmd_part_parallelism
@@ -159,7 +159,7 @@ function parse_basic_options {
 	fi
 
 	directories="$@"
-	cmd_part_ignore="( -ipath *$tmpfile* $cmd_part_ignore_scm $cmd_part_ignore_bin ) -prune -o "
+	cmd_part_ignore="( -iname $tmpfile* $cmd_part_ignore_scm $cmd_part_ignore_bin ) -prune -o "
 	warning "Target directories: $directories"
 
 	return 0
