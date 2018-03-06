@@ -36,7 +36,7 @@ function init_variables {
 	export enabled_rules="$rules_safe0"
 
 	export cmd_part_ignore_scm="-o -iname .git -o -iname .svn -o -iname .hg -o -iname CVS"
-	export cmd_part_ignore_bin="-o -iname *.gif -o -iname *.jpg -o -iname *.png -o -iname *.zip -o -iname *.gz -o -iname *.bz2 -o -iname *.xz -o -iname *.rar -o -iname *.po -o -iname *.pdf -o -iname *.woff -o -iname yarn.lock  -o -iname package-lock.json  -o -iname composer.lock  -o -iname *.mo"
+	export cmd_part_ignore_bin="-o -iname *.gif -o -iname *.jpg -o -iname *.jpeg -o -iname *.png -o -iname *.zip -o -iname *.gz -o -iname *.bz2 -o -iname *.xz -o -iname *.rar -o -iname *.po -o -iname *.pdf -o -iname *.woff -o -iname yarn.lock  -o -iname package-lock.json  -o -iname composer.lock  -o -iname *.mo"
 	export cmd_part_ignore
 
 	export cmd_part_parallelism

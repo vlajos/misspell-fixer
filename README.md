@@ -58,7 +58,7 @@ File filtering options:
 
 * `-N` Enable file name filtering. For example: `-N '*.cpp' -N '*.h'`
 * `-i` Walk through source code management system's internal directories. (do not ignore `.git`, `.svn`, `.hg`, `CVS`)
-* `-b` Process binary, generated files. (do not ignore `*.gif`, `*.jpg`, `*.png`, `*.zip`, `*.gz`, `*.bz2`, `*.xz`, `*.rar`, `*.po`, `*.pdf`, `*.woff`, `yarn.lock`, `package-lock.json`, `composer.lock`, `*.mo`)
+* `-b` Process binary, generated files. (do not ignore `*.gif`, `*.jpg`, `*.jpeg`, `*.png`, `*.zip`, `*.gz`, `*.bz2`, `*.xz`, `*.rar`, `*.po`, `*.pdf`, `*.woff`, `yarn.lock`, `package-lock.json`, `composer.lock`, `*.mo`)
 * `-m` Disable file size checks. Default is to ignore files > 1MB. (usually csv, compressed JS, ..)
 
 ### Sample usage
