@@ -188,7 +188,7 @@ testIgnoreBinary(){
 }
 
 testVerbose(){
-	$RUN -v $TEMP/work 2>&1|sed 's/[0-9]\+/X/g'|grep -v kcov |sort -f >/tmp/verboseoutput
+	$RUN -v $TEMP/work 2>&1|sed 's/[0-9]\+/X/g'|grep -v -e kcov -e "Your grep version is"|sort -f >/tmp/verboseoutput
 	diff -ruwb test/stubs/ $TEMP/work/
 	assertTrue 'Expected output differs.' $?
 	diff -ruwb /tmp/verboseoutput test/expected.verbose.output
@@ -196,7 +196,7 @@ testVerbose(){
 }
 
 testDots(){
-	$RUN -o $TEMP/work 2>&1|sed 's/[0-9]\+/X/g'|grep -v kcov |sort -f >/tmp/dotsoutput
+	$RUN -o $TEMP/work 2>&1|sed 's/[0-9]\+/X/g'|grep -v -e kcov -e "Your grep version is"|sort -f >/tmp/dotsoutput
 	diff -ruwb test/stubs/ $TEMP/work/
 	assertTrue 'Expected output differs.' $?
 	diff -ruwb /tmp/dotsoutput test/expected.dots.output

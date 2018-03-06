@@ -185,6 +185,17 @@ function process_parameter_rules {
 	return 0
 }
 
+function check_grep_version {
+	local current_version=$(grep --version|head -1|sed -e 's/.* //g')
+	local required_version="2.28"
+	if printf '%s\n%s\n' "$required_version" "$current_version" | sort -VC
+	then
+		verbose "Your grep version is $current_version which is at least the optimal: $required_version."
+	else
+		warning "!! Your grep version is $current_version which is less than the optimal: $required_version. This may degrade misspell fixer's performance significantly! (100x) !!"
+	fi
+}
+
 function preprocess_rules {
 	grep -vh 'bin/sed' $enabled_rules > $tmpfile.prep.allsedrules
 	grep    '\\b' $tmpfile.prep.allsedrules|sed -e 's/^s\///g' -e 's/\/.*g//g' -e 's/\\b//g'	>$tmpfile.prep.grep.rules.w
@@ -342,6 +353,7 @@ then
 	then
 		set -x
 	fi
+	check_grep_version
 	preprocess_rules
 	main_work prepare_prefilter_input_from_find 0 '' /dev/null
 	retval=$?
