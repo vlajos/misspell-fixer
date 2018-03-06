@@ -196,10 +196,10 @@ function prepare_prefilter_input_from_find {
 }
 
 function prepare_prefilter_input_from_cat {
-	for i in $(cat $1)
+	while IFS= read -r -d '' filename
 	do
-		printf '%s\0' "$i"
-	done
+		printf '%s\0' "$filename"
+	done <$1
 }
 
 function prefilter_progress_none {
@@ -274,13 +274,13 @@ function loop_main_replace {
 
 	sed $inplaceflag -b -f <(
 		IFS=$'\n'
-		for patternwithline in $(grep --text $filename $findresult|cut -d '' -f 2)
+		for patternwithline in $(grep --text "$filename" $findresult|cut -d '' -f 2)
 		do
 			line=${patternwithline/:*/}
 			pattern=${patternwithline/*:/}
 			grep --text -e "$pattern" $rulesmatched|sed "s/^/$line/"
 		done
-	) $filename
+	) "$filename"
 }
 export -f loop_main_replace
 
