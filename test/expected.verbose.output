@@ -1,19 +1,15 @@
+/tmp/misspell_fixer_test/X/work/X.txt:X:succesful
+/tmp/misspell_fixer_test/X/work/X.txt:X:succesful
 misspell_fixer: -v Enable verbose mode.
-misspell_fixer: actual file: /tmp/misspell_fixer_test/X/work/g.txt
-misspell_fixer: actual file: /tmp/misspell_fixer_test/X/work/R.txt
-misspell_fixer: actual file: /tmp/misspell_fixer_test/X/work/u.txt
-misspell_fixer: actual file: /tmp/misspell_fixer_test/X/work/V.txt
 misspell_fixer: actual file: /tmp/misspell_fixer_test/X/work/X.txt
-misspell_fixer: Done.
+misspell_fixer: Iteration X: done.
+misspell_fixer: Iteration X: done.
+misspell_fixer: Iteration X: nothing to replace.
+misspell_fixer: Iteration X: prefiltering.
+misspell_fixer: Iteration X: prefiltering.
+misspell_fixer: Iteration X: replacing.
 misspell_fixer: misspellings are fixed!
-misspell_fixer: nothing changed
-misspell_fixer: nothing changed
-misspell_fixer: nothing changed
-misspell_fixer: nothing changed
-misspell_fixer: Starting script
+misspell_fixer: Results of prefiltering: (filename:line:pattern)
+misspell_fixer: Results of prefiltering: (filename:line:pattern)
 misspell_fixer: Target directories: /tmp/misspell_fixer_test/X/work
-misspell_fixer: temp file: /tmp/misspell_fixer_test/X/work/g.txt.X
-misspell_fixer: temp file: /tmp/misspell_fixer_test/X/work/R.txt.X
-misspell_fixer: temp file: /tmp/misspell_fixer_test/X/work/u.txt.X
-misspell_fixer: temp file: /tmp/misspell_fixer_test/X/work/V.txt.X
 misspell_fixer: temp file: /tmp/misspell_fixer_test/X/work/X.txt.X

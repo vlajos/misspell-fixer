@@ -1,0 +1,9 @@
+,
+......misspell_fixer: Iteration X: replacing.
+misspell_fixer: -o Print dots for each file scanned, comma for each file fix iteration/file.
+misspell_fixer: Iteration X: done.
+misspell_fixer: Iteration X: done.
+misspell_fixer: Iteration X: nothing to replace.
+misspell_fixer: Iteration X: prefiltering.
+misspell_fixer: Iteration X: prefiltering.
+misspell_fixer: Target directories: /tmp/misspell_fixer_test/X/work

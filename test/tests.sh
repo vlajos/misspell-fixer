@@ -42,13 +42,7 @@ testErrors(){
 	assertFalse $?
 	$RUN -P
 	assertFalse $?
-	$RUN -f /dev/null
-	assertFalse $?
-	$RUN -fr /dev/null
-	assertFalse $?
-	$RUN -frns /dev/null
-	assertFalse $?
-	$RUN -frnv /dev/null
+	$RUN -fs /dev/null
 	assertFalse $?
 }
 
@@ -64,6 +58,16 @@ testSpaceInFileName(){
 	diff -ruwb $TEMP/expected/ $TEMP/work/
 	assertTrue 'Expected output differs.' $?
 	rm "$TEMP/work/0 0.txt" "$TEMP/expected/0 0.txt"
+}
+
+testMultipleFileNames(){
+	cp $TEMP/work/0.txt $TEMP/work/1.txt
+	cp -a test/expecteds/0.txt $TEMP/expected/0.txt
+	cp -a test/expecteds/0.txt $TEMP/expected/1.txt
+	$RUN -rn $TEMP/work/0.txt $TEMP/work/1.txt
+	diff -ruwb $TEMP/expected/ $TEMP/work/
+	assertTrue 'Expected output differs.' $?
+	rm $TEMP/work/1.txt $TEMP/expected/1.txt
 }
 
 testShowDiff(){
@@ -191,11 +195,20 @@ testVerbose(){
 	assertTrue 'Expected output differs.' $?
 }
 
+testDots(){
+	$RUN -o $TEMP/work 2>&1|sed 's/[0-9]\+/X/g'|grep -v kcov |sort -f >/tmp/dotsoutput
+	diff -ruwb test/stubs/ $TEMP/work/
+	assertTrue 'Expected output differs.' $?
+	diff -ruwb /tmp/dotsoutput test/expected.dots.output
+	assertTrue 'Expected output differs.' $?
+}
+
 suite(){
+	suite_addTest testShowDiff
 	suite_addTest testErrors
 	suite_addTest testOnlyDir
 	suite_addTest testSpaceInFileName
-	suite_addTest testShowDiff
+	suite_addTest testMultipleFileNames
 	suite_addTest testParallel
 	suite_addTest testBackup
 	suite_addTest testSCMdirsuntouched
@@ -205,7 +218,8 @@ suite(){
 	suite_addTest testKeepPermissionsFast
 	suite_addTest testIgnoreBinary
 	suite_addTest testVerbose
-	for i in '' R V u g 'R V u g'
+	suite_addTest testDots
+	for i in '' R V u g 'R V D' 'R V u g D'
 	do
 		allarg=${i// }
 		eval "testMainNormal$allarg(){ runAndCompare -rn$allarg 0 $i; }"

@@ -83,7 +83,7 @@ Fast mode example, no backups: (highest performance)
 
     $ misspell_fixer.sh -frn target
 
-The previos with all rules enabled:
+The previous with all rules enabled:
 
     $ misspell_fixer.sh -frunRVD target
 
