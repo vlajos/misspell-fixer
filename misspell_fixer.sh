@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 function warning {
-	echo "misspell_fixer: $*">&2
+	echo "misspell_fixer: $*" >&2
 }
 export -f warning
 
@@ -228,6 +228,12 @@ function main_work {
 		  xargs -0 $cmd_part_parallelism -n 100 grep --text -F -noH -w --null -f $tmpfile.prep.grep.rules.w >$itertmpfile.combos.w
 
 	sort -u $itertmpfile.combos $itertmpfile.combos.w >$itertmpfile.combos.all
+
+	if [[ $opt_verbose = 1 ]]
+	then
+		verbose "Results of prefiltering: (filename:line:pattern)"
+		sed $itertmpfile.combos.all -e 's/\x0/:/' >&2
+	fi
 
 	if [[ -s $itertmpfile.combos.all ]]
 	then
