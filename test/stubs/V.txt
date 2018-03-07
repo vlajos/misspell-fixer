@@ -1,2 +1,3 @@
 retore
 initilized
+a'ready
