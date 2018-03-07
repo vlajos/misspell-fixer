@@ -1,0 +1,18 @@
+Source: misspell-fixer
+Section: devel
+Priority: optional
+Maintainer: Lajos Veres <vlajos@gmail.com>
+Build-Depends: debhelper (>= 9), ruby-ronn
+Standards-Version: 3.9.8
+Homepage: https://github.com/vlajos/misspell_fixer
+#Vcs-Git: https://github.com/vlajos/misspell_fixer.git
+#Vcs-Browser: https://github.com/vlajos/misspell_fixer
+
+Package: misspell-fixer
+Architecture: all
+Depends: grep (>= 2.28)
+Description: Tool for fixing common misspellings, typos in source code.
+ Utility to fix common misspellings, typos in source code.
+ There are lots of typical misspellings in program code.
+ Typically they are more eye-catching in the living code but they can easily hide in comments, examples, samples, notes and documentation.
+ With this utility you can fix a large number of them very quickly.
