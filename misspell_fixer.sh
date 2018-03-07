@@ -27,12 +27,17 @@ function init_variables {
 	export opt_dots=0
 	export bash_arg
 	
-	rules_safe0=${BASH_SOURCE/%.sh/_safe.0.sed}
-	rules_safe1=${BASH_SOURCE/%.sh/_safe.1.sed}
-	rules_safe2=${BASH_SOURCE/%.sh/_safe.2.sed}
-	rules_safe3=${BASH_SOURCE/%.sh/_safe.3.sed}
-	rules_not_so_safe=${BASH_SOURCE/%.sh/_not_so_safe.sed}
-	rules_gb_to_us=${BASH_SOURCE/%.sh/_gb_to_us.sed}
+	export rule_file_base=${BASH_SOURCE/%.sh}
+	if [ ! -f $rule_file_base"_safe.0.sed" ]
+	then
+		rule_file_base=/usr/share/misspell-fixer/rules
+	fi
+	rules_safe0=$rule_file_base"_safe.0.sed"
+	rules_safe1=$rule_file_base"_safe.1.sed"
+	rules_safe2=$rule_file_base"_safe.2.sed"
+	rules_safe3=$rule_file_base"_safe.3.sed"
+	rules_not_so_safe=$rule_file_base"_not_so_safe.sed"
+	rules_gb_to_us=$rule_file_base"_gb_to_us.sed"
 	export enabled_rules="$rules_safe0"
 
 	export cmd_part_ignore_scm="-o -iname .git -o -iname .svn -o -iname .hg -o -iname CVS"
@@ -132,7 +137,12 @@ function parse_basic_options {
 			;;
 			h)
 				d="dirname ${BASH_SOURCE}"
-				cat "$($d)"/README.md
+				if [[ -f "$($d)"/README.md ]]
+				then
+					cat "$($d)"/README.md
+				else
+					zcat /usr/share/doc/misspell-fixer/README.md.gz
+				fi
 				return 1
 			;;
 			\?)
