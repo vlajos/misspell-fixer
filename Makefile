@@ -22,3 +22,8 @@ prepare_environment:
 	curl -L "https://github.com/kward/shunit2/archive/v2.1.7.tar.gz" | tar zx
 	cd /tmp;git clone https://github.com/SimonKagstrom/kcov
 	cd /tmp/kcov;cmake ./;make;sudo make install
+
+man:
+	ronn --roff --manual=misspell-fixer README.md
+	sed -i -e 's/README/misspell_fixer/g' -e '/travis/d' README 
+	mv README doc/misspell_fixer.1
