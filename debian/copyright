@@ -1,6 +1,6 @@
 Format: https://www.debian.org/doc/packaging-manuals/copyright-format/1.0/
 Upstream-Name: misspell-fixer
-Source: https://github.com/vlajos/misspell_fixer
+Source: https://github.com/vlajos/misspell-fixer
 
 Files: *
 Copyright: 2013 Lajos Veres <vlajos@gmail.com>

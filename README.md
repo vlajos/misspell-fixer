@@ -20,7 +20,7 @@ A manual review is always needed to verify that nothing has been broken.
 
 ### Synopsis
     
-    misspell_fixer	[OPTION] target[s]
+    misspell-fixer	[OPTION] target[s]
 
 ### Options, Arguments
 
@@ -65,27 +65,27 @@ File filtering options:
 
 By default nothing important will happen
 
-    $ misspell_fixer.sh target
+    $ misspell-fixer target
 
 Fixing the files with displaying each fixed file:
 
-    $ misspell_fixer.sh -rv target
+    $ misspell-fixer -rv target
 
 Showing only the diffs without modifying the originals:
 
-    $ misspell_fixer.sh -sv target
+    $ misspell-fixer -sv target
 
 Showing the diffs with progress and fixing the found typos:
 
-    $ misspell_fixer.sh -rsv target
+    $ misspell-fixer -rsv target
 
 Fast mode example, no backups: (highest performance)
 
-    $ misspell_fixer.sh -frn target
+    $ misspell-fixer -frn target
 
 The previous with all rules enabled:
 
-    $ misspell_fixer.sh -frunRVD target
+    $ misspell-fixer -frunRVD target
 
 It is based on the following sources for common misspellings:
 
@@ -123,6 +123,6 @@ A little more comprehensive list:
 
 ### Original source
 
-https://github.com/vlajos/misspell_fixer
+https://github.com/vlajos/misspell-fixer
 
 Feel free to use!

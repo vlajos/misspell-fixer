@@ -1,7 +1,7 @@
 .\" generated with Ronn/v0.7.3
 .\" http://github.com/rtomayko/ronn/tree/0.7.3
 .
-.TH "misspell_fixer" "" "March 2018" "" "misspell-fixer"
+.TH "misspell-fixer" "" "March 2018" "" "misspell-fixer"
 .
 .P
 Utility to fix common misspellings, typos in source code\. There are lots of typical misspellings in program code\. Typically they are more eye\-catching in the living code but they can easily hide in comments, examples, samples, notes and documentation\. With this utility you can fix a large number of them very quickly\.
@@ -19,7 +19,7 @@ A manual review is always needed to verify that nothing has been broken\.
 .
 .nf
 
-misspell_fixer  [OPTION] target[s]
+misspell-fixer  [OPTION] target[s]
 .
 .fi
 .
@@ -113,7 +113,7 @@ By default nothing important will happen
 .
 .nf
 
-$ misspell_fixer\.sh target
+$ misspell-fixer target
 .
 .fi
 .
@@ -126,7 +126,7 @@ Fixing the files with displaying each fixed file:
 .
 .nf
 
-$ misspell_fixer\.sh \-rv target
+$ misspell-fixer \-rv target
 .
 .fi
 .
@@ -139,7 +139,7 @@ Showing only the diffs without modifying the originals:
 .
 .nf
 
-$ misspell_fixer\.sh \-sv target
+$ misspell-fixer \-sv target
 .
 .fi
 .
@@ -152,7 +152,7 @@ Showing the diffs with progress and fixing the found typos:
 .
 .nf
 
-$ misspell_fixer\.sh \-rsv target
+$ misspell-fixer \-rsv target
 .
 .fi
 .
@@ -165,7 +165,7 @@ Fast mode example, no backups: (highest performance)
 .
 .nf
 
-$ misspell_fixer\.sh \-frn target
+$ misspell-fixer \-frn target
 .
 .fi
 .
@@ -178,7 +178,7 @@ The previous with all rules enabled:
 .
 .nf
 
-$ misspell_fixer\.sh \-frunRVD target
+$ misspell-fixer \-frunRVD target
 .
 .fi
 .
@@ -256,7 +256,7 @@ ka7
 .IP "" 0
 .
 .SS "Original source"
-https://github\.com/vlajos/misspell_fixer
+https://github\.com/vlajos/misspell-fixer
 .
 .P
 Feel free to use!

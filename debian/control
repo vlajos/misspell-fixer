@@ -4,9 +4,9 @@ Priority: optional
 Maintainer: Lajos Veres <vlajos@gmail.com>
 Build-Depends: debhelper (>= 9), ruby-ronn
 Standards-Version: 3.9.8
-Homepage: https://github.com/vlajos/misspell_fixer
-#Vcs-Git: https://github.com/vlajos/misspell_fixer.git
-#Vcs-Browser: https://github.com/vlajos/misspell_fixer
+Homepage: https://github.com/vlajos/misspell-fixer
+#Vcs-Git: https://github.com/vlajos/misspell-fixer.git
+#Vcs-Browser: https://github.com/vlajos/misspell-fixer
 
 Package: misspell-fixer
 Architecture: all

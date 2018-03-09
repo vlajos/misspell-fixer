@@ -1,7 +1,7 @@
 #! /bin/bash
 
-export TEMP=/tmp/misspell_fixer_test/$$
-export RUN=". misspell_fixer.sh"
+export TEMP=/tmp/misspell-fixer-test/$$
+export RUN=". misspell-fixer"
 export LC_ALL=C
 export SPELLING_ERR="$TEMP/self/spelling.txt"
 
