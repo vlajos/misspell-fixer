@@ -217,7 +217,7 @@ function prepare_prefilter_input_from_find {
 }
 
 function prepare_prefilter_input_from_cat {
-	while IFS= read -r -d '' filename
+	while read -r filename
 	do
 		printf '%s\0' "$filename"
 	done <$1
