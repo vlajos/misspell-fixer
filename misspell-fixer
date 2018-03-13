@@ -50,7 +50,7 @@ function init_variables {
 	export prefilter_progress_function=prefilter_progress_none
 
 	export opt_name_filter=''
-	export cmd_size="-and ( -size 1M )"  # find will ignore files > 1MB
+	export cmd_size="-and ( -size -1024k )"  # find will ignore files > 1MB
 
 	export directories
 
