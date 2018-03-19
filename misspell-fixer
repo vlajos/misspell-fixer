@@ -250,22 +250,22 @@ function main_work {
 	
 	$input_function $prev_matched_files|\
 	tee >($prefilter_progress_function) \
-		>(xargs -0 $cmd_part_parallelism -n 100 grep --text -F -noH    --null -f $tmpfile.prep.grep.rules   >$itertmpfile.combos)|\
-		  xargs -0 $cmd_part_parallelism -n 100 grep --text -F -noH -w --null -f $tmpfile.prep.grep.rules.w >$itertmpfile.combos.w
+		>(xargs -0 $cmd_part_parallelism -n 100 grep --text -F -noH     -f $tmpfile.prep.grep.rules   >$itertmpfile.combos)|\
+		  xargs -0 $cmd_part_parallelism -n 100 grep --text -F -noH -w  -f $tmpfile.prep.grep.rules.w >$itertmpfile.combos.w
 
 	sort -u $itertmpfile.combos $itertmpfile.combos.w >$itertmpfile.combos.all
 
 	if [[ $opt_verbose = 1 ]]
 	then
 		verbose "Results of prefiltering: (filename:line:pattern)"
-		sed $itertmpfile.combos.all -e 's/\x0/:/' >&2
+		cat $itertmpfile.combos.all >&2
 	fi
 
 	if [[ -s $itertmpfile.combos.all ]]
 	then
-		grep --text -f <(cut -d ':' -f 2 $itertmpfile.combos.all) $tmpfile.prep.allsedrules >$itertmpfile.rulesmatched
+		grep --text -f <(cut -d ':' -f 3 $itertmpfile.combos.all) $tmpfile.prep.allsedrules >$itertmpfile.rulesmatched
 		warning "Iteration $iteration: replacing."
-		cut -d '' -f 1 $itertmpfile.combos.all |sort -u >$itertmpfile.matchedfiles
+		cut -d ':' -f 1 $itertmpfile.combos.all |sort -u >$itertmpfile.matchedfiles
 		xargs <$itertmpfile.matchedfiles $cmd_part_parallelism -n 1 -I '{}' bash -c$bash_arg "$loop_function $itertmpfile.combos.all $itertmpfile.rulesmatched '{}' -i"
 		rm $itertmpfile.rulesmatched
 		if [[ $opt_dots = 1 ]]
@@ -306,7 +306,7 @@ function loop_main_replace {
 
 	sed $inplaceflag $sed_arguments -f <(
 		IFS=$'\n'
-		for patternwithline in $(grep --text "$filename" $findresult|cut -d '' -f 2)
+		for patternwithline in $(grep --text "$filename" $findresult|cut -d ':' -f 2,3)
 		do
 			line=${patternwithline/:*/}
 			pattern=${patternwithline/*:/}
