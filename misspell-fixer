@@ -51,6 +51,7 @@ function init_variables {
 
 	export opt_name_filter=''
 	export cmd_size="-and ( -size -1024k )"  # find will ignore files > 1MB
+	export sed_arguments
 
 	export directories
 
@@ -206,6 +207,10 @@ function check_grep_version {
 	fi
 }
 
+function check_sed_arguments {
+	sed -b 2>&1 |grep -q illegal || sed_arguments=-b
+}
+
 function preprocess_rules {
 	grep -vh 'bin/sed' $enabled_rules > $tmpfile.prep.allsedrules
 	grep    '\\b' $tmpfile.prep.allsedrules|sed -e 's/^s\///g' -e 's/\/.*g//g' -e 's/\\b//g'	>$tmpfile.prep.grep.rules.w
@@ -299,7 +304,7 @@ function loop_main_replace {
 		echo -n "," >&2
 	fi
 
-	sed $inplaceflag -b -f <(
+	sed $inplaceflag $sed_arguments -f <(
 		IFS=$'\n'
 		for patternwithline in $(grep --text "$filename" $findresult|cut -d '' -f 2)
 		do
@@ -364,6 +369,7 @@ then
 		set -x
 	fi
 	check_grep_version
+	check_sed_arguments
 	preprocess_rules
 	main_work prepare_prefilter_input_from_find 0 '' /dev/null
 	retval=$?
