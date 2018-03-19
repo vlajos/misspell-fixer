@@ -52,6 +52,7 @@ function init_variables {
 	export opt_name_filter=''
 	export cmd_size="-and ( -size -1024k )"  # find will ignore files > 1MB
 	export sed_arguments
+	export sed_arguments_inplace
 
 	export directories
 
@@ -208,7 +209,16 @@ function check_grep_version {
 }
 
 function check_sed_arguments {
-	sed -b 2>&1 |grep -q illegal || sed_arguments=-b
+	if sed -b 2>&1 |grep -q illegal
+	then
+		# OS/X
+		sed_arguments=''
+		sed_arguments_inplace="-i ''"
+	else
+		# Everything else
+		sed_arguments=-b
+		sed_arguments_inplace="-i"
+	fi
 }
 
 function preprocess_rules {
@@ -266,7 +276,7 @@ function main_work {
 		grep --text -f <(cut -d ':' -f 3 $itertmpfile.combos.all) $tmpfile.prep.allsedrules >$itertmpfile.rulesmatched
 		warning "Iteration $iteration: replacing."
 		cut -d ':' -f 1 $itertmpfile.combos.all |sort -u >$itertmpfile.matchedfiles
-		xargs <$itertmpfile.matchedfiles $cmd_part_parallelism -n 1 -I '{}' bash -c$bash_arg "$loop_function $itertmpfile.combos.all $itertmpfile.rulesmatched '{}' -i"
+		xargs <$itertmpfile.matchedfiles $cmd_part_parallelism -n 1 -I '{}' bash -c$bash_arg "$loop_function $itertmpfile.combos.all $itertmpfile.rulesmatched '{}' 1"
 		rm $itertmpfile.rulesmatched
 		if [[ $opt_dots = 1 ]]
 		then
@@ -298,13 +308,19 @@ function loop_main_replace {
 	local rulesmatched=$2
 	local filename=$3
 	local inplaceflag=$4
-	
+
 	if [[ $opt_dots = 1 ]]
 	then
 		echo -n "," >&2
 	fi
 
-	sed $inplaceflag $sed_arguments -f <(
+	local sed_arguments_local
+	if [[ $inplaceflag = 1 ]]
+	then
+		sed_arguments_local="$sed_arguments_inplace"
+	fi
+
+	sed $sed_arguments $sed_arguments_local -f <(
 		IFS=$'\n'
 		for patternwithline in $(grep --text "$filename" $findresult|cut -d ':' -f 2,3)
 		do
@@ -320,12 +336,13 @@ function loop_decorated_mode {
 	local findresult=$1
 	local rulesmatched=$2
 	local filename=$3
+	local inplace=$4
 
 	verbose "actual file: $filename"
 	local workfile=$filename.$$
 	verbose "temp file: $workfile"
 	cp -a "$filename" "$workfile"
-	loop_main_replace "$findresult" "$rulesmatched" "$filename" '' >"$workfile"
+	loop_main_replace "$findresult" "$rulesmatched" "$filename" 0 >"$workfile"
 	diff=$(diff -u "$filename" "$workfile")
 	if [[ $? = 0 ]]
 	then
