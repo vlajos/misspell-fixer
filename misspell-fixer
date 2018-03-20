@@ -171,7 +171,7 @@ function parse_basic_options {
 	fi
 
 	directories="$@"
-	cmd_part_ignore="( -iname $tmpfile* $cmd_part_ignore_scm $cmd_part_ignore_bin ) -prune -o "
+	cmd_part_ignore="( -iname $tmpfile* -o -iname *.BAK $cmd_part_ignore_scm $cmd_part_ignore_bin ) -prune -o "
 	warning "Target directories: $directories"
 
 	return 0
