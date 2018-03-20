@@ -113,8 +113,7 @@ A little more comprehensive list:
 * sort
 * tee
 * cut
-* rm
-* cp
+* rm, cp, mv
 * xargs
 
 ### Authors

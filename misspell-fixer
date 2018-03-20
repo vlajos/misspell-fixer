@@ -341,6 +341,11 @@ function loop_decorated_mode {
 	verbose "actual file: $filename"
 	local workfile=$filename.$$
 	verbose "temp file: $workfile"
+	if [[ -f $workfile ]]
+	then
+		warning "Temp file ($workfile) for ($filename) already exists. Skipping it."
+		return 1
+	fi
 	cp -a "$filename" "$workfile"
 	loop_main_replace "$findresult" "$rulesmatched" "$filename" 0 >"$workfile"
 	diff=$(diff -u "$filename" "$workfile")
@@ -358,7 +363,7 @@ function loop_decorated_mode {
 		then
 			if [[ $opt_backup = 1 ]]
 			then
-				mv "$filename" "$workfile.BAK"
+				mv -n "$filename" "$workfile.BAK"
 			fi
 			mv "$workfile" "$filename"
 		else
