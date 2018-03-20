@@ -101,7 +101,7 @@ It is based on the following sources for common misspellings:
 The script itself is just a misspelling database and some glue in `bash` between `grep` and `sed`.
 `grep`'s `-F` combined with `sed`'s line targeting makes the script quite efficient.
 `-F` enables parallel pattern matching with the https://en.wikipedia.org/wiki/Aho%E2%80%93Corasick_algorithm .
-Unfortunately this seem to work well with `-w` only in the newer (3+) versions.
+Unfortunately this seem to work well with `-w` only in the newer (2.28+) versions of grep.
 
 A little more comprehensive list:
 
@@ -114,6 +114,7 @@ A little more comprehensive list:
 * tee
 * cut
 * rm
+* cp
 * xargs
 
 ### Authors
