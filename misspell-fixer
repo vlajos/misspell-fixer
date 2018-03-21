@@ -51,8 +51,7 @@ function init_variables {
 
 	export opt_name_filter=''
 	export cmd_size="-and ( -size -1024k )"  # find will ignore files > 1MB
-	export sed_arguments
-	export sed_arguments_inplace
+	export smart_sed
 
 	export directories
 
@@ -212,12 +211,10 @@ function check_sed_arguments {
 	if sed -b 2>&1 |grep -q illegal
 	then
 		# OS/X
-		sed_arguments=''
-		sed_arguments_inplace="-i ''"
+		smart_sed=0
 	else
 		# Everything else
-		sed_arguments=-b
-		sed_arguments_inplace="-i"
+		smart_sed=1
 	fi
 }
 
@@ -314,13 +311,24 @@ function loop_main_replace {
 		echo -n "," >&2
 	fi
 
-	local sed_arguments_local
-	if [[ $inplaceflag = 1 ]]
+	local sed=('sed')
+	if [[ $smart_sed = 1 ]]
 	then
-		sed_arguments_local="$sed_arguments_inplace"
+		# -b is useful on windows, harmless on linux, but OS/X sed does not like it.
+		sed=("${sed[@]}" '-b')
+		if [[ $inplaceflag = 1 ]]
+		then
+			sed=("${sed[@]}" '-i')
+		fi
+	else
+		if [[ $inplaceflag = 1 ]]
+		then
+			# OS/X sed needs separate arguments
+			sed=("${sed[@]}" '-i' '')
+		fi
 	fi
 
-	sed $sed_arguments $sed_arguments_local -f <(
+	"${sed[@]}" -f <(
 		IFS=$'\n'
 		for patternwithline in $(grep --text "$filename" $findresult|cut -d ':' -f 2,3)
 		do
