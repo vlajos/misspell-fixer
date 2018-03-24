@@ -1,9 +1,9 @@
 # Misspell Fixer
 
-[![Build Status](https://travis-ci.org/vlajos/misspell_fixer.svg?branch=master)](https://travis-ci.org/vlajos/misspell_fixer)
-[![Coverage Status](https://img.shields.io/coveralls/vlajos/misspell_fixer.svg)](https://coveralls.io/r/vlajos/misspell_fixer?branch=master)
-[![Circle CI Build Status](https://circleci.com/gh/vlajos/misspell_fixer.svg?style=shield&circle-token=d5d85ed2985b507b547a98e2ace8c21a75395cc2)](https://circleci.com/gh/vlajos/misspell_fixer)
-[![Issue Count](https://codeclimate.com/github/vlajos/misspell_fixer/badges/issue_count.svg)](https://codeclimate.com/github/vlajos/misspell_fixer)
+[![Build Status](https://travis-ci.org/vlajos/misspell-fixer.svg?branch=master)](https://travis-ci.org/vlajos/misspell-fixer)
+[![Coverage Status](https://img.shields.io/coveralls/vlajos/misspell-fixer.svg)](https://coveralls.io/r/vlajos/misspell-fixer?branch=master)
+[![Circle CI Build Status](https://circleci.com/gh/vlajos/misspell-fixer.svg?style=svg)](https://circleci.com/gh/vlajos/misspell-fixer)
+[![Issue Count](https://codeclimate.com/github/vlajos/misspell-fixer/badges/issue_count.svg)](https://codeclimate.com/github/vlajos/misspell-fixer)
 
 ==============
 

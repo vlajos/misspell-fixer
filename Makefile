@@ -11,7 +11,7 @@ lint_dicts:
 	cd dict;./misspell-lint-dicts.sh
 
 test:
-	/usr/local/bin/kcov --include-pattern=misspell-fixer --path-strip-level=1 --coveralls-id=$(TRAVIS_JOB_ID) /tmp/coverage/ test/tests.sh
+	/usr/local/bin/kcov --include-pattern=misspell-fixer/misspell-fixer --path-strip-level=1 --coveralls-id=$(TRAVIS_JOB_ID) /tmp/coverage/ test/tests.sh
 
 test_self:
 	test/self-spelling-test.sh
