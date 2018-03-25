@@ -19,7 +19,7 @@ A manual review is always needed to verify that nothing has been broken\.
 .
 .nf
 
-misspell-fixer  [OPTION] target[s]
+misspell\-fixer  [OPTION] target[s]
 .
 .fi
 .
@@ -113,7 +113,7 @@ By default nothing important will happen
 .
 .nf
 
-$ misspell-fixer target
+$ misspell\-fixer target
 .
 .fi
 .
@@ -126,7 +126,7 @@ Fixing the files with displaying each fixed file:
 .
 .nf
 
-$ misspell-fixer \-rv target
+$ misspell\-fixer \-rv target
 .
 .fi
 .
@@ -139,7 +139,7 @@ Showing only the diffs without modifying the originals:
 .
 .nf
 
-$ misspell-fixer \-sv target
+$ misspell\-fixer \-sv target
 .
 .fi
 .
@@ -152,7 +152,7 @@ Showing the diffs with progress and fixing the found typos:
 .
 .nf
 
-$ misspell-fixer \-rsv target
+$ misspell\-fixer \-rsv target
 .
 .fi
 .
@@ -165,7 +165,7 @@ Fast mode example, no backups: (highest performance)
 .
 .nf
 
-$ misspell-fixer \-frn target
+$ misspell\-fixer \-frn target
 .
 .fi
 .
@@ -178,7 +178,7 @@ The previous with all rules enabled:
 .
 .nf
 
-$ misspell-fixer \-frunRVD target
+$ misspell\-fixer \-frunRVD target
 .
 .fi
 .
@@ -208,7 +208,7 @@ https://anonscm\.debian\.org/git/lintian/lintian\.git/tree/data/spelling/correct
 .IP "" 0
 .
 .SS "Dependencies \- \"On the shoulders of giants\""
-The script itself is just a misspelling database and some glue in \fBbash\fR between \fBgrep\fR and \fBsed\fR\. \fBgrep\fR\'s \fB\-F\fR combined with \fBsed\fR\'s line targeting makes the script quite efficient\. \fB\-F\fR enables parallel pattern matching with the https://en\.wikipedia\.org/wiki/Aho%E2%80%93Corasick_algorithm \. Unfortunately this seem to work well with \fB\-w\fR only in the newer (3+) versions\.
+The script itself is just a misspelling database and some glue in \fBbash\fR between \fBgrep\fR and \fBsed\fR\. \fBgrep\fR\'s \fB\-F\fR combined with \fBsed\fR\'s line targeting makes the script quite efficient\. \fB\-F\fR enables parallel pattern matching with the https://en\.wikipedia\.org/wiki/Aho%E2%80%93Corasick_algorithm \. Unfortunately this seem to work well with \fB\-w\fR only in the newer (2\.28+) versions of grep\.
 .
 .P
 A little more comprehensive list:
@@ -238,7 +238,7 @@ tee
 cut
 .
 .IP "\(bu" 4
-rm
+rm, cp, mv
 .
 .IP "\(bu" 4
 xargs
@@ -256,7 +256,7 @@ ka7
 .IP "" 0
 .
 .SS "Original source"
-https://github\.com/vlajos/misspell-fixer
+https://github\.com/vlajos/misspell\-fixer
 .
 .P
 Feel free to use!
