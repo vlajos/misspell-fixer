@@ -1,5 +1,5 @@
 #!/usr/bin/dh-exec
-misspell-fixer.sh usr/bin
+misspell-fixer usr/bin
 misspell-fixer-gb-to-us.sed => /usr/share/misspell-fixer/rules-gb-to-us.sed
 misspell-fixer-not-so-safe.sed => /usr/share/misspell-fixer/rules-not-so-safe.sed
 misspell-fixer-safe.0.sed => /usr/share/misspell-fixer/rules-safe.0.sed
