@@ -273,7 +273,7 @@ function main_work {
 		grep --text -f <(cut -d ':' -f 3 $itertmpfile.combos.all) $tmpfile.prep.allsedrules >$itertmpfile.rulesmatched
 		warning "Iteration $iteration: replacing."
 		cut -d ':' -f 1 $itertmpfile.combos.all |sort -u >$itertmpfile.matchedfiles
-		xargs <$itertmpfile.matchedfiles $cmd_part_parallelism -n 1 -I '{}' bash -c$bash_arg "$loop_function $itertmpfile.combos.all $itertmpfile.rulesmatched '{}' 1"
+		xargs <$itertmpfile.matchedfiles $cmd_part_parallelism -n 1 -I '{}' $COVERAGE_WRAPPER bash -c$bash_arg "$loop_function $itertmpfile.combos.all $itertmpfile.rulesmatched '{}' 1"
 		rm $itertmpfile.rulesmatched
 		if [[ $opt_dots = 1 ]]
 		then
@@ -380,6 +380,11 @@ function loop_decorated_mode {
 	fi
 }
 export -f loop_decorated_mode
+
+if [[ "$FUNCTIONS_ONLY_FOR_COVERAGE" = "1" ]]
+then
+    return
+fi
 
 init_variables
 
