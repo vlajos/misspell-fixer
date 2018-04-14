@@ -1,0 +1,9 @@
+misspell-fixer: -d Enable debug mode.
+misspell-fixer: Iteration X: done.
+misspell-fixer: Iteration X: done.
+misspell-fixer: Iteration X: matchlist is the same as in previous iteration...
+misspell-fixer: Iteration X: prefiltering.
+misspell-fixer: Iteration X: prefiltering.
+misspell-fixer: Iteration X: replacing.
+misspell-fixer: Iteration X: replacing.
+misspell-fixer: Target directories: /tmp/misspell-fixer-test/X/work

@@ -121,6 +121,7 @@ testSCMdirstouched(){
 testNamefilter(){
 	cp test/stubs/0.txt $TEMP/work/0.xxx
 	cp test/stubs/0.txt $TEMP/work/0.yyy
+	cp test/stubs/0.txt $TEMP/work/0.zzz
 	$RUN -rni -N '*.xxx' -N '*.yyy' $TEMP/work
 	assertTrue $?
 	diff -ruwb test/stubs/0.txt $TEMP/work/0.txt
@@ -129,7 +130,9 @@ testNamefilter(){
 	assertTrue 'Expected output differs.' $?
 	diff -ruwb test/expecteds/0.txt $TEMP/work/0.yyy
 	assertTrue 'Expected output differs.' $?
-	rm -rf $TEMP/work/0.xxx $TEMP/work/0.yyy
+	diff -ruwb test/expecteds/0.txt $TEMP/work/0.zzz
+	assertFalse 'Expected output equal?.' $?
+	rm -rf $TEMP/work/0.xxx $TEMP/work/0.yyy $TEMP/work/0.zzz
 }
 
 testKeepPermissionsNormal(){
@@ -195,12 +198,29 @@ testVerbose(){
 	assertTrue 'Expected output differs.' $?
 }
 
+testDebug(){
+	$RUN -d $TEMP/work 2>&1|sed 's/[0-9]\+/X/g'|grep -v -e kcov -e "Your grep version is"|sort -f >/tmp/debugoutput
+	diff -ruwb test/stubs/ $TEMP/work/
+	assertTrue 'Expected output differs.' $?
+	diff -ruwb /tmp/debugoutput test/expected.debug.output
+	assertTrue 'Expected output differs.' $?
+}
+
 testDots(){
 	$RUN -o $TEMP/work 2>&1|sed 's/[0-9]\+/X/g'|grep -v -e kcov -e "Your grep version is"|sort -f >/tmp/dotsoutput
 	diff -ruwb test/stubs/ $TEMP/work/
 	assertTrue 'Expected output differs.' $?
 	diff -ruwb /tmp/dotsoutput test/expected.dots.output
 	assertTrue 'Expected output differs.' $?
+}
+
+testMNoChange(){
+	cp test/nochange.txt $TEMP/work/
+	cp test/nochange.txt $TEMP/expected/
+	$RUN -mvRV $TEMP/work
+	diff -ruwb $TEMP/expected/ $TEMP/work/
+	assertTrue 'Expected output differs.' $?
+	rm -rf $TEMP/work/nochange.txt $TEMP/expected/nochange.txt
 }
 
 suite(){
@@ -218,7 +238,9 @@ suite(){
 	suite_addTest testKeepPermissionsFast
 	suite_addTest testIgnoreBinary
 	suite_addTest testVerbose
+	suite_addTest testDebug
 	suite_addTest testDots
+	suite_addTest testMNoChange
 	for i in '' R V u g 'R V D' 'R V u g D'
 	do
 		allarg=${i// }
