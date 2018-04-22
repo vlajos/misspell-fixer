@@ -6,6 +6,7 @@ all: lint_dicts $(wildcard *.sed)
 
 %.sed: dict/%.dict
 	./dict/misspell-convert-dict-to-sed.pl <$< >./$@
+	chmod a+x ./$@
 
 lint_dicts:
 	cd dict;./misspell-lint-dicts.sh
@@ -31,4 +32,6 @@ prepare_environment:
 man:
 	ronn --roff --manual=misspell-fixer README.md
 	sed -i -e 's/README/misspell-fixer/g' -e '/travis/d' README 
+	sed -i '/.TH /a .SH NAME\
+	misspell-fixer \- misspell-fixer' README
 	mv README doc/misspell-fixer.1

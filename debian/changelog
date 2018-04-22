@@ -1,5 +1,5 @@
 misspell-fixer (0.1-1) unstable; urgency=medium
 
-  * Initial release
+  * Initial release (Closes: #895712)
 
  -- Lajos Veres <vlajos@gmail.com>  Wed, 07 Mar 2018 19:25:13 +0000
