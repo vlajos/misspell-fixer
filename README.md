@@ -96,6 +96,29 @@ It is based on the following sources for common misspellings:
 * http://en.wikipedia.org/wiki/Wikipedia:Lists_of_common_misspellings/For_machines
 * https://anonscm.debian.org/git/lintian/lintian.git/tree/data/spelling/corrections
 
+### With Docker
+
+In some environments the dependencies may cause some trouble. (Mac, Windows, older linux versions.)
+In this case use misspell-fixer as a container:
+
+Build it:
+
+    $ docker build . -t misspell-fixer
+
+Run it:
+
+    $ docker run -ti --rm -v target:/work misspell-fixer arguments
+
+Or if your shell supports functions, you can define a function to make the command a little shorter:
+
+    $ function misspell-fixer { target=$1;shift; docker run -ti --rm -v $target:/work misspell-fixer "$@"; }
+
+And run it:
+
+    $ misspell-fixer target -arguments
+
+(Reverse order than normal and accepts only one target argument.)
+
 ### Dependencies - "On the shoulders of giants"
 
 The script itself is just a misspelling database and some glue in `bash` between `grep` and `sed`.
