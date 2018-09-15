@@ -99,7 +99,7 @@ It is based on the following sources for common misspellings:
 ### With Docker
 
 In some environments the dependencies may cause some trouble. (Mac, Windows, older linux versions.)
-In this case use misspell-fixer as a container:
+In this case use misspell-fixer from a container:
 
 Build it:
 
@@ -109,15 +109,20 @@ Run it:
 
     $ docker run -ti --rm -v target:/work misspell-fixer arguments
 
+You can also use the `dockered-fixer` wrapper:
+
+    $ dockered-fixer [any above arguments]
+
 Or if your shell supports functions, you can define a function to make the command a little shorter:
 
-    $ function misspell-fixer { target=$1;shift; docker run -ti --rm -v $target:/work misspell-fixer "$@"; }
+    $ function misspell-fixer { docker run -ti --rm -v $(pwd):/work misspell-fixer "$@"; }
 
 And run it:
 
-    $ misspell-fixer target -arguments
+    $ misspell-fixer [any above arguments]
 
-(Reverse order than normal and accepts only one target argument.)
+Through the wrapper and the function it can access only the folders below the current working directory
+as it is the only one passed to the container as a volume.
 
 ### Dependencies - "On the shoulders of giants"
 
