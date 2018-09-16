@@ -5,7 +5,7 @@ jobs:
             - image: circleci/buildpack-deps:stretch-curl
         steps:
             - checkout
-            - run: apt-get install make
+            - run: sudo apt-get install make
             - run:
                 name: Prepare environment
                 command: make prepare_environment
