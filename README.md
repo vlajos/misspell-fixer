@@ -99,16 +99,19 @@ It is based on the following sources for common misspellings:
 ### With Docker
 
 In some environments the dependencies may cause some trouble. (Mac, Windows, older linux versions.)
-In this case use misspell-fixer from a container:
+In this case use misspell-fixer from a container.
 
-Pull it:
+Pull the latest version:
+
     $ docker pull vlajos/misspell-fixer
 
-Or build:
+And fix `targetdir`'s content:
 
-    $ docker build . -t misspell-fixer
+    $ docker run -ti --rm -v targetdir:/work misspell-fixer -frunRVD .
 
-Then run it:
+#### Some other different use cases, examples:
+
+General execution directly with docker:
 
     $ docker run -ti --rm -v targetdir:/work misspell-fixer arguments
 
@@ -122,12 +125,16 @@ Or if your shell supports functions, you can define a function to make the comma
 
     $ function misspell-fixer { docker run -ti --rm -v $(pwd):/work misspell-fixer "$@"; }
 
-And run it:
+And fixing with the function:
 
     $ misspell-fixer [any above arguments]
 
 Through the wrapper and the function it can access only the folders below the current working directory
 as it is the only one passed to the container as a volume.
+
+You can build the container locally, although this should not be really needed:
+
+    $ docker build docker/ -t misspell-fixer
 
 ### Dependencies - "On the shoulders of giants"
 
