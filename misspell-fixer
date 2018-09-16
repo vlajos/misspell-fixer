@@ -137,7 +137,7 @@ function parse_basic_options {
 				cmd_part_parallelism="-P $OPTARG"
 			;;
 			h)
-				d="dirname ${BASH_SOURCE}"
+				d="dirname ${BASH_SOURCE[0]}"
 				if [[ -f "$($d)"/README.md ]]
 				then
 					cat "$($d)"/README.md
