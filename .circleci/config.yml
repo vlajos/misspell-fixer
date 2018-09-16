@@ -1,11 +1,11 @@
 version: 2
 jobs:
     build-and-test:
-    steps:
-        - checkout
-        - run
-            name: Prepare environment
-            command: make prepare_environment
-        - run
-            name: Run tests
-            command: make test
+        steps:
+            - checkout
+            - run
+                name: Prepare environment
+                command: make prepare_environment
+            - run
+                name: Run tests
+                command: make test
