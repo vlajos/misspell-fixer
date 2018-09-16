@@ -18,6 +18,8 @@ Also important to be very careful when fixing public APIs!
 
 A manual review is always needed to verify that nothing has been broken.
 
+[Jump to docker notes](#with-docker)
+
 ### Synopsis
     
     misspell-fixer	[OPTION] target[s]
@@ -134,7 +136,7 @@ as it is the only one passed to the container as a volume.
 
 You can build the container locally, although this should not be really needed:
 
-    $ docker build docker/ -t misspell-fixer
+    $ docker build . -t misspell-fixer
 
 ### Dependencies - "On the shoulders of giants"
 
