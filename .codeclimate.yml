@@ -1,9 +1,8 @@
-engines:
+version: "2"
+plugins:
   fixme:
     enabled: true
   shellcheck:
     enabled: true
-ratings:
-  paths: []
-exclude_paths:
-- test/
+exclude_patterns:
+- "test/"

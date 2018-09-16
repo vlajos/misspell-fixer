@@ -27,7 +27,7 @@ function init_variables {
 	export opt_dots=0
 	export bash_arg
 	
-	export rule_file_base=$BASH_SOURCE
+	export rule_file_base="${BASH_SOURCE[0]}"
 	if [ ! -f $rule_file_base"-safe.0.sed" ]
 	then
 		rule_file_base=/usr/share/misspell-fixer/rules
@@ -137,7 +137,7 @@ function parse_basic_options {
 				cmd_part_parallelism="-P $OPTARG"
 			;;
 			h)
-				d="dirname ${BASH_SOURCE}"
+				d="dirname ${BASH_SOURCE[0]}"
 				if [[ -f "$($d)"/README.md ]]
 				then
 					cat "$($d)"/README.md
@@ -163,7 +163,7 @@ function parse_basic_options {
 	
 	shift $((OPTIND-1))
 	
-	if [[ "$@" = "" ]]
+	if [[ "$*" = "" ]]
 	then
 		warning "Not enough arguments. (target directory not found) => Exiting."
 		return 1
@@ -219,7 +219,7 @@ function check_sed_arguments {
 }
 
 function preprocess_rules {
-	grep -vh 'bin/sed' $enabled_rules > $tmpfile.prep.allsedrules
+	grep -vh 'bin/sed' $enabled_rules > "$tmpfile.prep.allsedrules"
 	grep    '\\b' $tmpfile.prep.allsedrules|sed -e 's/^s\///g' -e 's/\/.*g//g' -e 's/\\b//g'	>$tmpfile.prep.grep.rules.w
 	grep -v '\\b' $tmpfile.prep.allsedrules|sed -e 's/^s\///g' -e 's/\/.*g//g'			>$tmpfile.prep.grep.rules
 }
@@ -232,7 +232,7 @@ function prepare_prefilter_input_from_cat {
 	while read -r filename
 	do
 		printf '%s\0' "$filename"
-	done <$1
+	done <"$1"
 }
 
 function prefilter_progress_none {
@@ -254,27 +254,27 @@ function main_work {
 	local itertmpfile=$tmpfile.$iteration
 
 	warning "Iteration $iteration: prefiltering."
-	
-	$input_function $prev_matched_files|\
-	tee >($prefilter_progress_function) \
-		>(xargs -0 $cmd_part_parallelism -n 100 grep --text -F -noH     -f $tmpfile.prep.grep.rules   >$itertmpfile.combos)|\
-		  xargs -0 $cmd_part_parallelism -n 100 grep --text -F -noH -w  -f $tmpfile.prep.grep.rules.w >$itertmpfile.combos.w
 
-	sort -u $itertmpfile.combos $itertmpfile.combos.w >$itertmpfile.combos.all
+	$input_function "$prev_matched_files"|\
+	tee >($prefilter_progress_function) \
+		>(xargs -0 $cmd_part_parallelism -n 100 grep --text -F -noH     -f "$tmpfile.prep.grep.rules"   >"$itertmpfile.combos")|\
+		  xargs -0 $cmd_part_parallelism -n 100 grep --text -F -noH -w  -f "$tmpfile.prep.grep.rules.w" >"$itertmpfile.combos.w"
+
+	sort -u "$itertmpfile.combos" "$itertmpfile.combos.w" >"$itertmpfile.combos.all"
 
 	if [[ $opt_verbose = 1 ]]
 	then
 		verbose "Results of prefiltering: (filename:line:pattern)"
-		cat $itertmpfile.combos.all >&2
+		cat "$itertmpfile.combos.all" >&2
 	fi
 
 	if [[ -s $itertmpfile.combos.all ]]
 	then
-		grep --text -f <(cut -d ':' -f 3 $itertmpfile.combos.all) $tmpfile.prep.allsedrules >$itertmpfile.rulesmatched
+		grep --text -f <(cut -d ':' -f 3 "$itertmpfile.combos.all") "$tmpfile.prep.allsedrules" >"$itertmpfile.rulesmatched"
 		warning "Iteration $iteration: replacing."
-		cut -d ':' -f 1 $itertmpfile.combos.all |sort -u >$itertmpfile.matchedfiles
-		xargs <$itertmpfile.matchedfiles $cmd_part_parallelism -n 1 -I '{}' $COVERAGE_WRAPPER bash -c$bash_arg "$loop_function $itertmpfile.combos.all $itertmpfile.rulesmatched '{}' 1"
-		rm $itertmpfile.rulesmatched
+		cut -d ':' -f 1 "$itertmpfile.combos.all" |sort -u >"$itertmpfile.matchedfiles"
+		xargs <"$itertmpfile.matchedfiles" $cmd_part_parallelism -n 1 -I '{}' $COVERAGE_WRAPPER bash -c$bash_arg "$loop_function $itertmpfile.combos.all $itertmpfile.rulesmatched '{}' 1"
+		rm "$itertmpfile.rulesmatched"
 		if [[ $opt_dots = 1 ]]
 		then
 			echo >&2
@@ -283,20 +283,20 @@ function main_work {
 		warning "Iteration $iteration: nothing to replace."
 	fi
 	warning "Iteration $iteration: done."
-	if [[ $iteration -lt 5 && -s $itertmpfile.combos.all ]]
+	if [[ $iteration -lt 5 && -s "$itertmpfile.combos.all" ]]
 	then
-		if diff --text -q $prev_matches $itertmpfile.combos.all >/dev/null
+		if diff --text -q "$prev_matches" "$itertmpfile.combos.all" >/dev/null
 		then
 			warning "Iteration $iteration: matchlist is the same as in previous iteration..."
 		else
-			main_work prepare_prefilter_input_from_cat $((iteration + 1)) $itertmpfile.matchedfiles $itertmpfile.combos.all
+			main_work prepare_prefilter_input_from_cat $((iteration + 1)) "$itertmpfile.matchedfiles" "$itertmpfile.combos.all"
 		fi
 	fi
 	if [[ -f $itertmpfile.matchedfiles ]]
 	then
-		rm $itertmpfile.matchedfiles
+		rm "$itertmpfile.matchedfiles"
 	fi
-	rm $itertmpfile.combos $itertmpfile.combos.w $itertmpfile.combos.all
+	rm "$itertmpfile.combos" "$itertmpfile.combos.w" "$itertmpfile.combos.all"
 	return 0
 }
 
@@ -330,11 +330,11 @@ function loop_main_replace {
 
 	"${sed[@]}" -f <(
 		IFS=$'\n'
-		for patternwithline in $(grep --text "$filename" $findresult|cut -d ':' -f 2,3)
+		for patternwithline in $(grep --text "$filename" "$findresult"|cut -d ':' -f 2,3)
 		do
 			line=${patternwithline/:*/}
 			pattern=${patternwithline/*:/}
-			grep --text -e "$pattern" $rulesmatched|sed "s/^/$line/"
+			grep --text -e "$pattern" "$rulesmatched"|sed "s/^/$line/"
 		done
 	) "$filename"
 }
@@ -344,7 +344,8 @@ function loop_decorated_mode {
 	local findresult=$1
 	local rulesmatched=$2
 	local filename=$3
-	local inplace=$4
+	# Passed, but not used at the moment:
+	#local inplace=$4
 
 	verbose "actual file: $filename"
 	local workfile=$filename.$$
