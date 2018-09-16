@@ -1,6 +1,6 @@
 version: 2
 jobs:
-    build-and-test:
+    build:
         docker:
             - image: circleci/buildpack-deps:stretch-curl
         steps:
