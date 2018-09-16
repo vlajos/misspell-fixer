@@ -1,5 +1,0 @@
-test:
-  pre:
-    - make prepare_environment
-  override:
-    - make test

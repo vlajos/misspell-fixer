@@ -1,0 +1,16 @@
+version: 2
+jobs:
+    build:
+        docker:
+            - image: circleci/buildpack-deps:stretch-curl
+        steps:
+            - checkout
+            - run:
+                name: Install make
+                command: sudo apt-get install make
+            - run:
+                name: Prepare testing environment
+                command: make prepare_environment
+            - run:
+                name: Run tests
+                command: make test
