@@ -101,7 +101,7 @@ It is based on the following sources for common misspellings:
 ### With Docker
 
 In some environments the dependencies may cause some trouble. (Mac, Windows, older linux versions.)
-In this case use misspell-fixer from a container.
+In this case, you can use misspell-fixer as a docker container image.
 
 Pull the latest version:
 
@@ -109,13 +109,13 @@ Pull the latest version:
 
 And fix `targetdir`'s content:
 
-    $ docker run -ti --rm -v targetdir:/work misspell-fixer -frunRVD .
+    $ docker run -ti --rm -v targetdir:/work vlajos/misspell-fixer -frunRVD .
 
 #### Some other different use cases, examples:
 
 General execution directly with docker:
 
-    $ docker run -ti --rm -v targetdir:/work misspell-fixer [arguments]
+    $ docker run -ti --rm -v targetdir:/work vlajos/misspell-fixer [arguments]
 
 `targetdir` becomes the current working directory in the container, so you can reference it as `.` in the arguments list.
 
@@ -125,7 +125,7 @@ You can also use the `dockered-fixer` wrapper from the source repository:
 
 Or if your shell supports functions, you can define a function to make the command a little shorter:
 
-    $ function misspell-fixer { docker run -ti --rm -v $(pwd):/work misspell-fixer "$@"; }
+    $ function misspell-fixer { docker run -ti --rm -v $(pwd):/work vlajos/misspell-fixer "$@"; }
 
 And fixing with the function:
 
