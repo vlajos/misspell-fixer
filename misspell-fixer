@@ -27,7 +27,7 @@ function init_variables {
 	export opt_dots=0
 	export bash_arg
 	
-	export rule_file_base="$BASH_SOURCE[0]"
+	export rule_file_base=$BASH_SOURCE
 	if [ ! -f $rule_file_base"-safe.0.sed" ]
 	then
 		rule_file_base=/usr/share/misspell-fixer/rules
@@ -137,7 +137,7 @@ function parse_basic_options {
 				cmd_part_parallelism="-P $OPTARG"
 			;;
 			h)
-				d="dirname ${BASH_SOURCE[0]}"
+				d="dirname ${BASH_SOURCE}"
 				if [[ -f "$($d)"/README.md ]]
 				then
 					cat "$($d)"/README.md
