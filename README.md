@@ -18,6 +18,8 @@ Also important to be very careful when fixing public APIs!
 
 A manual review is always needed to verify that nothing has been broken.
 
+[Jump to docker notes](#with-docker)
+
 ### Synopsis
     
     misspell-fixer	[OPTION] target[s]
@@ -95,6 +97,46 @@ It is based on the following sources for common misspellings:
 * https://github.com/neleai/stylepp
 * http://en.wikipedia.org/wiki/Wikipedia:Lists_of_common_misspellings/For_machines
 * https://anonscm.debian.org/git/lintian/lintian.git/tree/data/spelling/corrections
+
+### With Docker
+
+In some environments the dependencies may cause some trouble. (Mac, Windows, older linux versions.)
+In this case, you can use misspell-fixer as a docker container image.
+
+Pull the latest version:
+
+    $ docker pull vlajos/misspell-fixer
+
+And fix `targetdir`'s content:
+
+    $ docker run -ti --rm -v targetdir:/work vlajos/misspell-fixer -frunRVD .
+
+#### Some other different use cases, examples:
+
+General execution directly with docker:
+
+    $ docker run -ti --rm -v targetdir:/work vlajos/misspell-fixer [arguments]
+
+`targetdir` becomes the current working directory in the container, so you can reference it as `.` in the arguments list.
+
+You can also use the `dockered-fixer` wrapper from the source repository:
+
+    $ dockered-fixer [arguments]
+
+Or if your shell supports functions, you can define a function to make the command a little shorter:
+
+    $ function misspell-fixer { docker run -ti --rm -v $(pwd):/work vlajos/misspell-fixer "$@"; }
+
+And fixing with the function:
+
+    $ misspell-fixer [arguments]
+
+Through the wrapper and the function it can access only the folders below the current working directory
+as it is the only one passed to the container as a volume.
+
+You can build the container locally, although this should not be really needed:
+
+    $ docker build . -t misspell-fixer
 
 ### Dependencies - "On the shoulders of giants"
 

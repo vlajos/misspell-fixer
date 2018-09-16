@@ -1,0 +1,3 @@
+#!/usr/bin/env bash
+
+docker run -ti --rm -v $(pwd):/work vlajos/misspell-fixer "$@"
