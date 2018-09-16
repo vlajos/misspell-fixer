@@ -112,6 +112,8 @@ Then run it:
 
     $ docker run -ti --rm -v targetdir:/work misspell-fixer arguments
 
+`targetdir` becomes the current working directory in the container, so you can reference it as `.` in the arguments list.
+
 You can also use the `dockered-fixer` wrapper from the source repository:
 
     $ dockered-fixer [any above arguments]

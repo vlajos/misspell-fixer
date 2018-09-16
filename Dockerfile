@@ -5,10 +5,6 @@ RUN apk --no-cache add bash grep sed findutils coreutils diffutils
 
 RUN mkdir /misspell-fixer
 
-RUN echo '#!/usr/bin/env bash' >>/misspell-fixer/misspell-fixer-docker.sh
-RUN echo '/misspell-fixer/misspell-fixer "$@"  /work' >>/misspell-fixer/misspell-fixer-docker.sh
-RUN chmod a+x /misspell-fixer/misspell-fixer-docker.sh
-
 ADD misspell-fixer \
     misspell-fixer-not-so-safe.sed \
     misspell-fixer-safe.0.sed \
@@ -21,5 +17,5 @@ ADD misspell-fixer \
 
 WORKDIR /work
 
-ENTRYPOINT ["/misspell-fixer/misspell-fixer-docker.sh"]
+ENTRYPOINT ["/misspell-fixer/misspell-fixer"]
 CMD ["-h"]
