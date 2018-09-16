@@ -27,7 +27,7 @@ function init_variables {
 	export opt_dots=0
 	export bash_arg
 	
-	export rule_file_base=$BASH_SOURCE
+	export rule_file_base=$BASH_SOURCE[0]
 	if [ ! -f $rule_file_base"-safe.0.sed" ]
 	then
 		rule_file_base=/usr/share/misspell-fixer/rules
@@ -137,7 +137,7 @@ function parse_basic_options {
 				cmd_part_parallelism="-P $OPTARG"
 			;;
 			h)
-				d="dirname ${BASH_SOURCE}"
+				d="dirname ${BASH_SOURCE[0]}"
 				if [[ -f "$($d)"/README.md ]]
 				then
 					cat "$($d)"/README.md
@@ -163,7 +163,7 @@ function parse_basic_options {
 	
 	shift $((OPTIND-1))
 	
-	if [[ "$@" = "" ]]
+	if [[ "$*" = "" ]]
 	then
 		warning "Not enough arguments. (target directory not found) => Exiting."
 		return 1
@@ -344,7 +344,8 @@ function loop_decorated_mode {
 	local findresult=$1
 	local rulesmatched=$2
 	local filename=$3
-	local inplace=$4
+	# Passed, but not used at the moment:
+	#local inplace=$4
 
 	verbose "actual file: $filename"
 	local workfile=$filename.$$
