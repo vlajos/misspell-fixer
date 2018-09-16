@@ -31,7 +31,7 @@ prepare_environment:
 
 man:
 	ronn --roff --manual=misspell-fixer README.md
-	sed -i -e 's/README/misspell-fixer/g' -e '/travis/d' README 
+	sed -i -e 's/README/misspell-fixer/g' -e '/travis/d' -e '/Jump to docker/d' README
 	sed -i '/.TH /a .SH NAME\
 	misspell-fixer \- misspell-fixer' README
 	mv README doc/misspell-fixer.1
