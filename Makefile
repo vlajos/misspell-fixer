@@ -24,7 +24,7 @@ test_self:
 
 prepare_environment:
 	sudo apt-get update -qq
-	sudo apt-get install -y elfutils libdw1 libasm1 libdw-dev libelf-dev libcurl4-openssl-dev
+	sudo apt-get install -y elfutils libdw1 libasm1 libdw-dev libelf-dev libcurl4-openssl-dev make cmake g++ zlib1g-dev
 	curl -L "https://github.com/kward/shunit2/archive/v2.1.7.tar.gz" | tar zx
 	cd /tmp;git clone https://github.com/SimonKagstrom/kcov
 	cd /tmp/kcov;cmake ./;make;sudo make install
