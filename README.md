@@ -101,15 +101,18 @@ It is based on the following sources for common misspellings:
 In some environments the dependencies may cause some trouble. (Mac, Windows, older linux versions.)
 In this case use misspell-fixer from a container:
 
-Build it:
+Pull it:
+    $ docker pull vlajos/misspell-fixer
+
+Or build:
 
     $ docker build . -t misspell-fixer
 
-Run it:
+Then run it:
 
-    $ docker run -ti --rm -v target:/work misspell-fixer arguments
+    $ docker run -ti --rm -v targetdir:/work misspell-fixer arguments
 
-You can also use the `dockered-fixer` wrapper:
+You can also use the `dockered-fixer` wrapper from the source repository:
 
     $ dockered-fixer [any above arguments]
 
