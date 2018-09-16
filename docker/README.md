@@ -23,13 +23,13 @@ And fix `targetdir`'s content:
 
 General execution directly with docker:
 
-    $ docker run -ti --rm -v targetdir:/work misspell-fixer arguments
+    $ docker run -ti --rm -v targetdir:/work misspell-fixer [arguments]
 
 `targetdir` becomes the current working directory in the container, so you can reference it as `.` in the arguments list.
 
 You can also use the `dockered-fixer` wrapper from the source repository:
 
-    $ dockered-fixer [any above arguments]
+    $ dockered-fixer [arguments]
 
 Or if your shell supports functions, you can define a function to make the command a little shorter:
 
@@ -37,7 +37,7 @@ Or if your shell supports functions, you can define a function to make the comma
 
 And fixing with the function:
 
-    $ misspell-fixer [any above arguments]
+    $ misspell-fixer [arguments]
 
 Through the wrapper and the function it can access only the folders below the current working directory
 as it is the only one passed to the container as a volume.
@@ -46,6 +46,10 @@ You can build the container locally, although this should not be really needed:
 
     $ docker build docker/ -t misspell-fixer
 
-## General documentation: https://github.com/vlajos/misspell-fixer/blob/master/README.md
+### General documentation:
 
-## Original source: https://github.com/vlajos/misspell-fixer
+https://github.com/vlajos/misspell-fixer/blob/master/README.md
+
+### Original source:
+
+https://github.com/vlajos/misspell-fixer
