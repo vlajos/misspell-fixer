@@ -3,9 +3,9 @@ jobs:
     build-and-test:
         steps:
             - checkout
-            - run
+            - run:
                 name: Prepare environment
                 command: make prepare_environment
-            - run
+            - run:
                 name: Run tests
                 command: make test
