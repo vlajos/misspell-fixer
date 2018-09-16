@@ -5,7 +5,7 @@ jobs:
             - image: circleci/buildpack-deps:stretch-curl
         steps:
             - checkout
-            - run: sudo apt-get install make cmake g++
+            - run: sudo apt-get install make cmake g++ zlib1g-dev
             - run:
                 name: Prepare environment
                 command: make prepare_environment
