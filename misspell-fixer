@@ -169,9 +169,9 @@ function parse_basic_options {
 		return 1
 	fi
 
-	directories="$@"
+	directories=( "$@" )
 	cmd_part_ignore="( -iname $tmpfile* -o -iname *.BAK $cmd_part_ignore_scm $cmd_part_ignore_bin ) -prune -o "
-	warning "Target directories: $directories"
+	warning "Target directories: ${directories[*]}"
 
 	return 0
 }
@@ -225,7 +225,7 @@ function preprocess_rules {
 }
 
 function prepare_prefilter_input_from_find {
-	find $directories $cmd_part_ignore -type f -and \( $opt_name_filter \) $cmd_size -print0
+	find ${directories[*]} $cmd_part_ignore -type f -and \( $opt_name_filter \) $cmd_size -print0
 }
 
 function prepare_prefilter_input_from_cat {
