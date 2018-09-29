@@ -1,3 +1,7 @@
+misspell-fixer: -s Enable showing of diffs.
+misspell-fixer: Target directories: /tmp/misspell-fixer-test/X/work
+misspell-fixer: Iteration X: prefiltering.
+misspell-fixer: Iteration X: replacing.
 --- /tmp/misspell-fixer-test/X/work/X.txt	X-X-X X:X:X.X +X
 +++ /tmp/misspell-fixer-test/X/work/X.txt.X	X-X-X X:X:X.X +X
 @@ -X,X +X,X @@
@@ -9,6 +13,9 @@
 +successfully
 +lower than
 \ No newline at end of file
+misspell-fixer: Iteration X: done.
+misspell-fixer: Iteration X: prefiltering.
+misspell-fixer: Iteration X: replacing.
 --- /tmp/misspell-fixer-test/X/work/X.txt	X-X-X X:X:X.X +X
 +++ /tmp/misspell-fixer-test/X/work/X.txt.X	X-X-X X:X:X.X +X
 @@ -X,X +X,X @@
@@ -20,3 +27,5 @@
 +successfully
 +lower than
 \ No newline at end of file
+misspell-fixer: Iteration X: done.
+misspell-fixer: Iteration X: matchlist is the same as in previous iteration...

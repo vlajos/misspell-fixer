@@ -1,23 +1,23 @@
-/tmp/misspell-fixer-test/X/work/X.txt:X:lower then
-/tmp/misspell-fixer-test/X/work/X.txt:X:lower then
-/tmp/misspell-fixer-test/X/work/X.txt:X:succesful
-/tmp/misspell-fixer-test/X/work/X.txt:X:succesful
-/tmp/misspell-fixer-test/X/work/X.txt:X:succesful
-/tmp/misspell-fixer-test/X/work/X.txt:X:succesful
 misspell-fixer: -v Enable verbose mode.
+misspell-fixer: Target directories: /tmp/misspell-fixer-test/X/work
+misspell-fixer: Iteration X: prefiltering.
+misspell-fixer: Results of prefiltering: (filename:line:pattern)
+/tmp/misspell-fixer-test/X/work/X.txt:X:succesful
+/tmp/misspell-fixer-test/X/work/X.txt:X:succesful
+/tmp/misspell-fixer-test/X/work/X.txt:X:lower then
+misspell-fixer: Iteration X: replacing.
 misspell-fixer: actual file: /tmp/misspell-fixer-test/X/work/X.txt
-misspell-fixer: actual file: /tmp/misspell-fixer-test/X/work/X.txt
+misspell-fixer: temp file: /tmp/misspell-fixer-test/X/work/X.txt.X
+misspell-fixer: misspellings are fixed!
 misspell-fixer: Iteration X: done.
+misspell-fixer: Iteration X: prefiltering.
+misspell-fixer: Results of prefiltering: (filename:line:pattern)
+/tmp/misspell-fixer-test/X/work/X.txt:X:succesful
+/tmp/misspell-fixer-test/X/work/X.txt:X:succesful
+/tmp/misspell-fixer-test/X/work/X.txt:X:lower then
+misspell-fixer: Iteration X: replacing.
+misspell-fixer: actual file: /tmp/misspell-fixer-test/X/work/X.txt
+misspell-fixer: temp file: /tmp/misspell-fixer-test/X/work/X.txt.X
+misspell-fixer: misspellings are fixed!
 misspell-fixer: Iteration X: done.
 misspell-fixer: Iteration X: matchlist is the same as in previous iteration...
-misspell-fixer: Iteration X: prefiltering.
-misspell-fixer: Iteration X: prefiltering.
-misspell-fixer: Iteration X: replacing.
-misspell-fixer: Iteration X: replacing.
-misspell-fixer: misspellings are fixed!
-misspell-fixer: misspellings are fixed!
-misspell-fixer: Results of prefiltering: (filename:line:pattern)
-misspell-fixer: Results of prefiltering: (filename:line:pattern)
-misspell-fixer: Target directories: /tmp/misspell-fixer-test/X/work
-misspell-fixer: temp file: /tmp/misspell-fixer-test/X/work/X.txt.X
-misspell-fixer: temp file: /tmp/misspell-fixer-test/X/work/X.txt.X
