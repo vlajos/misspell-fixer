@@ -11,13 +11,12 @@ all: lint_dicts $(wildcard *.sed)
 lint_dicts:
 	cd dict;./misspell-lint-dicts.sh
 
-KCOV=/usr/local/bin/kcov
-KCOV_ARGS=--include-pattern=misspell-fixer/misspell-fixer --path-strip-level=1
+KCOV=/usr/local/bin/kcov --include-pattern=misspell-fixer/misspell-fixer --path-strip-level=1
 COV_DIR=/tmp/coverage
 test:
-	export COVERAGE_WRAPPER="${KCOV} ${KCOV_ARGS} ${COV_DIR}-forks test/coverage_wrapper.sh";\
-	${KCOV} ${KCOV_ARGS} ${COV_DIR}-main test/tests.sh &&\
-	${KCOV} ${KCOV_ARGS} --coveralls-id=${TRAVIS_JOB_ID} --merge ${COV_DIR} ${COV_DIR}-main ${COV_DIR}-forks
+	export COVERAGE_WRAPPER="${KCOV} ${COV_DIR}-forks test/coverage_wrapper.sh";\
+	${KCOV} ${COV_DIR}-main test/tests.sh &&\
+	${KCOV} --coveralls-id=${TRAVIS_JOB_ID} --merge ${COV_DIR} ${COV_DIR}-main ${COV_DIR}-forks
 
 test_self:
 	test/self-spelling-test.sh
