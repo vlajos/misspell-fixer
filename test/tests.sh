@@ -253,4 +253,4 @@ suite(){
 
 
 # load shunit2
-. shunit2-2.1.7/shunit2
+. shunit2-2.1.7/shunit2 >&2

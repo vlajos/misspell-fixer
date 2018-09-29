@@ -16,7 +16,7 @@ KCOV_ARGS=--include-pattern=misspell-fixer/misspell-fixer --path-strip-level=1
 COV_DIR=/tmp/coverage
 test:
 	export COVERAGE_WRAPPER="${KCOV} ${KCOV_ARGS} ${COV_DIR}-forks test/coverage_wrapper.sh";\
-	${KCOV} ${KCOV_ARGS} ${COV_DIR}-main test/tests.sh;\
+	${KCOV} ${KCOV_ARGS} ${COV_DIR}-main test/tests.sh &&\
 	${KCOV} ${KCOV_ARGS} --coveralls-id=${TRAVIS_JOB_ID} --merge ${COV_DIR} ${COV_DIR}-main ${COV_DIR}-forks
 
 test_self:
