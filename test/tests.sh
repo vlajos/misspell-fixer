@@ -31,6 +31,25 @@ runAndCompare(){
 	assertTrue 'Expected output differs.' $?
 }
 
+runAndCompareOutput(){
+	export TEST_OUTPUT=$TEMP/output.$2
+
+	$RUN $1 $TEMP/work >>$TEST_OUTPUT 2>&1
+	diff -ruwb $TEMP/expected/ $TEMP/work/
+	assertTrue 'Expected output differs.' $?
+
+	sed 's/[0-9]\+/X/g' $TEST_OUTPUT |\
+	grep -v -e kcov -e "Your grep version is" >$TEST_OUTPUT.standard
+	if [[ "$3" = "1" ]]
+	then
+		sort -f $TEST_OUTPUT.standard >$TEST_OUTPUT.standard.sorted
+		mv $TEST_OUTPUT.standard.sorted $TEST_OUTPUT.standard
+	fi
+	diff -ruwb $TEST_OUTPUT.standard test/expected.$2.output
+	assertTrue 'Expected output differs.' $?
+	rm $TEST_OUTPUT $TEST_OUTPUT.standard
+}
+
 testErrors(){
 	TMP=$($RUN 2>&1)
 	assertFalse $?
@@ -71,11 +90,7 @@ testMultipleFileNames(){
 }
 
 testShowDiff(){
-	$RUN -s $TEMP/work|sed 's/[0-9]\+/X/g' >/tmp/diffoutput
-	diff -ruwb $TEMP/expected/ $TEMP/work/
-	assertTrue 'Expected output differs.' $?
-	diff -ruwb /tmp/diffoutput test/expected.diff.output
-	assertTrue 'Expected output differs.' $?
+	runAndCompareOutput -s diff
 }
 
 testParallel(){
@@ -191,27 +206,15 @@ testIgnoreBinary(){
 }
 
 testVerbose(){
-	$RUN -v $TEMP/work 2>&1|sed 's/[0-9]\+/X/g'|grep -v -e kcov -e "Your grep version is"|sort -f >/tmp/verboseoutput
-	diff -ruwb test/stubs/ $TEMP/work/
-	assertTrue 'Expected output differs.' $?
-	diff -ruwb /tmp/verboseoutput test/expected.verbose.output
-	assertTrue 'Expected output differs.' $?
+	runAndCompareOutput -v verbose
 }
 
 testDebug(){
-	$RUN -d $TEMP/work 2>&1|sed 's/[0-9]\+/X/g'|grep -v -e kcov -e "Your grep version is"|sort -f >/tmp/debugoutput
-	diff -ruwb test/stubs/ $TEMP/work/
-	assertTrue 'Expected output differs.' $?
-	diff -ruwb /tmp/debugoutput test/expected.debug.output
-	assertTrue 'Expected output differs.' $?
+	runAndCompareOutput -d debug 1
 }
 
 testDots(){
-	$RUN -o $TEMP/work 2>&1|sed 's/[0-9]\+/X/g'|grep -v -e kcov -e "Your grep version is"|sort -f >/tmp/dotsoutput
-	diff -ruwb test/stubs/ $TEMP/work/
-	assertTrue 'Expected output differs.' $?
-	diff -ruwb /tmp/dotsoutput test/expected.dots.output
-	assertTrue 'Expected output differs.' $?
+	runAndCompareOutput -o dots
 }
 
 testMNoChange(){
@@ -238,7 +241,6 @@ suite(){
 	suite_addTest testKeepPermissionsFast
 	suite_addTest testIgnoreBinary
 	suite_addTest testVerbose
-	suite_addTest testDebug
 	suite_addTest testDots
 	suite_addTest testMNoChange
 	for i in '' R V u g 'R V D' 'R V u g D'
@@ -249,8 +251,14 @@ suite(){
 		eval "testMainFast$allarg(){ runAndCompare -frn$allarg 0 $i; }"
 		suite_addTest testMainFast$allarg
 	done
+	if [[ "$COVERAGE_WRAPPER" = "" ]]
+	then
+		suite_addTest testDebug
+	else
+		echo "Skipping testDebug under kcov. Set -x does not cascade through all the processes unfortunately."
+	fi
 }
 
 
 # load shunit2
-. shunit2-2.1.7/shunit2
+. shunit2-2.1.7/shunit2 >&2
