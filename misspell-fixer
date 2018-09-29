@@ -329,11 +329,10 @@ function loop_main_replace {
 	fi
 
 	"${sed[@]}" -f <(
-		IFS=$'\n'
-		for patternwithline in $(grep --text "$filename" "$findresult"|cut -d ':' -f 2,3)
+		grep --text "$filename" "$findresult"|\
+		cut -d ':' -f 2,3|\
+		while IFS=: read -r line pattern
 		do
-			line=${patternwithline/:*/}
-			pattern=${patternwithline/*:/}
 			grep --text -e "$pattern" "$rulesmatched"|sed "s/^/$line/"
 		done
 	) "$filename"
