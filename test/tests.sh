@@ -47,7 +47,7 @@ runAndCompareOutput(){
 	fi
 	diff -ruwb $TEST_OUTPUT.standard test/expected.$2.output
 	assertTrue 'Expected output differs.' $?
-	rm $TEST_OUTPUT.standard
+	rm $TEST_OUTPUT $TEST_OUTPUT.standard
 }
 
 testErrors(){

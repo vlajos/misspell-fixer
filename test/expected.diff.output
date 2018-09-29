@@ -14,18 +14,3 @@ misspell-fixer: Iteration X: replacing.
 +lower than
 \ No newline at end of file
 misspell-fixer: Iteration X: done.
-misspell-fixer: Iteration X: prefiltering.
-misspell-fixer: Iteration X: replacing.
---- /tmp/misspell-fixer-test/X/work/X.txt	X-X-X X:X:X.X +X
-+++ /tmp/misspell-fixer-test/X/work/X.txt.X	X-X-X X:X:X.X +X
-@@ -X,X +X,X @@
--succesful
--succesfully
--lower then
-\ No newline at end of file
-+successful
-+successfully
-+lower than
-\ No newline at end of file
-misspell-fixer: Iteration X: done.
-misspell-fixer: Iteration X: matchlist is the same as in previous iteration...
