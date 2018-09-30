@@ -27,7 +27,6 @@
 + [[ X = X ]]
 + [[ X = X ]]
 + [[ X = X ]]
-+ [[ X = X ]]
 ++ cut -d : -f X,X
 ++ diff -u /tmp/misspell-fixer-test/X/work/X.txt /tmp/misspell-fixer-test/X/work/X.txt.X
 ++ grep --text -e 'lower then' .misspell-fixer.X.X.rulesmatched
@@ -48,6 +47,7 @@
 +++ /tmp/misspell-fixer-test/X/work/X.txt.X	X-X-X X:X:X.X +X
 ++++ check_grep_version
 ++++ check_sed_arguments
+++++ current_version=X.X
 ++++ cut -d : -f X .misspell-fixer.X.X.combos.all
 ++++ echo 'misspell-fixer: Iteration X: done.'
 ++++ echo 'misspell-fixer: Iteration X: prefiltering.'
@@ -58,7 +58,7 @@
 ++++ grep -q illegal
 ++++ grep -v '\\b' .misspell-fixer.X.prep.allsedrules
 ++++ grep -vh bin/sed misspell-fixer-safe.X.sed
-++++ local current_version=X.X
+++++ local current_version
 ++++ local input_function=prepare_prefilter_input_from_find
 ++++ local iteration=X
 ++++ local itertmpfile=.misspell-fixer.X.X
