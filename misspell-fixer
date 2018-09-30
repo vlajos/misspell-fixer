@@ -225,7 +225,7 @@ function preprocess_rules {
 }
 
 function prepare_prefilter_input_from_find {
-	find ${directories[*]} $cmd_part_ignore -type f -and \( $opt_name_filter \) $cmd_size -print0
+	find "${directories[*]}" $cmd_part_ignore -type f -and \( $opt_name_filter \) $cmd_size -print0
 }
 
 function prepare_prefilter_input_from_cat {
