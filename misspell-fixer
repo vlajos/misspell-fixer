@@ -28,16 +28,16 @@ function init_variables {
 	export bash_arg
 	
 	export rule_file_base="${BASH_SOURCE[0]}"
-	if [ ! -f $rule_file_base"-safe.0.sed" ]
+	if [ ! -f "${rule_file_base}-safe.0.sed" ]
 	then
 		rule_file_base=/usr/share/misspell-fixer/rules
 	fi
-	rules_safe0=$rule_file_base"-safe.0.sed"
-	rules_safe1=$rule_file_base"-safe.1.sed"
-	rules_safe2=$rule_file_base"-safe.2.sed"
-	rules_safe3=$rule_file_base"-safe.3.sed"
-	rules_not_so_safe=$rule_file_base"-not-so-safe.sed"
-	rules_gb_to_us=$rule_file_base"-gb-to-us.sed"
+	rules_safe0="${rule_file_base}-safe.0.sed"
+	rules_safe1="${rule_file_base}-safe.1.sed"
+	rules_safe2="${rule_file_base}-safe.2.sed"
+	rules_safe3="${rule_file_base}-safe.3.sed"
+	rules_not_so_safe="${rule_file_base}-not-so-safe.sed"
+	rules_gb_to_us="${rule_file_base}-gb-to-us.sed"
 	export enabled_rules="$rules_safe0"
 
 	export cmd_part_ignore_scm="-o -iname .git -o -iname .svn -o -iname .hg -o -iname CVS"
@@ -169,9 +169,9 @@ function parse_basic_options {
 		return 1
 	fi
 
-	directories="$@"
+	directories=( "$@" )
 	cmd_part_ignore="( -iname $tmpfile* -o -iname *.BAK $cmd_part_ignore_scm $cmd_part_ignore_bin ) -prune -o "
-	warning "Target directories: $directories"
+	warning "Target directories: ${directories[*]}"
 
 	return 0
 }
@@ -197,7 +197,8 @@ function process_parameter_rules {
 }
 
 function check_grep_version {
-	local current_version=$(grep --version|head -1|sed -e 's/.* //g')
+	local current_version
+	current_version=$(grep --version|head -1|sed -e 's/.* //g')
 	local required_version="2.28"
 	if printf '%s\n%s\n' "$required_version" "$current_version" | sort -VC
 	then
@@ -225,7 +226,7 @@ function preprocess_rules {
 }
 
 function prepare_prefilter_input_from_find {
-	find $directories $cmd_part_ignore -type f -and \( $opt_name_filter \) $cmd_size -print0
+	find ${directories[*]} $cmd_part_ignore -type f -and \( $opt_name_filter \) $cmd_size -print0
 }
 
 function prepare_prefilter_input_from_cat {
@@ -329,11 +330,10 @@ function loop_main_replace {
 	fi
 
 	"${sed[@]}" -f <(
-		IFS=$'\n'
-		for patternwithline in $(grep --text "$filename" "$findresult"|cut -d ':' -f 2,3)
+		grep --text "$filename" "$findresult"|\
+		cut -d ':' -f 2,3|\
+		while IFS=: read -r line pattern
 		do
-			line=${patternwithline/:*/}
-			pattern=${patternwithline/*:/}
 			grep --text -e "$pattern" "$rulesmatched"|sed "s/^/$line/"
 		done
 	) "$filename"
@@ -357,8 +357,7 @@ function loop_decorated_mode {
 	fi
 	cp -a "$filename" "$workfile"
 	loop_main_replace "$findresult" "$rulesmatched" "$filename" 0 >"$workfile"
-	diff=$(diff -u "$filename" "$workfile")
-	if [[ $? = 0 ]]
+	if diff=$(diff -u "$filename" "$workfile")
 	then
 		verbose "nothing changed"
 		rm "$workfile"
