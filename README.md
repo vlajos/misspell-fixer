@@ -65,6 +65,30 @@ File filtering options:
 * `-b` Process binary, generated files. (do not ignore `*.gif`, `*.jpg`, `*.jpeg`, `*.png`, `*.zip`, `*.gz`, `*.bz2`, `*.xz`, `*.rar`, `*.po`, `*.pdf`, `*.woff`, `yarn.lock`, `package-lock.json`, `composer.lock`, `*.mo`)
 * `-m` Disable file size checks. Default is to ignore files > 1MB. (usually csv, compressed JS, ..)
 
+White listing files/entries
+
+Misspell-fixer automatically ignores the issues matching to the patterns listed in `.misspell-fixer.ignore`.
+The format of this file follows the prefiltering's temporary result format:
+`^filename:line number:matched word`
+
+* `-W` can be used to append the found issues instead of fixing them based on the other settings.
+
+The ignore file is interpreted as a `grep` exclusion list.
+It is applied after the prefiltering step as a set of grep expression.
+So it is possible to exclude any prefixes or more specifically whole files with keeping only their file names:
+
+`^filename`
+
+Or a directory:
+
+`^directory`
+
+The entries are listed/matched with the paths based on the current invocation. Reaching the same target with different path from
+the same working directory will will not apply the white listed entries geneated from the other invocation.
+In directory `x` the white list entries generated with target `.` will not be applied for target `../x`, although they are the same.
+This can be worked around with manually editing the white list to your needs.
+(Patches are welcome for a more general solution...)
+
 ### Sample usage
 
 By default nothing important will happen

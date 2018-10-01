@@ -226,7 +226,28 @@ testMNoChange(){
 	rm -rf $TEMP/work/nochange.txt $TEMP/expected/nochange.txt
 }
 
+testWhitelistConflictWithRealRun(){
+	runAndCompareOutput -rW whitelist_vs_real
+}
+
+testWhitelist(){
+	cp test/stubs/0.txt $TEMP/work/0.txt
+	cp test/stubs/0.txt $TEMP/expected/0.txt
+	local whitelist=".misspell-fixer.ignore"
+	assertFalse 'Whitelist should not exist' "[ -s $whitelist ]"
+	$RUN -W $TEMP/work/
+	assertTrue 'Whitelist should not exist' "[ -s $whitelist ]"
+	cp test/stubs/0.txt $TEMP/work/1.txt
+	cp test/expecteds/0.txt $TEMP/expected/1.txt
+	runAndCompare -rn
+	cp -a $TEMP/expected /tmp/xxx
+	rm $whitelist
+}
+
 suite(){
+	export TEST_OUTPUT=$TEMP/output.default
+	suite_addTest testWhitelist
+	suite_addTest testWhitelistConflictWithRealRun
 	suite_addTest testShowDiff
 	suite_addTest testErrors
 	suite_addTest testOnlyDir

@@ -26,7 +26,10 @@ function init_variables {
 	export opt_backup=1
 	export opt_dots=0
 	export bash_arg
-	
+
+	export opt_whitelist_save=0
+	export opt_whitelist_filename=".misspell-fixer.ignore"
+
 	export rule_file_base="${BASH_SOURCE[0]}"
 	if [ ! -f "${rule_file_base}-safe.0.sed" ]
 	then
@@ -60,7 +63,7 @@ function init_variables {
 
 function parse_basic_options {
 	local OPTIND
-	while getopts ":dvorfsibnRVDmughN:P:" opt; do
+	while getopts ":dvorfsibnRVDmughwWN:P:" opt; do
 		case $opt in
 			d)
 				warning "-d Enable debug mode."
@@ -146,6 +149,10 @@ function parse_basic_options {
 				fi
 				return 1
 			;;
+			W)
+				warning "-W Save found misspelled file entries into $opt_whitelist_filename instead of fixing them."
+				opt_whitelist_save=1
+			;;
 			\?)
 				warning "Invalid option: -$OPTARG"
 				return 1
@@ -170,14 +177,20 @@ function parse_basic_options {
 	fi
 
 	directories=( "$@" )
-	cmd_part_ignore="( -iname $tmpfile* -o -iname *.BAK $cmd_part_ignore_scm $cmd_part_ignore_bin ) -prune -o "
+	cmd_part_ignore="( -iname $tmpfile* -o -iname $opt_whitelist_filename -o -iname *.BAK $cmd_part_ignore_scm $cmd_part_ignore_bin ) -prune -o "
 	warning "Target directories: ${directories[*]}"
 
 	return 0
 }
 
 function process_parameter_rules {
-	if [[ 	$opt_show_diff = 1 ||\
+	if [[ $opt_whitelist_save = 1 &&
+		$opt_real_run = 1 ]]
+	then
+		warning "Whitelist cannot be generated in real run mode. => Exiting."
+		return 1
+	fi
+	if [[ $opt_show_diff = 1 ||\
 		$opt_backup = 1 ||\
 		$opt_real_run = 0 ||\
 		$opt_verbose = 1 ]]
@@ -263,6 +276,13 @@ function main_work {
 
 	sort -u "$itertmpfile.combos" "$itertmpfile.combos.w" >"$itertmpfile.combos.all"
 
+	if [[ -s "$opt_whitelist_filename" ]]
+	then
+		warning "Skipping whitelisted entries based on $opt_whitelist_filename."
+		grep -vf $opt_whitelist_filename "$itertmpfile.combos.all" >"$itertmpfile.combos.all.onlynonwhitelisted"
+		mv "$itertmpfile.combos.all.onlynonwhitelisted" "$itertmpfile.combos.all"
+	fi
+
 	if [[ $opt_verbose = 1 ]]
 	then
 		verbose "Results of prefiltering: (filename:line:pattern)"
@@ -271,14 +291,24 @@ function main_work {
 
 	if [[ -s $itertmpfile.combos.all ]]
 	then
-		grep --text -f <(cut -d ':' -f 3 "$itertmpfile.combos.all") "$tmpfile.prep.allsedrules" >"$itertmpfile.rulesmatched"
-		warning "Iteration $iteration: replacing."
-		cut -d ':' -f 1 "$itertmpfile.combos.all" |sort -u >"$itertmpfile.matchedfiles"
-		xargs <"$itertmpfile.matchedfiles" $cmd_part_parallelism -n 1 -I '{}' $COVERAGE_WRAPPER bash -c$bash_arg "$loop_function $itertmpfile.combos.all $itertmpfile.rulesmatched '{}' 1"
-		rm "$itertmpfile.rulesmatched"
-		if [[ $opt_dots = 1 ]]
+		if [[ $opt_whitelist_save = 1 ]]
 		then
-			echo >&2
+			warning "Saving found misspells into $opt_whitelist_filename."
+			sed -e 's/^/^/' "$itertmpfile.combos.all" >> "$opt_whitelist_filename"
+		else
+			if [[ $opt_real_run = 0 ]]
+			then
+				warning "Real run (-r) has not been enabled. Files will not be changed. Use -r to override this."
+			fi
+			grep --text -f <(cut -d ':' -f 3 "$itertmpfile.combos.all") "$tmpfile.prep.allsedrules" >"$itertmpfile.rulesmatched"
+			warning "Iteration $iteration: replacing."
+			cut -d ':' -f 1 "$itertmpfile.combos.all" |sort -u >"$itertmpfile.matchedfiles"
+			xargs <"$itertmpfile.matchedfiles" $cmd_part_parallelism -n 1 -I '{}' $COVERAGE_WRAPPER bash -c$bash_arg "$loop_function $itertmpfile.combos.all $itertmpfile.rulesmatched '{}' 1"
+			rm "$itertmpfile.rulesmatched"
+			if [[ $opt_dots = 1 ]]
+			then
+				echo >&2
+			fi
 		fi
 	else
 		warning "Iteration $iteration: nothing to replace."
