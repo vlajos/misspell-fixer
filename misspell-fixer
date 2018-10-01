@@ -279,7 +279,7 @@ function main_work {
 	if [[ -s "$opt_whitelist_filename" ]]
 	then
 		warning "Skipping whitelisted entries based on $opt_whitelist_filename."
-		grep -vxf $opt_whitelist_filename "$itertmpfile.combos.all" >"$itertmpfile.combos.all.onlynonwhitelisted"
+		grep -vf $opt_whitelist_filename "$itertmpfile.combos.all" >"$itertmpfile.combos.all.onlynonwhitelisted"
 		mv "$itertmpfile.combos.all.onlynonwhitelisted" "$itertmpfile.combos.all"
 	fi
 
@@ -294,7 +294,7 @@ function main_work {
 		if [[ $opt_whitelist_save = 1 ]]
 		then
 			warning "Saving found misspells into $opt_whitelist_filename."
-			cat "$itertmpfile.combos.all" >> "$opt_whitelist_filename"
+			sed -e 's/^/^/' "$itertmpfile.combos.all" >> "$opt_whitelist_filename"
 		else
 			if [[ $opt_real_run = 0 ]]
 			then
