@@ -1,6 +1,7 @@
 misspell-fixer: -s Enable showing of diffs.
 misspell-fixer: Target directories: /tmp/misspell-fixer-test/X/work
 misspell-fixer: Iteration X: prefiltering.
+misspell-fixer: Real run (-r) has not been enabled. Files will not be changed. Use -r to override this.
 misspell-fixer: Iteration X: replacing.
 --- /tmp/misspell-fixer-test/X/work/X.txt	X-X-X X:X:X.X +X
 +++ /tmp/misspell-fixer-test/X/work/X.txt.X	X-X-X X:X:X.X +X

@@ -190,7 +190,7 @@ function process_parameter_rules {
 		warning "Whitelist cannot be generated in real run mode. => Exiting."
 		return 1
 	fi
-	if [[ 	$opt_show_diff = 1 ||\
+	if [[ $opt_show_diff = 1 ||\
 		$opt_backup = 1 ||\
 		$opt_real_run = 0 ||\
 		$opt_verbose = 1 ]]
