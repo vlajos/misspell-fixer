@@ -27,7 +27,7 @@ function init_variables {
 	export opt_dots=0
 	export bash_arg
 
-	export opt_save_whitelist=0
+	export opt_whitelist_save=0
 	export opt_whitelist_filename=".misspell-fixer.ignore"
 
 	export rule_file_base="${BASH_SOURCE[0]}"
@@ -63,7 +63,7 @@ function init_variables {
 
 function parse_basic_options {
 	local OPTIND
-	while getopts ":dvorfsibnRVDmughWN:P:" opt; do
+	while getopts ":dvorfsibnRVDmughwWN:P:" opt; do
 		case $opt in
 			d)
 				warning "-d Enable debug mode."
@@ -151,12 +151,7 @@ function parse_basic_options {
 			;;
 			W)
 				warning "-W Save found misspelled file entries into $opt_whitelist_filename instead of fixing them."
-				if [[ -s "$opt_whitelist_filename" ]]
-				then
-					warning "$opt_whitelist_filename already exists. Overwriting it automatically does not sound safe. Please remove it manually first if you want to generate a new one!"
-					return 1
-				fi
-				opt_save_whitelist=1
+				opt_whitelist_save=1
 			;;
 			\?)
 				warning "Invalid option: -$OPTARG"
@@ -189,7 +184,7 @@ function parse_basic_options {
 }
 
 function process_parameter_rules {
-	if [[ $opt_save_whitelist = 1 &&
+	if [[ $opt_whitelist_save = 1 &&
 		$opt_real_run = 1 ]]
 	then
 		warning "Whitelist cannot be generated in real run mode. => Exiting."
@@ -296,10 +291,10 @@ function main_work {
 
 	if [[ -s $itertmpfile.combos.all ]]
 	then
-		if [[ $opt_save_whitelist = 1 ]]
+		if [[ $opt_whitelist_save = 1 ]]
 		then
 			warning "Saving found misspells into $opt_whitelist_filename."
-			cp "$itertmpfile.combos.all" "$opt_whitelist_filename"
+			cat "$itertmpfile.combos.all" >> "$opt_whitelist_filename"
 		else
 			if [[ $opt_real_run = 0 ]]
 			then
