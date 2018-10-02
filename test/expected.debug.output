@@ -58,7 +58,7 @@
 ++++ grep --text -f /dev/fd/X .misspell-fixer.X.prep.allsedrules
 ++++ grep -q illegal
 ++++ grep -v '\\b' .misspell-fixer.X.prep.allsedrules
-++++ grep -vh bin/sed misspell-fixer-safe.X.sed
+++++ grep -vh bin/sed rules/safe.X.sed
 ++++ local current_version
 ++++ local input_function=prepare_prefilter_input_from_find
 ++++ local iteration=X

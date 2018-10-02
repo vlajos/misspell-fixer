@@ -6,12 +6,7 @@ RUN apk --no-cache add bash grep sed findutils coreutils diffutils
 RUN mkdir /misspell-fixer
 
 ADD misspell-fixer \
-    misspell-fixer-not-so-safe.sed \
-    misspell-fixer-safe.0.sed \
-    misspell-fixer-safe.1.sed \
-    misspell-fixer-safe.2.sed \
-    misspell-fixer-safe.3.sed \
-    misspell-fixer-gb-to-us.sed \
+    rules \
     README.md \
     /misspell-fixer/
 

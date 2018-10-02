@@ -30,17 +30,22 @@ function init_variables {
 	export opt_whitelist_save=0
 	export opt_whitelist_filename=".misspell-fixer.ignore"
 
-	export rule_file_base="${BASH_SOURCE[0]}"
-	if [ ! -f "${rule_file_base}-safe.0.sed" ]
+	export source_directory="${BASH_SOURCE[0]%misspell-fixer}"
+	if [[ "$source_directory" == "" ]]
 	then
-		rule_file_base=/usr/share/misspell-fixer/rules
+		source_directory='./'
 	fi
-	rules_safe0="${rule_file_base}-safe.0.sed"
-	rules_safe1="${rule_file_base}-safe.1.sed"
-	rules_safe2="${rule_file_base}-safe.2.sed"
-	rules_safe3="${rule_file_base}-safe.3.sed"
-	rules_not_so_safe="${rule_file_base}-not-so-safe.sed"
-	rules_gb_to_us="${rule_file_base}-gb-to-us.sed"
+	export rules_directory="${rule_file_base}rules"
+	if [ ! -f "${rules_directory}/safe.0.sed" ]
+	then
+		rules_directory=/usr/share/misspell-fixer/rules
+	fi
+	rules_safe0="${rules_directory}/safe.0.sed"
+	rules_safe1="${rules_directory}/safe.1.sed"
+	rules_safe2="${rules_directory}/safe.2.sed"
+	rules_safe3="${rules_directory}/safe.3.sed"
+	rules_not_so_safe="${rules_directory}/not-so-safe.sed"
+	rules_gb_to_us="${rules_directory}/gb-to-us.sed"
 	export enabled_rules="$rules_safe0"
 
 	export cmd_part_ignore_scm="-o -iname .git -o -iname .svn -o -iname .hg -o -iname CVS"
