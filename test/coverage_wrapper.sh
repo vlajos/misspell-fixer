@@ -1,7 +1,6 @@
 #!/bin/bash
 
-export FUNCTIONS_ONLY_FOR_COVERAGE=1
-
-source misspell-fixer
+source "lib/initialisation_functions.sh"
+source "lib/main_functions.sh"
 
 eval $3 >>"$TEST_OUTPUT" 2>&1

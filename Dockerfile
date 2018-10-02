@@ -7,6 +7,7 @@ RUN mkdir /misspell-fixer
 
 ADD misspell-fixer \
     rules \
+    lib \
     README.md \
     /misspell-fixer/
 
