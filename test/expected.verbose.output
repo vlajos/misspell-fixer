@@ -1,11 +1,11 @@
 misspell-fixer: -v Enable verbose mode.
 misspell-fixer: Target directories: /tmp/misspell-fixer-test/X/work
+misspell-fixer: Real run (-r) has not been enabled. Files will not be changed. Use -r to override this.
 misspell-fixer: Iteration X: prefiltering.
 misspell-fixer: Results of prefiltering: (filename:line:pattern)
 /tmp/misspell-fixer-test/X/work/X.txt:X:succesful
 /tmp/misspell-fixer-test/X/work/X.txt:X:succesful
 /tmp/misspell-fixer-test/X/work/X.txt:X:lower then
-misspell-fixer: Real run (-r) has not been enabled. Files will not be changed. Use -r to override this.
 misspell-fixer: Iteration X: replacing.
 misspell-fixer: actual file: /tmp/misspell-fixer-test/X/work/X.txt
 misspell-fixer: temp file: /tmp/misspell-fixer-test/X/work/X.txt.X

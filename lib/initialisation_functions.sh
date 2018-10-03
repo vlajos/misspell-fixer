@@ -13,7 +13,7 @@ function verbose {
 }
 export -f verbose
 
-function init_variables {
+function initialise_variables {
     set -f
 
     export LC_CTYPE=C
@@ -44,7 +44,7 @@ function init_variables {
 
     export cmd_part_parallelism
 
-    export loop_function=loop_main_replace
+    export loop_function=apply_rules_on_one_file
     export prefilter_progress_function=prefilter_progress_none
 
     export opt_name_filter=''
@@ -56,7 +56,7 @@ function init_variables {
     export tmpfile=.misspell-fixer.$$
 }
 
-function parse_basic_options {
+function process_command_arguments {
     local OPTIND
     while getopts ":dvorfsibnRVDmughwWN:P:" opt; do
         case $opt in
@@ -175,22 +175,28 @@ function parse_basic_options {
     cmd_part_ignore="( -iname $tmpfile* -o -iname $opt_whitelist_filename -o -iname *.BAK $cmd_part_ignore_scm $cmd_part_ignore_bin ) -prune -o "
     warning "Target directories: ${directories[*]}"
 
+    if [[ $opt_show_diff = 1 ||\
+        $opt_backup = 1 ||\
+        $opt_real_run = 0 ||\
+        $opt_verbose = 1 ]]
+    then
+        loop_function=decorate_one_iteration
+    fi
+
     return 0
 }
 
-function process_parameter_rules {
+function handle_parameter_conflicts {
     if [[ $opt_whitelist_save = 1 &&
         $opt_real_run = 1 ]]
     then
         warning "Whitelist cannot be generated in real run mode. => Exiting."
         return 1
     fi
-    if [[ $opt_show_diff = 1 ||\
-        $opt_backup = 1 ||\
-        $opt_real_run = 0 ||\
-        $opt_verbose = 1 ]]
+    if [[ $opt_whitelist_save = 0 &&
+        $opt_real_run = 0 ]]
     then
-        loop_function=loop_decorated_mode
+        warning "Real run (-r) has not been enabled. Files will not be changed. Use -r to override this."
     fi
     if [[ -z $cmd_part_parallelism ]]
     then

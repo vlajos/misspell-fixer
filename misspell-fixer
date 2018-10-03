@@ -15,14 +15,14 @@ export rules_directory="${rule_file_base}rules"
 source "${source_directory}/lib/initialisation_functions.sh"
 source "${source_directory}/lib/main_functions.sh"
 
-init_variables
+initialise_variables
 
-parse_basic_options "$@"
+process_command_arguments "$@"
 retval=$?
 
 if [[ $retval == 0 ]]
 then
-    process_parameter_rules
+    handle_parameter_conflicts
     retval=$?
 fi
 
@@ -34,10 +34,11 @@ then
     fi
     check_grep_version
     check_sed_arguments
-    preprocess_rules
-    main_work prepare_prefilter_input_from_find 0 '' /dev/null
+
+    prepare_rules_for_prefiltering
+    iterate_through_targets list_files_from_find 0 '' /dev/null
     retval=$?
-    rm $tmpfile.prep.grep.rules $tmpfile.prep.grep.rules.w $tmpfile.prep.allsedrules
+    rm $tmpfile.prepared.grep.patterns $tmpfile.prepared.grep.patterns.word_limited $tmpfile.prepared.sed.all_rules
     if [[ $opt_debug = 1 ]]
     then
         set +x

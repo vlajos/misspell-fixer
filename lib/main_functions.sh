@@ -1,16 +1,16 @@
 #!/usr/bin/env bash
 
-function preprocess_rules {
-    grep -vh 'bin/sed' $enabled_rules > "$tmpfile.prep.allsedrules"
-    grep    '\\b' $tmpfile.prep.allsedrules|sed -e 's/^s\///g' -e 's/\/.*g//g' -e 's/\\b//g'    >$tmpfile.prep.grep.rules.w
-    grep -v '\\b' $tmpfile.prep.allsedrules|sed -e 's/^s\///g' -e 's/\/.*g//g'          >$tmpfile.prep.grep.rules
+function prepare_rules_for_prefiltering {
+    grep -vh 'bin/sed' $enabled_rules > "$tmpfile.prepared.sed.all_rules"
+    grep    '\\b' $tmpfile.prepared.sed.all_rules|sed -e 's/^s\///g' -e 's/\/.*g//g' -e 's/\\b//g' >$tmpfile.prepared.grep.patterns.word_limited
+    grep -v '\\b' $tmpfile.prepared.sed.all_rules|sed -e 's/^s\///g' -e 's/\/.*g//g' >$tmpfile.prepared.grep.patterns
 }
 
-function prepare_prefilter_input_from_find {
+function list_files_from_find {
     find ${directories[*]} $cmd_part_ignore -type f -and \( $opt_name_filter \) $cmd_size -print0
 }
 
-function prepare_prefilter_input_from_cat {
+function list_files_from_last_iteration {
     while read -r filename
     do
         printf '%s\0' "$filename"
@@ -28,80 +28,97 @@ function prefilter_progress_dots {
     done
 }
 
-function main_work {
-    local input_function=$1
-    local iteration=$2
-    local prev_matched_files=$3
-    local prev_matches=$4
-    local itertmpfile=$tmpfile.$iteration
+function execute_prefiltering {
+    local file_lister_function=$1
+    local iteration_tmp_file=$2
+    local previously_matched_files=$3
 
-    warning "Iteration $iteration: prefiltering."
-
-    $input_function "$prev_matched_files"|\
+    $file_lister_function "$previously_matched_files"|\
     tee >($prefilter_progress_function) \
-        >(xargs -0 $cmd_part_parallelism -n 100 grep --text -F -noH     -f "$tmpfile.prep.grep.rules"   >"$itertmpfile.combos")|\
-          xargs -0 $cmd_part_parallelism -n 100 grep --text -F -noH -w  -f "$tmpfile.prep.grep.rules.w" >"$itertmpfile.combos.w"
+        >(xargs -0 $cmd_part_parallelism -n 100 grep --text -F -noH     -f "$tmpfile.prepared.grep.patterns"   >"$iteration_tmp_file.matches")|\
+          xargs -0 $cmd_part_parallelism -n 100 grep --text -F -noH -w  -f "$tmpfile.prepared.grep.patterns.word_limited" >"$iteration_tmp_file.matches.word_limited"
 
-    sort -u "$itertmpfile.combos" "$itertmpfile.combos.w" >"$itertmpfile.combos.all"
+    sort -u "$iteration_tmp_file.matches" "$iteration_tmp_file.matches.word_limited" >"$iteration_tmp_file.matches.all"
+}
+
+function apply_whitelist_on_prefiltered_list {
+    local iteration_tmp_file=$1
 
     if [[ -s "$opt_whitelist_filename" ]]
     then
         warning "Skipping whitelisted entries based on $opt_whitelist_filename."
-        grep -vf $opt_whitelist_filename "$itertmpfile.combos.all" >"$itertmpfile.combos.all.onlynonwhitelisted"
-        mv "$itertmpfile.combos.all.onlynonwhitelisted" "$itertmpfile.combos.all"
+        grep -vf $opt_whitelist_filename "$iteration_tmp_file.matches.all" >"$iteration_tmp_file.matches.all.only_non_whitelisted"
+        mv "$iteration_tmp_file.matches.all.only_non_whitelisted" "$iteration_tmp_file.matches.all"
     fi
+}
+
+function iterate_through_prefiltered_files {
+    local iteration=$1
+    local iteration_tmp_file=$2
+
+    grep --text -f <(cut -d ':' -f 3 "$iteration_tmp_file.matches.all") "$tmpfile.prepared.sed.all_rules" >"$iteration_tmp_file.sed.matched_rules"
+    warning "Iteration $iteration: replacing."
+    cut -d ':' -f 1 "$iteration_tmp_file.matches.all" |sort -u >"$iteration_tmp_file.matched_files"
+    xargs <"$iteration_tmp_file.matched_files" $cmd_part_parallelism -n 1 -I '{}' $COVERAGE_WRAPPER bash -c$bash_arg "$loop_function $iteration_tmp_file.matches.all $iteration_tmp_file.sed.matched_rules '{}' 1"
+    rm "$iteration_tmp_file.sed.matched_rules"
+    if [[ $opt_dots = 1 ]]
+    then
+        echo >&2
+    fi
+}
+
+function iterate_through_targets {
+    local file_lister_function=$1
+    local iteration=$2
+    local previously_matched_files=$3
+    local prev_matches=$4
+    local iteration_tmp_file=$tmpfile.$iteration
+
+    warning "Iteration $iteration: prefiltering."
+
+    execute_prefiltering $file_lister_function $iteration_tmp_file $previously_matched_files $iteration_tmp_file
+
+    apply_whitelist_on_prefiltered_list $iteration_tmp_file
 
     if [[ $opt_verbose = 1 ]]
     then
         verbose "Results of prefiltering: (filename:line:pattern)"
-        cat "$itertmpfile.combos.all" >&2
+        cat "$iteration_tmp_file.matches.all" >&2
     fi
 
-    if [[ -s $itertmpfile.combos.all ]]
+    if [[ -s $iteration_tmp_file.matches.all ]]
     then
         if [[ $opt_whitelist_save = 1 ]]
         then
             warning "Saving found misspells into $opt_whitelist_filename."
-            sed -e 's/^/^/' "$itertmpfile.combos.all" >> "$opt_whitelist_filename"
+            sed -e 's/^/^/' "$iteration_tmp_file.matches.all" >> "$opt_whitelist_filename"
         else
-            if [[ $opt_real_run = 0 ]]
-            then
-                warning "Real run (-r) has not been enabled. Files will not be changed. Use -r to override this."
-            fi
-            grep --text -f <(cut -d ':' -f 3 "$itertmpfile.combos.all") "$tmpfile.prep.allsedrules" >"$itertmpfile.rulesmatched"
-            warning "Iteration $iteration: replacing."
-            cut -d ':' -f 1 "$itertmpfile.combos.all" |sort -u >"$itertmpfile.matchedfiles"
-            xargs <"$itertmpfile.matchedfiles" $cmd_part_parallelism -n 1 -I '{}' $COVERAGE_WRAPPER bash -c$bash_arg "$loop_function $itertmpfile.combos.all $itertmpfile.rulesmatched '{}' 1"
-            rm "$itertmpfile.rulesmatched"
-            if [[ $opt_dots = 1 ]]
-            then
-                echo >&2
-            fi
+            iterate_through_prefiltered_files $iteration $iteration_tmp_file
         fi
     else
         warning "Iteration $iteration: nothing to replace."
     fi
     warning "Iteration $iteration: done."
-    if [[ $iteration -lt 5 && -s "$itertmpfile.combos.all" && $opt_real_run = 1 ]]
+    if [[ $iteration -lt 5 && -s "$iteration_tmp_file.matches.all" && $opt_real_run = 1 ]]
     then
-        if diff --text -q "$prev_matches" "$itertmpfile.combos.all" >/dev/null
+        if diff --text -q "$prev_matches" "$iteration_tmp_file.matches.all" >/dev/null
         then
             warning "Iteration $iteration: matchlist is the same as in previous iteration..."
         else
-            main_work prepare_prefilter_input_from_cat $((iteration + 1)) "$itertmpfile.matchedfiles" "$itertmpfile.combos.all"
+            iterate_through_targets list_files_from_last_iteration $((iteration + 1)) "$iteration_tmp_file.matched_files" "$iteration_tmp_file.matches.all"
         fi
     fi
-    if [[ -f $itertmpfile.matchedfiles ]]
+    if [[ -f $iteration_tmp_file.matched_files ]]
     then
-        rm "$itertmpfile.matchedfiles"
+        rm "$iteration_tmp_file.matched_files"
     fi
-    rm "$itertmpfile.combos" "$itertmpfile.combos.w" "$itertmpfile.combos.all"
+    rm "$iteration_tmp_file.matches" "$iteration_tmp_file.matches.word_limited" "$iteration_tmp_file.matches.all"
     return 0
 }
 
-function loop_main_replace {
-    local findresult=$1
-    local rulesmatched=$2
+function apply_rules_on_one_file {
+    local all_matches=$1
+    local sed_rules_matched=$2
     local filename=$3
     local inplaceflag=$4
 
@@ -128,19 +145,19 @@ function loop_main_replace {
     fi
 
     "${sed[@]}" -f <(
-        grep --text "$filename" "$findresult"|\
+        grep --text "$filename" "$all_matches"|\
         cut -d ':' -f 2,3|\
         while IFS=: read -r line pattern
         do
-            grep --text -e "$pattern" "$rulesmatched"|sed "s/^/$line/"
+            grep --text -e "$pattern" "$sed_rules_matched"|sed "s/^/$line/"
         done
     ) "$filename"
 }
-export -f loop_main_replace
+export -f apply_rules_on_one_file
 
-function loop_decorated_mode {
-    local findresult=$1
-    local rulesmatched=$2
+function decorate_one_iteration {
+    local all_matches=$1
+    local sed_rules_matched=$2
     local filename=$3
     # Passed, but not used at the moment:
     #local inplace=$4
@@ -154,7 +171,7 @@ function loop_decorated_mode {
         return 1
     fi
     cp -a "$filename" "$workfile"
-    loop_main_replace "$findresult" "$rulesmatched" "$filename" 0 >"$workfile"
+    apply_rules_on_one_file "$all_matches" "$sed_rules_matched" "$filename" 0 >"$workfile"
     if diff=$(diff -u "$filename" "$workfile")
     then
         verbose "nothing changed"
@@ -177,4 +194,4 @@ function loop_decorated_mode {
         fi
     fi
 }
-export -f loop_decorated_mode
+export -f decorate_one_iteration
