@@ -10,7 +10,7 @@ then
     source_directory="/usr/share/misspell-fixer/"
 fi
 
-export rules_directory="${rule_file_base}rules"
+export rules_directory="${source_directory}rules"
 
 source "${source_directory}/lib/initialisation_functions.sh"
 source "${source_directory}/lib/main_functions.sh"
