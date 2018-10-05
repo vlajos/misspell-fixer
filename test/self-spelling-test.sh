@@ -1,4 +1,4 @@
-#! /bin/bash
+#!/usr/bin/env bash
 
 export TEMP=/tmp/misspell-fixer-test/$$
 export RUN=". misspell-fixer"
