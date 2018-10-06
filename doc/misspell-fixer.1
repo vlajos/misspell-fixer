@@ -111,10 +111,13 @@ File filtering options:
 .IP "" 0
 .
 .P
-White listing files/entries
+Whitelisting files/entries:
 .
 .P
-Misspell\-fixer automatically ignores the issues matching to the patterns listed in \fB\.misspell\-fixer\.ignore\fR\. The format of this file follows the prefiltering\'s temporary result format: \fB^filename:line number:matched word\fR
+Misspell\-fixer automatically ignores the issues matching to the patterns listed in \fB\.misspell\-fixer\.ignore\fR\. The format of this file follows the prefiltering\'s temporary result format:
+.
+.P
+\fB^filename:line number:matched word\fR
 .
 .IP "\(bu" 4
 \fB\-W\fR can be used to append the found issues instead of fixing them based on the other settings\.
@@ -134,7 +137,7 @@ Or a directory:
 \fB^directory\fR
 .
 .P
-The entries are listed/matched with the paths based on the current invocation\. Reaching the same target with different path from the same working directory will will not apply the white listed entries geneated from the other invocation\. In directory \fBx\fR the white list entries generated with target \fB\.\fR will not be applied for target \fB\.\./x\fR, although they are the same\. This can be worked around with manually editing the white list to your needs\. (Patches are welcome for a more general solution\.\.\.)
+The entries are listed/matched with the paths based on the current invocation\. Reaching the same target with different path from the same working directory will will not apply the whitelisted entries geneated from the other invocation\. In directory \fBx\fR the whitelist entries generated with target \fB\.\fR will not be applied for target \fB\.\./x\fR, although they are the same\. This can be worked around with manually editing the whitelist to your needs\. (Patches are welcome for a more general solution\.\.\.)
 .
 .SS "Return values"
 Generally the script tries to return with \fB0\fR if no typos or errors have been found/fixed\.
@@ -238,22 +241,22 @@ $ misspell\-fixer \-frunRVD target
 It is based on the following sources for common misspellings:
 .
 .IP "\(bu" 4
-http://www\.how\-do\-you\-spell\.com/
-.
-.IP "\(bu" 4
-http://en\.wikipedia\.org/wiki/Commonly_misspelled_words
-.
-.IP "\(bu" 4
-http://www\.wrongspelled\.com/
+https://en\.wikipedia\.org/wiki/Commonly_misspelled_words
 .
 .IP "\(bu" 4
 https://github\.com/neleai/stylepp
 .
 .IP "\(bu" 4
-http://en\.wikipedia\.org/wiki/Wikipedia:Lists_of_common_misspellings/For_machines
+https://en\.wikipedia\.org/wiki/Wikipedia:Lists_of_common_misspellings/For_machines
 .
 .IP "\(bu" 4
 https://anonscm\.debian\.org/git/lintian/lintian\.git/tree/data/spelling/corrections
+.
+.IP "\(bu" 4
+http://www\.how\-do\-you\-spell\.com/
+.
+.IP "\(bu" 4
+http://www\.wrongspelled\.com/
 .
 .IP "" 0
 .

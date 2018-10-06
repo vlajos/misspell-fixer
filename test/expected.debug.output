@@ -51,7 +51,7 @@
 ++++ echo 'misspell-fixer: Iteration X: done.'
 ++++ echo 'misspell-fixer: Iteration X: prefiltering.'
 ++++ echo 'misspell-fixer: Iteration X: processing.'
-++++ execute_prefiltering list_files_from_find .misspell-fixer.X.X .misspell-fixer.X.X
+++++ execute_prefiltering list_files_from_find .misspell-fixer.X.X ''
 ++++ find /tmp/misspell-fixer-test/X/work '(' -iname '.misspell-fixer.X*' -o -iname .misspell-fixer.ignore -o -iname '*.BAK' -o -iname .git -o -iname .svn -o -iname .hg -o -iname CVS -o -iname '*.gif' -o -iname '*.jpg' -o -iname '*.jpeg' -o -iname '*.png' -o -iname '*.zip' -o -iname '*.gz' -o -iname '*.bzX' -o -iname '*.xz' -o -iname '*.rar' -o -iname '*.po' -o -iname '*.pdf' -o -iname '*.woff' -o -iname yarn.lock -o -iname package-lock.json -o -iname composer.lock -o -iname '*.mo' ')' -prune -o -type f -and '(' -true ')' -and '(' -size -Xk ')' -printX
 ++++ grep '\\b' .misspell-fixer.X.prepared.sed.all_rules
 ++++ grep --text -f /dev/fd/X .misspell-fixer.X.prepared.sed.all_rules
@@ -60,7 +60,7 @@
 ++++ grep -vh bin/sed ./rules/safe.X.sed
 ++++ iterate_through_prefiltered_files X .misspell-fixer.X.X
 ++++ iterate_through_targets list_files_from_find X '' /dev/null
-++++ list_files_from_find .misspell-fixer.X.X
+++++ list_files_from_find ''
 ++++ local current_version
 ++++ local file_lister_function=list_files_from_find
 ++++ local file_lister_function=list_files_from_find
@@ -71,7 +71,7 @@
 ++++ local iteration_tmp_file=.misspell-fixer.X.X
 ++++ local iteration_tmp_file=.misspell-fixer.X.X
 ++++ local previously_matched_files=
-++++ local previously_matched_files=.misspell-fixer.X.X
+++++ local previously_matched_files=
 ++++ local prev_matches=/dev/null
 ++++ local required_version=X.X
 ++++ local retval=X

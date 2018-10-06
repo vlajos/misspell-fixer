@@ -16,7 +16,7 @@ oneTimeTearDown(){
 # copy code, but remove data which is not needed or we know it contains errors. ( like the dict )
 setUp(){
     set +f
-    cp -a * $TEMP/self/
+    cp -a ./* $TEMP/self/
     rm -R $TEMP/self/dict/*.dict
     rm $TEMP/self/rules/*.sed
     rm -R $TEMP/self/test/expected/
@@ -32,9 +32,8 @@ setUp(){
 # run over own code, assume zero errors.
 testSelf(){
     $RUN -s -D $TEMP/self/ > $SPELLING_ERR
-    count=$(cat $SPELLING_ERR | grep "^+" | wc -l)
-    if [[ $count -eq 0 ]]
-    then
+    count=$(grep -c "^+" <$SPELLING_ERR)
+    if [[ $count -eq 0 ]]; then
         echo "*** * * * * * * * * * * * * * * * * * * ***"
         echo "*** hurray, no spelling errors detected ***"
         echo "*** * * * * * * * * * * * * * * * * * * ***"
@@ -44,9 +43,8 @@ testSelf(){
         echo "*** * * * * * * * * * * * * * * * * * * ***"
         cat $SPELLING_ERR
     fi
-    assertEquals "found some spelling-errors. :-( " $count 0
+    assertEquals "found some spelling-errors. :-( " "$count" 0
 }
-
 
 suite(){
     suite_addTest testSelf

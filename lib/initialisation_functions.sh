@@ -6,8 +6,7 @@ function warning {
 export -f warning
 
 function verbose {
-    if [[ $opt_verbose = 1 ]]
-    then
+    if [[ $opt_verbose = 1 ]]; then
         warning "$@"
     fi
 }
@@ -38,8 +37,28 @@ function initialise_variables {
     rules_gb_to_us="${rules_directory}/gb-to-us.sed"
     export enabled_rules="$rules_safe0"
 
-    export cmd_part_ignore_scm="-o -iname .git -o -iname .svn -o -iname .hg -o -iname CVS"
-    export cmd_part_ignore_bin="-o -iname *.gif -o -iname *.jpg -o -iname *.jpeg -o -iname *.png -o -iname *.zip -o -iname *.gz -o -iname *.bz2 -o -iname *.xz -o -iname *.rar -o -iname *.po -o -iname *.pdf -o -iname *.woff -o -iname yarn.lock  -o -iname package-lock.json  -o -iname composer.lock  -o -iname *.mo"
+    export cmd_part_ignore_scm="\
+        -o -iname .git\
+        -o -iname .svn\
+        -o -iname .hg\
+        -o -iname CVS"
+    export cmd_part_ignore_bin="\
+        -o -iname *.gif\
+        -o -iname *.jpg\
+        -o -iname *.jpeg\
+        -o -iname *.png\
+        -o -iname *.zip\
+        -o -iname *.gz\
+        -o -iname *.bz2\
+        -o -iname *.xz\
+        -o -iname *.rar\
+        -o -iname *.po\
+        -o -iname *.pdf\
+        -o -iname *.woff\
+        -o -iname yarn.lock\
+        -o -iname package-lock.json\
+        -o -iname composer.lock\
+        -o -iname *.mo"
     export cmd_part_ignore
 
     export cmd_part_parallelism
@@ -58,7 +77,7 @@ function initialise_variables {
 
 function process_command_arguments {
     local OPTIND
-    while getopts ":dvorfsibnRVDmughwWN:P:" opt; do
+    while getopts ":dvorfsibnRVDmughWN:P:" opt; do
         case $opt in
             d)
                 warning "-d Enable debug mode."
@@ -70,7 +89,8 @@ function process_command_arguments {
                 opt_verbose=1
             ;;
             o)
-                warning "-o Print dots for each file scanned, comma for each file fix iteration/file."
+                warning "-o Print dots for each file scanned,"\
+                    "comma for each file fix iteration/file."
                 opt_dots=1
                 prefilter_progress_function=prefilter_progress_dots
             ;;
@@ -115,7 +135,8 @@ function process_command_arguments {
                 enabled_rules="$enabled_rules $rules_safe3"
             ;;
             m)
-                warning "-m Disable max-size check. Default is to ignore files > 1MB."
+                warning "-m Disable max-size check. "\
+                    "Default is to ignore files > 1MB."
                 cmd_size=" "
             ;;
             g)
@@ -136,16 +157,16 @@ function process_command_arguments {
             ;;
             h)
                 d="dirname ${BASH_SOURCE[0]}"
-                if [[ -f "$($d)"/README.md ]]
-                then
-                    cat "$($d)"/README.md
+                if [[ -f "$($d)"/../README.md ]]; then
+                    cat "$($d)"/../README.md
                 else
                     zcat /usr/share/doc/misspell-fixer/README.md.gz
                 fi
                 return 10
             ;;
             W)
-                warning "-W Save found misspelled file entries into $opt_whitelist_filename instead of fixing them."
+                warning "-W Save found misspelled file entries into"\
+                    "$opt_whitelist_filename instead of fixing them."
                 opt_whitelist_save=1
             ;;
             \?)
@@ -165,14 +186,19 @@ function process_command_arguments {
 
     shift $((OPTIND-1))
 
-    if [[ "$*" = "" ]]
-    then
-        warning "Not enough arguments. (target directory not found) => Exiting."
+    if [[ "$*" = "" ]]; then
+        warning "Not enough arguments."\
+            "(target directory not found) => Exiting."
         return 102
     fi
 
     directories=( "$@" )
-    cmd_part_ignore="( -iname $tmpfile* -o -iname $opt_whitelist_filename -o -iname *.BAK $cmd_part_ignore_scm $cmd_part_ignore_bin ) -prune -o "
+    cmd_part_ignore="(\
+        -iname $tmpfile*\
+        -o -iname $opt_whitelist_filename\
+        -o -iname *.BAK\
+        $cmd_part_ignore_scm $cmd_part_ignore_bin\
+        ) -prune -o "
     warning "Target directories: ${directories[*]}"
 
     if [[ $opt_show_diff = 1 ||\
@@ -187,24 +213,20 @@ function process_command_arguments {
 }
 
 function handle_parameter_conflicts {
-    if [[ $opt_whitelist_save = 1 &&
-        $opt_real_run = 1 ]]
-    then
+    if [[ $opt_whitelist_save = 1 && $opt_real_run = 1 ]]; then
         warning "Whitelist cannot be generated in real run mode. => Exiting."
         return 103
     fi
-    if [[ $opt_whitelist_save = 0 &&
-        $opt_real_run = 0 ]]
-    then
-        warning "Real run (-r) has not been enabled. Files will not be changed. Use -r to override this."
+    if [[ $opt_whitelist_save = 0 && $opt_real_run = 0 ]]; then
+        warning "Real run (-r) has not been enabled."\
+            "Files will not be changed. Use -r to override this."
     fi
-    if [[ -z $cmd_part_parallelism ]]
-    then
+    if [[ -z $cmd_part_parallelism ]]; then
         return 0
     fi
-    if [[ $opt_show_diff = 1 ]]
-    then
-        warning "Parallel mode cannot show diffs. Showing diffs is turned on. => Exiting."
+    if [[ $opt_show_diff = 1 ]]; then
+        warning "Parallel mode cannot show diffs."\
+            "Showing diffs is turned on. => Exiting."
         return 104
     fi
     return 0
@@ -216,9 +238,13 @@ function check_grep_version {
     local required_version="2.28"
     if printf '%s\n%s\n' "$required_version" "$current_version" | sort -VC
     then
-        verbose "Your grep version is $current_version which is at least the optimal: $required_version."
+        verbose "Your grep version is $current_version"\
+            "which is at least the optimal: $required_version."
     else
-        warning "!! Your grep version is $current_version which is less than the optimal: $required_version. This may degrade misspell fixer's performance significantly! (100x) !!"
+        warning "!! Your grep version is $current_version"\
+            "which is less than the optimal: $required_version."\
+            "This may degrade misspell fixer's performance"\
+            "significantly! (100x) !!"
     fi
 }
 

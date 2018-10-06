@@ -15,5 +15,5 @@ version=4
 #   (?:.*?/)?v?(\d[\d.]*)\.tar\.gz debian uupdate
 
 # Direct Git
-# opts="mode=git" http://git.example.com/misspell-fixer.git \
+# opts="mode=git" https://git.example.com/misspell-fixer.git \
 #   refs/tags/v([\d\.]+) debian uupdate

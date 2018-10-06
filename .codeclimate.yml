@@ -1,3 +1,4 @@
+---
 version: "2"
 plugins:
   fixme:
@@ -5,4 +6,4 @@ plugins:
   shellcheck:
     enabled: true
 exclude_patterns:
-- "test/"
+  - "test/"

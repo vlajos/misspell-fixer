@@ -20,11 +20,10 @@ setUp(){
 }
 
 runAndCompare(){
-    $RUN $1 $TEMP/work
+    $RUN "$1" "$TEMP/work"
     assertFalse $?
-    while [ "$2" != "" ]
-    do
-        cp -a test/expecteds/$2.txt $TEMP/expected/
+    while [ "$2" != "" ]; do
+        cp -a "test/expecteds/$2.txt" $TEMP/expected/
         shift
     done
     diff -ruwb $TEMP/expected/ $TEMP/work/
@@ -34,26 +33,27 @@ runAndCompare(){
 runAndCompareOutput(){
     export TEST_OUTPUT=$TEMP/output.$2
 
-    $RUN $1 $TEMP/work >>$TEST_OUTPUT 2>&1
+    $RUN "$1" "$TEMP/work" >>"$TEST_OUTPUT" 2>&1
     diff -ruwb $TEMP/expected/ $TEMP/work/
     assertTrue 'Expected output differs.' $?
 
-    sed 's/[0-9]\+/X/g' $TEST_OUTPUT |\
-    grep -v -e kcov -e "Your grep version is" >$TEST_OUTPUT.standard
-    if [[ "$3" = "1" ]]
-    then
-        sort -f $TEST_OUTPUT.standard >$TEST_OUTPUT.standard.sorted
-        mv $TEST_OUTPUT.standard.sorted $TEST_OUTPUT.standard
+    sed 's/[0-9]\+/X/g' "$TEST_OUTPUT" |\
+    grep -v -e kcov -e "Your grep version is" >"$TEST_OUTPUT.standard"
+    if [[ "$3" = "1" ]]; then
+        sort -f "$TEST_OUTPUT.standard" >"$TEST_OUTPUT.standard.sorted"
+        mv "$TEST_OUTPUT.standard.sorted" "$TEST_OUTPUT.standard"
     fi
-    diff -ruwb $TEST_OUTPUT.standard test/expected.$2.output
+    diff -ruwb "$TEST_OUTPUT.standard" "test/expected.$2.output"
     assertTrue 'Expected output differs.' $?
-    rm $TEST_OUTPUT $TEST_OUTPUT.standard
+    rm "$TEST_OUTPUT" "$TEST_OUTPUT.standard"
 }
 
 testErrors(){
     TMP=$($RUN 2>&1)
     assertSame 102 $?
-    echo $TMP|grep -q "misspell-fixer: Not enough arguments. (target directory not found) => Exiting."
+    echo "$TMP"|\
+        grep -q\
+        "misspell-fixer: Not enough arguments."
     assertTrue 'No argument handling problem.' $?
     $RUN -h
     assertSame 10 $?
@@ -134,34 +134,32 @@ testSCMdirstouched(){
 }
 
 testNamefilter(){
-    cp test/stubs/0.txt $TEMP/work/0.xxx
+    cp test/stubs/0.txt $TEMP/work/0.aaa
     cp test/stubs/0.txt $TEMP/work/0.yyy
     cp test/stubs/0.txt $TEMP/work/0.zzz
-    $RUN -rni -N '*.xxx' -N '*.yyy' $TEMP/work
+    $RUN -rni -N '*.aaa' -N '*.yyy' $TEMP/work
     assertFalse $?
     diff -ruwb test/stubs/0.txt $TEMP/work/0.txt
     assertTrue 'Expected output differs.' $?
-    diff -ruwb test/expecteds/0.txt $TEMP/work/0.xxx
+    diff -ruwb test/expecteds/0.txt $TEMP/work/0.aaa
     assertTrue 'Expected output differs.' $?
     diff -ruwb test/expecteds/0.txt $TEMP/work/0.yyy
     assertTrue 'Expected output differs.' $?
     diff -ruwb test/expecteds/0.txt $TEMP/work/0.zzz
     assertFalse 'Expected output equal?.' $?
-    rm -rf $TEMP/work/0.xxx $TEMP/work/0.yyy $TEMP/work/0.zzz
+    rm -rf $TEMP/work/0.aaa $TEMP/work/0.yyy $TEMP/work/0.zzz
 }
 
 testKeepPermissionsNormal(){
     tests=(0000 777u 444g 222R 111V)
-    for i in ${tests[*]}
-    do
-        chmod ${i:0:3} $TEMP/work/${i:3}.txt
+    for i in ${tests[*]}; do
+        chmod "${i:0:3}" "$TEMP/work/${i:3}.txt"
     done
     $RUN -fnuVG $TEMP/work
-    for i in ${tests[*]}
-    do
-        chmod ${i:0:3} $TEMP/work/${i:3}.txt |grep -q changed
+    for i in ${tests[*]}; do
+        chmod "${i:0:3}" "$TEMP/work/${i:3}.txt" |grep -q changed
         assertFalse "Permissions broken:$i" $?
-        chmod 644 $TEMP/work/${i:3}.txt
+        chmod 644 "$TEMP/work/${i:3}.txt"
     done
     diff -ruwb $TEMP/expected/ $TEMP/work/
     assertTrue 'Expected output differs.' $?
@@ -169,16 +167,14 @@ testKeepPermissionsNormal(){
 
 testKeepPermissionsFast(){
     tests=(0000 777u 444g 222R 111V)
-    for i in ${tests[*]}
-    do
-        chmod ${i:0:3} $TEMP/work/${i:3}.txt
+    for i in ${tests[*]}; do
+        chmod "${i:0:3}" "$TEMP/work/${i:3}.txt"
     done
     $RUN -frnuVG $TEMP/work
-    for i in ${tests[*]}
-    do
-        chmod ${i:0:3} $TEMP/work/${i:3}.txt |grep -q changed
+    for i in ${tests[*]}; do
+        chmod "${i:0:3}" "$TEMP/work/${i:3}.txt" |grep -q changed
         assertFalse "Permissions broken:$i" $?
-        chmod 644 $TEMP/work/${i:3}.txt
+        chmod 644 "$TEMP/work/${i:3}.txt"
     done
     diff -ruwb $TEMP/expected/ $TEMP/work/
     assertTrue 'Expected output differs.' $?
@@ -186,22 +182,19 @@ testKeepPermissionsFast(){
 
 testIgnoreBinary(){
     tests=(gif jpg png gz zip rar)
-    for i in ${tests[*]}
-    do
-        cp test/stubs/0.txt $TEMP/work/0.$i
+    for i in ${tests[*]}; do
+        cp test/stubs/0.txt "$TEMP/work/0.$i"
     done
     $RUN -rn $TEMP/work
-    for i in ${tests[*]}
-    do
-        diff -uwb test/stubs/0.txt $TEMP/work/0.$i
+    for i in ${tests[*]}; do
+        diff -uwb test/stubs/0.txt "$TEMP/work/0.$i"
         assertTrue "Binary files changed:$i" $?
     done
     $RUN -rnb $TEMP/work
-    for i in ${tests[*]}
-    do
-        diff -uwb test/expecteds/0.txt $TEMP/work/0.$i
+    for i in ${tests[*]}; do
+        diff -uwb test/expecteds/0.txt "$TEMP/work/0.$i"
         assertTrue "Binary files unchanged:$i" $?
-        rm $TEMP/work/0.$i
+        rm "$TEMP/work/0.$i"
     done
 }
 
@@ -240,7 +233,6 @@ testWhitelist(){
     cp test/stubs/0.txt $TEMP/work/1.txt
     cp test/expecteds/0.txt $TEMP/expected/1.txt
     runAndCompare -rn
-    cp -a $TEMP/expected /tmp/xxx
     rm $whitelist
 }
 
@@ -264,19 +256,18 @@ suite(){
     suite_addTest testVerbose
     suite_addTest testDots
     suite_addTest testMNoChange
-    for i in '' R V u g 'R V D' 'R V u g D'
-    do
+    for i in '' R V u g 'R V D' 'R V u g D'; do
         allarg=${i// }
         eval "testMainNormal$allarg(){ runAndCompare -rn$allarg 0 $i; }"
-        suite_addTest testMainNormal$allarg
+        suite_addTest "testMainNormal$allarg"
         eval "testMainFast$allarg(){ runAndCompare -frn$allarg 0 $i; }"
-        suite_addTest testMainFast$allarg
+        suite_addTest "testMainFast$allarg"
     done
-    if [[ "$COVERAGE_WRAPPER" = "" ]]
-    then
+    if [[ "$COVERAGE_WRAPPER" = "" ]]; then
         suite_addTest testDebug
     else
-        echo "Skipping testDebug under kcov. Set -x does not cascade through all the processes unfortunately."
+        echo "Skipping testDebug under kcov."\
+            "Set -x does not cascade through all the processes unfortunately."
     fi
 }
 
