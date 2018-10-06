@@ -142,7 +142,7 @@ function process_command_arguments {
                 else
                     zcat /usr/share/doc/misspell-fixer/README.md.gz
                 fi
-                return 1
+                return 10
             ;;
             W)
                 warning "-W Save found misspelled file entries into $opt_whitelist_filename instead of fixing them."
@@ -150,11 +150,11 @@ function process_command_arguments {
             ;;
             \?)
                 warning "Invalid option: -$OPTARG"
-                return 1
+                return 100
             ;;
             :)
                 warning "Option -$OPTARG requires an argument."
-                return 1
+                return 101
             ;;
         esac
     done
@@ -168,7 +168,7 @@ function process_command_arguments {
     if [[ "$*" = "" ]]
     then
         warning "Not enough arguments. (target directory not found) => Exiting."
-        return 1
+        return 102
     fi
 
     directories=( "$@" )
@@ -191,7 +191,7 @@ function handle_parameter_conflicts {
         $opt_real_run = 1 ]]
     then
         warning "Whitelist cannot be generated in real run mode. => Exiting."
-        return 1
+        return 103
     fi
     if [[ $opt_whitelist_save = 0 &&
         $opt_real_run = 0 ]]
@@ -205,7 +205,7 @@ function handle_parameter_conflicts {
     if [[ $opt_show_diff = 1 ]]
     then
         warning "Parallel mode cannot show diffs. Showing diffs is turned on. => Exiting."
-        return 1
+        return 104
     fi
     return 0
 }

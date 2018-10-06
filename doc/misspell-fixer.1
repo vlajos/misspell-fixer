@@ -136,8 +136,28 @@ Or a directory:
 .P
 The entries are listed/matched with the paths based on the current invocation\. Reaching the same target with different path from the same working directory will will not apply the white listed entries geneated from the other invocation\. In directory \fBx\fR the white list entries generated with target \fB\.\fR will not be applied for target \fB\.\./x\fR, although they are the same\. This can be worked around with manually editing the white list to your needs\. (Patches are welcome for a more general solution\.\.\.)
 .
+.SS "Return values"
+Generally the script tries to return with \fB0\fR if no typos or errors have been found/fixed\.
+.
+.IP "\(bu" 4
+\fB0\fR No typos found,
+.
+.IP "\(bu" 4
+\fB1\-5\fR Typos found\. The return value shows the number of iterations executed\.
+.
+.IP "\(bu" 4
+\fB10\fR Help successfully printed\.
+.
+.IP "\(bu" 4
+\fB11\fR Whitelist successfully saved\.
+.
+.IP "\(bu" 4
+\fB100\-\fR Parameter errors\. (invalid, missing, conflicting)
+.
+.IP "" 0
+.
 .SS "Sample usage"
-By default nothing important will happen
+Without arguments, the script will not change anything and its output is minimal\. Its return value can be used to detect if it found any typos\.
 .
 .IP "" 4
 .

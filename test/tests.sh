@@ -21,7 +21,7 @@ setUp(){
 
 runAndCompare(){
     $RUN $1 $TEMP/work
-    assertTrue $?
+    assertFalse $?
     while [ "$2" != "" ]
     do
         cp -a test/expecteds/$2.txt $TEMP/expected/
@@ -52,17 +52,17 @@ runAndCompareOutput(){
 
 testErrors(){
     TMP=$($RUN 2>&1)
-    assertFalse $?
+    assertSame 102 $?
     echo $TMP|grep -q "misspell-fixer: Not enough arguments. (target directory not found) => Exiting."
     assertTrue 'No argument handling problem.' $?
     $RUN -h
-    assertFalse $?
+    assertSame 10 $?
     $RUN -p /dev/null
-    assertFalse $?
+    assertSame 100 $?
     $RUN -P
-    assertFalse $?
+    assertSame 101 $?
     $RUN -fs /dev/null
-    assertFalse $?
+    assertSame 104 $?
 }
 
 testOnlyDir(){
@@ -99,7 +99,7 @@ testParallel(){
 
 testBackup(){
     $RUN -r $TEMP/work
-    assertTrue $?
+    assertFalse $?
     diff -ruwb test/expecteds/0.txt $TEMP/work/0.txt
     assertTrue 'Expected output differs.' $?
     set +f
@@ -113,7 +113,7 @@ testSCMdirsuntouched(){
     mkdir $TEMP/work/.git/
     cp test/stubs/0.txt $TEMP/work/.git/0.txt
     $RUN -rn $TEMP/work
-    assertTrue $?
+    assertFalse $?
     diff -ruwb test/expecteds/0.txt $TEMP/work/0.txt
     assertTrue 'Expected output differs.' $?
     diff -ruwb test/stubs/0.txt $TEMP/work/.git/0.txt
@@ -125,7 +125,7 @@ testSCMdirstouched(){
     mkdir $TEMP/work/.git/
     cp test/stubs/0.txt $TEMP/work/.git/0.txt
     $RUN -rni $TEMP/work
-    assertTrue $?
+    assertFalse $?
     diff -ruwb test/expecteds/0.txt $TEMP/work/0.txt
     assertTrue 'Expected output differs.' $?
     diff -ruwb test/expecteds/0.txt $TEMP/work/.git/0.txt
@@ -138,7 +138,7 @@ testNamefilter(){
     cp test/stubs/0.txt $TEMP/work/0.yyy
     cp test/stubs/0.txt $TEMP/work/0.zzz
     $RUN -rni -N '*.xxx' -N '*.yyy' $TEMP/work
-    assertTrue $?
+    assertFalse $?
     diff -ruwb test/stubs/0.txt $TEMP/work/0.txt
     assertTrue 'Expected output differs.' $?
     diff -ruwb test/expecteds/0.txt $TEMP/work/0.xxx

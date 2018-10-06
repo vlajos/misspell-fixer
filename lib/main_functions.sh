@@ -57,7 +57,7 @@ function iterate_through_prefiltered_files {
     local iteration_tmp_file=$2
 
     grep --text -f <(cut -d ':' -f 3 "$iteration_tmp_file.matches.all") "$tmpfile.prepared.sed.all_rules" >"$iteration_tmp_file.sed.matched_rules"
-    warning "Iteration $iteration: replacing."
+    warning "Iteration $iteration: processing."
     cut -d ':' -f 1 "$iteration_tmp_file.matches.all" |sort -u >"$iteration_tmp_file.matched_files"
     xargs <"$iteration_tmp_file.matched_files" $cmd_part_parallelism -n 1 -I '{}' $COVERAGE_WRAPPER bash -c$bash_arg "$loop_function $iteration_tmp_file.matches.all $iteration_tmp_file.sed.matched_rules '{}' 1"
     rm "$iteration_tmp_file.sed.matched_rules"
@@ -72,7 +72,9 @@ function iterate_through_targets {
     local iteration=$2
     local previously_matched_files=$3
     local prev_matches=$4
+
     local iteration_tmp_file=$tmpfile.$iteration
+    local retval=0
 
     warning "Iteration $iteration: prefiltering."
 
@@ -92,8 +94,10 @@ function iterate_through_targets {
         then
             warning "Saving found misspells into $opt_whitelist_filename."
             sed -e 's/^/^/' "$iteration_tmp_file.matches.all" >> "$opt_whitelist_filename"
+            retval=11
         else
             iterate_through_prefiltered_files $iteration $iteration_tmp_file
+            retval=1
         fi
     else
         warning "Iteration $iteration: nothing to replace."
@@ -106,6 +110,7 @@ function iterate_through_targets {
             warning "Iteration $iteration: matchlist is the same as in previous iteration..."
         else
             iterate_through_targets list_files_from_last_iteration $((iteration + 1)) "$iteration_tmp_file.matched_files" "$iteration_tmp_file.matches.all"
+            retval=$(($? + 1 ))
         fi
     fi
     if [[ -f $iteration_tmp_file.matched_files ]]
@@ -113,7 +118,7 @@ function iterate_through_targets {
         rm "$iteration_tmp_file.matched_files"
     fi
     rm "$iteration_tmp_file.matches" "$iteration_tmp_file.matches.word_limited" "$iteration_tmp_file.matches.all"
-    return 0
+    return $retval
 }
 
 function apply_rules_on_one_file {
@@ -177,13 +182,13 @@ function decorate_one_iteration {
         verbose "nothing changed"
         rm "$workfile"
     else
-        verbose "misspellings are fixed!"
         if [[ $opt_show_diff = 1 ]]
         then
             echo "$diff"
         fi
         if [[ $opt_real_run = 1 ]]
         then
+            verbose "misspellings are fixed!"
             if [[ $opt_backup = 1 ]]
             then
                 mv -n "$filename" "$workfile.BAK"

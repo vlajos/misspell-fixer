@@ -89,9 +89,21 @@ In directory `x` the white list entries generated with target `.` will not be ap
 This can be worked around with manually editing the white list to your needs.
 (Patches are welcome for a more general solution...)
 
+### Return values
+
+Generally the script tries to return with `0` if no typos or errors have been found/fixed.
+
+* `0` No typos found,
+* `1-5` Typos found. The return value shows the number of iterations executed.
+* `10` Help successfully printed.
+* `11` Whitelist successfully saved.
+* `100-` Parameter errors. (invalid, missing, conflicting)
+
+
 ### Sample usage
 
-By default nothing important will happen
+Without arguments, the script will not change anything and its output is minimal.
+Its return value can be used to detect if it found any typos.
 
     $ misspell-fixer target
 
