@@ -2,5 +2,10 @@
 language: bash
 sudo: required
 
-before_script: make prepare_environment
-script: make test && make test_self
+before_script:
+    - make prepare_environment
+    - echo Optimize source for coverage calculations
+    - echo https://github.com/SimonKagstrom/kcov/issues/74
+    - sed -i ':a;N;$!ba;s/\\\n/ /g' misspell-fixer lib/*sh
+script:
+    - make test && make test_self
