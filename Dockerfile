@@ -6,10 +6,10 @@ RUN apk --no-cache add bash grep sed findutils coreutils diffutils
 RUN mkdir /misspell-fixer
 
 ADD misspell-fixer \
-    rules \
-    lib \
     README.md \
     /misspell-fixer/
+ADD rules /misspell-fixer/rules
+ADD lib /misspell-fixer/lib
 
 WORKDIR /work
 
