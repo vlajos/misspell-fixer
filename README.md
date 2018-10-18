@@ -4,8 +4,8 @@
 [![Coverage Status](https://img.shields.io/coveralls/vlajos/misspell-fixer.svg)](https://coveralls.io/r/vlajos/misspell-fixer?branch=master)
 [![Circle CI Build Status](https://circleci.com/gh/vlajos/misspell-fixer.svg?style=svg)](https://circleci.com/gh/vlajos/misspell-fixer)
 [![Issue Count](https://codeclimate.com/github/vlajos/misspell-fixer/badges/issue_count.svg)](https://codeclimate.com/github/vlajos/misspell-fixer)
-[![Average time to resolve an issue](http://isitmaintained.com/badge/resolution/vlajos/misspell-fixer.svg)](http://isitmaintained.com/project/vlajos/misspell-fixer "Average time to resolve an issue")
-[![Percentage of issues still open](http://isitmaintained.com/badge/open/vlajos/misspell-fixer.svg)](http://isitmaintained.com/project/vlajos/misspell-fixer "Percentage of issues still open")
+[![Average time to resolve an issue](https://isitmaintained.com/badge/resolution/vlajos/misspell-fixer.svg)](https://isitmaintained.com/project/vlajos/misspell-fixer "Average time to resolve an issue")
+[![Percentage of issues still open](https://isitmaintained.com/badge/open/vlajos/misspell-fixer.svg)](https://isitmaintained.com/project/vlajos/misspell-fixer "Percentage of issues still open")
 
 ==============
 
@@ -65,10 +65,11 @@ File filtering options:
 * `-b` Process binary, generated files. (do not ignore `*.gif`, `*.jpg`, `*.jpeg`, `*.png`, `*.zip`, `*.gz`, `*.bz2`, `*.xz`, `*.rar`, `*.po`, `*.pdf`, `*.woff`, `yarn.lock`, `package-lock.json`, `composer.lock`, `*.mo`)
 * `-m` Disable file size checks. Default is to ignore files > 1MB. (usually csv, compressed JS, ..)
 
-White listing files/entries
+Whitelisting files/entries:
 
 Misspell-fixer automatically ignores the issues matching to the patterns listed in `.misspell-fixer.ignore`.
 The format of this file follows the prefiltering's temporary result format:
+
 `^filename:line number:matched word`
 
 * `-W` can be used to append the found issues instead of fixing them based on the other settings.
@@ -84,14 +85,26 @@ Or a directory:
 `^directory`
 
 The entries are listed/matched with the paths based on the current invocation. Reaching the same target with different path from
-the same working directory will will not apply the white listed entries geneated from the other invocation.
-In directory `x` the white list entries generated with target `.` will not be applied for target `../x`, although they are the same.
-This can be worked around with manually editing the white list to your needs.
+the same working directory will will not apply the whitelisted entries geneated from the other invocation.
+In directory `x` the whitelist entries generated with target `.` will not be applied for target `../x`, although they are the same.
+This can be worked around with manually editing the whitelist to your needs.
 (Patches are welcome for a more general solution...)
+
+### Return values
+
+Generally the script tries to return with `0` if no typos or errors have been found/fixed.
+
+* `0` No typos found,
+* `1-5` Typos found. The return value shows the number of iterations executed.
+* `10` Help successfully printed.
+* `11` Whitelist successfully saved.
+* `100-` Parameter errors. (invalid, missing, conflicting)
+
 
 ### Sample usage
 
-By default nothing important will happen
+Without arguments, the script will not change anything and its output is minimal.
+Its return value can be used to detect if it found any typos.
 
     $ misspell-fixer target
 
@@ -117,12 +130,12 @@ The previous with all rules enabled:
 
 It is based on the following sources for common misspellings:
 
-* http://www.how-do-you-spell.com/
-* http://en.wikipedia.org/wiki/Commonly_misspelled_words
-* http://www.wrongspelled.com/
+* https://en.wikipedia.org/wiki/Commonly_misspelled_words
 * https://github.com/neleai/stylepp
-* http://en.wikipedia.org/wiki/Wikipedia:Lists_of_common_misspellings/For_machines
+* https://en.wikipedia.org/wiki/Wikipedia:Lists_of_common_misspellings/For_machines
 * https://anonscm.debian.org/git/lintian/lintian.git/tree/data/spelling/corrections
+* http://www.how-do-you-spell.com/
+* http://www.wrongspelled.com/
 
 ### With Docker
 

@@ -2,21 +2,21 @@
 
 .PHONY: test prepare_environment coveralls
 
-all: lint_dicts $(wildcard *.sed)
+all: lint_dicts $(wildcard rules/*.sed)
 
-%.sed: dict/%.dict
-	./dict/misspell-convert-dict-to-sed.pl <$< >./$@
+rules/%.sed: dict/%.dict
+	./util/convert-dict-to-sed.pl <$< >./$@
 	chmod a+x ./$@
 
 lint_dicts:
-	cd dict;./misspell-lint-dicts.sh
+	./util/lint-dicts.sh
 
-KCOV=/usr/local/bin/kcov --include-pattern=misspell-fixer/misspell-fixer --path-strip-level=1
+KCOV=/usr/local/bin/kcov --include-pattern=misspell-fixer/misspell-fixer,misspell-fixer/lib --path-strip-level=1
 COV_DIR=/tmp/coverage
+KCOV_WITH_ENV=env -i COVERAGE_WRAPPER="${KCOV} ${COV_DIR}-forks test/coverage_wrapper.sh" ${KCOV}
 test:
-	export COVERAGE_WRAPPER="${KCOV} ${COV_DIR}-forks test/coverage_wrapper.sh";\
-	${KCOV} ${COV_DIR}-main test/tests.sh &&\
-	${KCOV} --coveralls-id=${TRAVIS_JOB_ID} --merge ${COV_DIR} ${COV_DIR}-main ${COV_DIR}-forks
+	${KCOV_WITH_ENV} ${COV_DIR}-main test/tests.sh &&\
+	${KCOV_WITH_ENV} --coveralls-id=${TRAVIS_JOB_ID} --merge ${COV_DIR} ${COV_DIR}-main ${COV_DIR}-forks
 
 test_self:
 	test/self-spelling-test.sh

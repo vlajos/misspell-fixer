@@ -1,8 +1,4 @@
 #!/usr/bin/dh-exec
 misspell-fixer usr/bin
-misspell-fixer-gb-to-us.sed => /usr/share/misspell-fixer/rules-gb-to-us.sed
-misspell-fixer-not-so-safe.sed => /usr/share/misspell-fixer/rules-not-so-safe.sed
-misspell-fixer-safe.0.sed => /usr/share/misspell-fixer/rules-safe.0.sed
-misspell-fixer-safe.1.sed => /usr/share/misspell-fixer/rules-safe.1.sed
-misspell-fixer-safe.2.sed => /usr/share/misspell-fixer/rules-safe.2.sed
-misspell-fixer-safe.3.sed => /usr/share/misspell-fixer/rules-safe.3.sed
+lib /usr/share/misspell-fixer/
+rules /usr/share/misspell-fixer/

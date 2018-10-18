@@ -1931,9 +1931,6 @@ s/\bDictionnary\b/Dictionary/g
 s/\bdidnt'\b/didn't/g
 s/\bDIDNT'\b/DIDN'T/g
 s/\bDidnt'\b/Didn't/g
-s/\bdidnt\b/didn't/g
-s/\bDIDNT\b/DIDN'T/g
-s/\bDidnt\b/Didn't/g
 s/\bdiferent\b/different/g
 s/\bDIFERENT\b/DIFFERENT/g
 s/\bDiferent\b/Different/g
@@ -2090,9 +2087,6 @@ s/\bDoesnt'\b/Doesn't/g
 s/\bdoesnt't\b/doesn't/g
 s/\bDOESNT'T\b/DOESN'T/g
 s/\bDoesnt't\b/Doesn't/g
-s/\bdoesnt\b/doesn't/g
-s/\bDOESNT\b/DOESN'T/g
-s/\bDoesnt\b/Doesn't/g
 s/\bdoman\b/domain/g
 s/\bDOMAN\b/DOMAIN/g
 s/\bDoman\b/Domain/g
@@ -2105,9 +2099,6 @@ s/\bDont'\b/Don't/g
 s/\bdont't\b/don't/g
 s/\bDONT'T\b/DON'T/g
 s/\bDont't\b/Don't/g
-s/\bdont\b/don't/g
-s/\bDONT\b/DON'T/g
-s/\bDont\b/Don't/g
 s/\bdonwload\b/download/g
 s/\bDONWLOAD\b/DOWNLOAD/g
 s/\bDonwload\b/Download/g

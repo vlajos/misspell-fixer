@@ -1,3 +1,4 @@
+---
 version: 2
 jobs:
     build:
@@ -6,11 +7,11 @@ jobs:
         steps:
             - checkout
             - run:
-                name: Install make
-                command: sudo apt-get install make
+                  name: Install make
+                  command: sudo apt-get install make
             - run:
-                name: Prepare testing environment
-                command: make prepare_environment
+                  name: Prepare testing environment
+                  command: make prepare_environment
             - run:
-                name: Run tests
-                command: make test
+                  name: Run tests
+                  command: make test
