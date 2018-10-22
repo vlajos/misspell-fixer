@@ -13,7 +13,7 @@ lint_dicts:
 
 KCOV=/usr/local/bin/kcov --include-pattern=misspell-fixer/misspell-fixer,misspell-fixer/lib --path-strip-level=1
 COV_DIR=/tmp/coverage
-KCOV_WITH_ENV=env -i COVERAGE_WRAPPER="${KCOV} ${COV_DIR}-forks test/coverage_wrapper.sh" ${KCOV}
+KCOV_WITH_ENV=env -i COVERAGE_WRAPPER="${KCOV} ${COV_DIR}-forks $(CURDIR)/test/coverage_wrapper.sh" ${KCOV}
 test:
 	${KCOV_WITH_ENV} ${COV_DIR}-main test/tests.sh &&\
 	${KCOV_WITH_ENV} --coveralls-id=${TRAVIS_JOB_ID} --merge ${COV_DIR} ${COV_DIR}-main ${COV_DIR}-forks

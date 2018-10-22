@@ -20,8 +20,10 @@ setUp(){
 }
 
 runAndCompare(){
-    $RUN "$1" "$TEMP/work"
+    cd "$TEMP"
+    $RUN "$1" work
     assertFalse $?
+    cd -
     while [ "$2" != "" ]; do
         cp -a "test/expecteds/$2.txt" $TEMP/expected/
         shift
@@ -33,7 +35,9 @@ runAndCompare(){
 runAndCompareOutput(){
     export TEST_OUTPUT=$TEMP/output.$2
 
-    $RUN "$1" "$TEMP/work" >>"$TEST_OUTPUT" 2>&1
+    cd "$TEMP"
+    $RUN "$1" "work" >>"$TEST_OUTPUT" 2>&1
+    cd -
     diff -ruwb $TEMP/expected/ $TEMP/work/
     assertTrue 'Expected output differs.' $?
 
@@ -73,7 +77,9 @@ testSpaceInFileName(){
     mv $TEMP/work/0.txt "$TEMP/work/0 0.txt"
     rm $TEMP/expected/0.txt
     cp -a test/expecteds/0.txt "$TEMP/expected/0 0.txt"
-    $RUN -rn $TEMP/work
+    cd $TEMP
+    $RUN -rn work
+    cd -
     diff -ruwb $TEMP/expected/ $TEMP/work/
     assertTrue 'Expected output differs.' $?
     rm "$TEMP/work/0 0.txt" "$TEMP/expected/0 0.txt"
@@ -83,7 +89,9 @@ testMultipleFileNames(){
     cp $TEMP/work/0.txt $TEMP/work/1.txt
     cp -a test/expecteds/0.txt $TEMP/expected/0.txt
     cp -a test/expecteds/0.txt $TEMP/expected/1.txt
-    $RUN -rn $TEMP/work/0.txt $TEMP/work/1.txt
+    cd $TEMP
+    $RUN -rn work/0.txt work/1.txt
+    cd -
     diff -ruwb $TEMP/expected/ $TEMP/work/
     assertTrue 'Expected output differs.' $?
     rm $TEMP/work/1.txt $TEMP/expected/1.txt
@@ -98,8 +106,10 @@ testParallel(){
 }
 
 testBackup(){
-    $RUN -r $TEMP/work
+    cd $TEMP
+    $RUN -r work
     assertFalse $?
+    cd -
     diff -ruwb test/expecteds/0.txt $TEMP/work/0.txt
     assertTrue 'Expected output differs.' $?
     set +f
@@ -112,8 +122,10 @@ testBackup(){
 testSCMdirsuntouched(){
     mkdir $TEMP/work/.git/
     cp test/stubs/0.txt $TEMP/work/.git/0.txt
-    $RUN -rn $TEMP/work
+    cd $TEMP
+    $RUN -rn work
     assertFalse $?
+    cd -
     diff -ruwb test/expecteds/0.txt $TEMP/work/0.txt
     assertTrue 'Expected output differs.' $?
     diff -ruwb test/stubs/0.txt $TEMP/work/.git/0.txt
@@ -124,8 +136,10 @@ testSCMdirsuntouched(){
 testSCMdirstouched(){
     mkdir $TEMP/work/.git/
     cp test/stubs/0.txt $TEMP/work/.git/0.txt
-    $RUN -rni $TEMP/work
+    cd $TEMP
+    $RUN -rni work
     assertFalse $?
+    cd -
     diff -ruwb test/expecteds/0.txt $TEMP/work/0.txt
     assertTrue 'Expected output differs.' $?
     diff -ruwb test/expecteds/0.txt $TEMP/work/.git/0.txt
@@ -137,8 +151,10 @@ testNamefilter(){
     cp test/stubs/0.txt $TEMP/work/0.aaa
     cp test/stubs/0.txt $TEMP/work/0.yyy
     cp test/stubs/0.txt $TEMP/work/0.zzz
-    $RUN -rni -N '*.aaa' -N '*.yyy' $TEMP/work
+    cd $TEMP
+    $RUN -rni -N '*.aaa' -N '*.yyy' work
     assertFalse $?
+    cd -
     diff -ruwb test/stubs/0.txt $TEMP/work/0.txt
     assertTrue 'Expected output differs.' $?
     diff -ruwb test/expecteds/0.txt $TEMP/work/0.aaa
@@ -155,7 +171,9 @@ testKeepPermissionsNormal(){
     for i in ${tests[*]}; do
         chmod "${i:0:3}" "$TEMP/work/${i:3}.txt"
     done
-    $RUN -fnuVG $TEMP/work
+    cd $TEMP
+    $RUN -fnuVG work
+    cd -
     for i in ${tests[*]}; do
         chmod "${i:0:3}" "$TEMP/work/${i:3}.txt" |grep -q changed
         assertFalse "Permissions broken:$i" $?
@@ -170,7 +188,9 @@ testKeepPermissionsFast(){
     for i in ${tests[*]}; do
         chmod "${i:0:3}" "$TEMP/work/${i:3}.txt"
     done
-    $RUN -frnuVG $TEMP/work
+    cd $TEMP
+    $RUN -frnuVG work
+    cd -
     for i in ${tests[*]}; do
         chmod "${i:0:3}" "$TEMP/work/${i:3}.txt" |grep -q changed
         assertFalse "Permissions broken:$i" $?
@@ -185,12 +205,16 @@ testIgnoreBinary(){
     for i in ${tests[*]}; do
         cp test/stubs/0.txt "$TEMP/work/0.$i"
     done
-    $RUN -rn $TEMP/work
+    cd $TEMP
+    $RUN -rn work
+    cd -
     for i in ${tests[*]}; do
         diff -uwb test/stubs/0.txt "$TEMP/work/0.$i"
         assertTrue "Binary files changed:$i" $?
     done
-    $RUN -rnb $TEMP/work
+    cd $TEMP
+    $RUN -rnb work
+    cd -
     for i in ${tests[*]}; do
         diff -uwb test/expecteds/0.txt "$TEMP/work/0.$i"
         assertTrue "Binary files unchanged:$i" $?
@@ -213,7 +237,9 @@ testDots(){
 testMNoChange(){
     cp test/nochange.txt $TEMP/work/
     cp test/nochange.txt $TEMP/expected/
-    $RUN -mvRV $TEMP/work
+    cd $TEMP
+    $RUN -mvRV work
+    cd -
     diff -ruwb $TEMP/expected/ $TEMP/work/
     assertTrue 'Expected output differs.' $?
     rm -rf $TEMP/work/nochange.txt $TEMP/expected/nochange.txt
@@ -227,13 +253,17 @@ testWhitelist(){
     cp test/stubs/0.txt $TEMP/work/0.txt
     cp test/stubs/0.txt $TEMP/expected/0.txt
     local whitelist=".misspell-fixer.ignore"
+    cd $TEMP
     assertFalse 'Whitelist should not exist' "[ -s $whitelist ]"
-    $RUN -W $TEMP/work/
-    assertTrue 'Whitelist should not exist' "[ -s $whitelist ]"
+    $RUN -W work
+    assertTrue 'Whitelist should exist' "[ -s $whitelist ]"
+    cd -
     cp test/stubs/0.txt $TEMP/work/1.txt
     cp test/expecteds/0.txt $TEMP/expected/1.txt
     runAndCompare -rn
+    cd $TEMP
     rm $whitelist
+    cd -
 }
 
 suite(){

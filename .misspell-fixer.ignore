@@ -1,0 +1,7 @@
+^./dict/.*.dict
+^./doc/example_test.txt
+^./doc/example_walkthrough.md
+^./rules/.*.sed
+^./test/expected.*.output
+^./test/nochange.txt
+^./test/stubs/.*.txt

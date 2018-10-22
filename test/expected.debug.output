@@ -1,133 +1,133 @@
-+ apply_rules_on_one_file .misspell-fixer.X.X.matches.all .misspell-fixer.X.X.sed.matched_rules /tmp/misspell-fixer-test/X/work/X.txt X
-+ cp -a /tmp/misspell-fixer-test/X/work/X.txt /tmp/misspell-fixer-test/X/work/X.txt.X
-+ decorate_one_iteration .misspell-fixer.X.X.matches.all .misspell-fixer.X.X.sed.matched_rules /tmp/misspell-fixer-test/X/work/X.txt X
-+ diff='--- /tmp/misspell-fixer-test/X/work/X.txt	X-X-X X:X:X.X +X
-+ local all_matches=.misspell-fixer.X.X.matches.all
-+ local all_matches=.misspell-fixer.X.X.matches.all
-+ local filename=/tmp/misspell-fixer-test/X/work/X.txt
-+ local filename=/tmp/misspell-fixer-test/X/work/X.txt
-+ local inplaceflag=X
-+ local sed
-+ local sed_rules_matched=.misspell-fixer.X.X.sed.matched_rules
-+ local sed_rules_matched=.misspell-fixer.X.X.sed.matched_rules
-+ local workfile=/tmp/misspell-fixer-test/X/work/X.txt.X
-+ rm /tmp/misspell-fixer-test/X/work/X.txt.X
-+ sed -b -f /dev/fd/X /tmp/misspell-fixer-test/X/work/X.txt
-+ sed=("${sed[@]}" '-b')
-+ sed=('sed')
-+ verbose 'actual file: /tmp/misspell-fixer-test/X/work/X.txt'
-+ verbose 'temp file: /tmp/misspell-fixer-test/X/work/X.txt.X'
-+ [[ -f /tmp/misspell-fixer-test/X/work/X.txt.X ]]
-+ [[ X = X ]]
-+ [[ X = X ]]
-+ [[ X = X ]]
-+ [[ X = X ]]
-+ [[ X = X ]]
-+ [[ X = X ]]
-+ [[ X = X ]]
-++ cut -d : -f X,X
-++ diff -u /tmp/misspell-fixer-test/X/work/X.txt /tmp/misspell-fixer-test/X/work/X.txt.X
-++ grep --text -e 'lower then' .misspell-fixer.X.X.sed.matched_rules
-++ grep --text -e succesful .misspell-fixer.X.X.sed.matched_rules
-++ grep --text -e succesful .misspell-fixer.X.X.sed.matched_rules
-++ grep --text /tmp/misspell-fixer-test/X/work/X.txt .misspell-fixer.X.X.matches.all
-++ IFS=:
-++ IFS=:
-++ IFS=:
-++ IFS=:
-++ read -r line pattern
-++ read -r line pattern
-++ read -r line pattern
-++ read -r line pattern
-++ sed 's/^/X/'
-++ sed 's/^/X/'
-++ sed 's/^/X/'
-+++ /tmp/misspell-fixer-test/X/work/X.txt.X	X-X-X X:X:X.X +X
-++++ apply_whitelist_on_prefiltered_list .misspell-fixer.X.X
-++++ check_grep_version
-++++ check_sed_arguments
-++++ current_version=X.X
-++++ cut -d : -f X .misspell-fixer.X.X.matches.all
-++++ echo 'misspell-fixer: Iteration X: done.'
-++++ echo 'misspell-fixer: Iteration X: prefiltering.'
-++++ echo 'misspell-fixer: Iteration X: processing.'
-++++ execute_prefiltering list_files_from_find .misspell-fixer.X.X ''
-++++ find /tmp/misspell-fixer-test/X/work '(' -iname '.misspell-fixer.X*' -o -iname .misspell-fixer.ignore -o -iname '*.BAK' -o -iname .git -o -iname .svn -o -iname .hg -o -iname CVS -o -iname '*.gif' -o -iname '*.jpg' -o -iname '*.jpeg' -o -iname '*.png' -o -iname '*.zip' -o -iname '*.gz' -o -iname '*.bzX' -o -iname '*.xz' -o -iname '*.rar' -o -iname '*.po' -o -iname '*.pdf' -o -iname '*.woff' -o -iname yarn.lock -o -iname package-lock.json -o -iname composer.lock -o -iname '*.mo' ')' -prune -o -type f -and '(' -true ')' -and '(' -size -Xk ')' -printX
-++++ grep '\\b' .misspell-fixer.X.prepared.sed.all_rules
-++++ grep --text -f /dev/fd/X .misspell-fixer.X.prepared.sed.all_rules
-++++ grep -q illegal
-++++ grep -v '\\b' .misspell-fixer.X.prepared.sed.all_rules
-++++ grep -vh bin/sed ./rules/safe.X.sed
-++++ iterate_through_prefiltered_files X .misspell-fixer.X.X
-++++ iterate_through_targets list_files_from_find X '' /dev/null
-++++ list_files_from_find ''
-++++ local current_version
-++++ local file_lister_function=list_files_from_find
-++++ local file_lister_function=list_files_from_find
-++++ local iteration=X
-++++ local iteration=X
-++++ local iteration_tmp_file=.misspell-fixer.X.X
-++++ local iteration_tmp_file=.misspell-fixer.X.X
-++++ local iteration_tmp_file=.misspell-fixer.X.X
-++++ local iteration_tmp_file=.misspell-fixer.X.X
-++++ local previously_matched_files=
-++++ local previously_matched_files=
-++++ local prev_matches=/dev/null
-++++ local required_version=X.X
-++++ local retval=X
-++++ prepare_rules_for_prefiltering
-++++ printf '%s\n%s\n' X.X X.X
-++++ return X
-++++ retval=X
-++++ retval=X
-++++ rm .misspell-fixer.X.prepared.grep.patterns .misspell-fixer.X.prepared.grep.patterns.word_limited .misspell-fixer.X.prepared.sed.all_rules
-++++ rm .misspell-fixer.X.X.matched_files
-++++ rm .misspell-fixer.X.X.matches .misspell-fixer.X.X.matches.word_limited .misspell-fixer.X.X.matches.all
-++++ rm .misspell-fixer.X.X.sed.matched_rules
-++++ sed -b
-++++ sed -e 's/^s\///g' -e 's/\/.*g//g'
-++++ sed -e 's/^s\///g' -e 's/\/.*g//g' -e 's/\\b//g'
-++++ set +x
-++++ smart_sed=X
-++++ sort -u
-++++ sort -u .misspell-fixer.X.X.matches .misspell-fixer.X.X.matches.word_limited
-++++ sort -VC
-++++ tee /dev/fd/X /dev/fd/X
-++++ warning 'Iteration X: done.'
-++++ warning 'Iteration X: prefiltering.'
-++++ warning 'Iteration X: processing.'
-++++ xargs -P X -n X -I '{}' bash -cx 'decorate_one_iteration .misspell-fixer.X.X.matches.all .misspell-fixer.X.X.sed.matched_rules '\''{}'\'' X'
-++++ xargs -X -P X -n X grep --text -F -noH -w -f .misspell-fixer.X.prepared.grep.patterns.word_limited
-++++ [[ -f .misspell-fixer.X.X.matched_files ]]
-++++ [[ -s .misspell-fixer.ignore ]]
-++++ [[ -s .misspell-fixer.X.X.matches.all ]]
-++++ [[ -s .misspell-fixer.X.X.matches.all ]]
-++++ [[ X -lt X ]]
-++++ [[ X = X ]]
-++++ [[ X = X ]]
-++++ [[ X = X ]]
-++++ [[ X = X ]]
-++++ [[ X = X ]]
-++++ [[ X = X ]]
-+++++ cat
-+++++ cut -d : -f X .misspell-fixer.X.X.matches.all
-+++++ grep --version
-+++++ head -X
-+++++ prefilter_progress_none
-+++++ sed -e 's/.* //g'
-+++++ xargs -X -P X -n X grep --text -F -noH -f .misspell-fixer.X.prepared.grep.patterns
-+lower than
-+successful
-+successfully
--lower then
--succesful
--succesfully
-@@ -X,X +X,X @@
-misspell-fixer: -d Enable debug mode.
-misspell-fixer: Iteration X: done.
-misspell-fixer: Iteration X: prefiltering.
-misspell-fixer: Iteration X: processing.
-misspell-fixer: Real run (-r) has not been enabled. Files will not be changed. Use -r to override this.
-misspell-fixer: Target directories: /tmp/misspell-fixer-test/X/work
-\ No newline at end of file
-\ No newline at end of file'
+	+ apply_rules_on_one_file .misspell-fixer.X.X.matches.all .misspell-fixer.X.X.sed.matched_rules work/X.txt X
+	+ cp -a work/X.txt work/X.txt.X
+	+ decorate_one_iteration .misspell-fixer.X.X.matches.all .misspell-fixer.X.X.sed.matched_rules work/X.txt X
+	+ diff='--- work/X.txt	X-X-X X:X:X.X +X
+	+ local all_matches=.misspell-fixer.X.X.matches.all
+	+ local all_matches=.misspell-fixer.X.X.matches.all
+	+ local filename=work/X.txt
+	+ local filename=work/X.txt
+	+ local inplaceflag=X
+	+ local sed
+	+ local sed_rules_matched=.misspell-fixer.X.X.sed.matched_rules
+	+ local sed_rules_matched=.misspell-fixer.X.X.sed.matched_rules
+	+ local workfile=work/X.txt.X
+	+ rm work/X.txt.X
+	+ sed -b -f /dev/fd/X work/X.txt
+	+ sed=("${sed[@]}" '-b')
+	+ sed=('sed')
+	+ verbose 'actual file: work/X.txt'
+	+ verbose 'temp file: work/X.txt.X'
+	+ [[ -f work/X.txt.X ]]
+	+ [[ X = X ]]
+	+ [[ X = X ]]
+	+ [[ X = X ]]
+	+ [[ X = X ]]
+	+ [[ X = X ]]
+	+ [[ X = X ]]
+	+ [[ X = X ]]
+	++ cut -d : -f X,X
+	++ diff -u work/X.txt work/X.txt.X
+	++ grep --text -e 'lower then' .misspell-fixer.X.X.sed.matched_rules
+	++ grep --text -e succesful .misspell-fixer.X.X.sed.matched_rules
+	++ grep --text -e succesful .misspell-fixer.X.X.sed.matched_rules
+	++ grep --text work/X.txt .misspell-fixer.X.X.matches.all
+	++ IFS=:
+	++ IFS=:
+	++ IFS=:
+	++ IFS=:
+	++ read -r line pattern
+	++ read -r line pattern
+	++ read -r line pattern
+	++ read -r line pattern
+	++ sed 's/^/X/'
+	++ sed 's/^/X/'
+	++ sed 's/^/X/'
+	+++ work/X.txt.X	X-X-X X:X:X.X +X
+	++++ apply_whitelist_on_prefiltered_list .misspell-fixer.X.X
+	++++ check_grep_version
+	++++ check_sed_arguments
+	++++ current_version=X.X
+	++++ cut -d : -f X .misspell-fixer.X.X.matches.all
+	++++ echo 'misspell-fixer: Iteration X: done.'
+	++++ echo 'misspell-fixer: Iteration X: prefiltering.'
+	++++ echo 'misspell-fixer: Iteration X: processing.'
+	++++ execute_prefiltering list_files_from_find .misspell-fixer.X.X ''
+	++++ find work '(' -iname '.misspell-fixer.X*' -o -iname .misspell-fixer.ignore -o -iname '*.BAK' -o -iname .git -o -iname .svn -o -iname .hg -o -iname CVS -o -iname '*.gif' -o -iname '*.jpg' -o -iname '*.jpeg' -o -iname '*.png' -o -iname '*.zip' -o -iname '*.gz' -o -iname '*.bzX' -o -iname '*.xz' -o -iname '*.rar' -o -iname '*.po' -o -iname '*.pdf' -o -iname '*.woff' -o -iname yarn.lock -o -iname package-lock.json -o -iname composer.lock -o -iname '*.mo' ')' -prune -o -type f -and '(' -true ')' -and '(' -size -Xk ')' -printX
+	++++ grep '\\b' .misspell-fixer.X.prepared.sed.all_rules
+	++++ grep --text -f /dev/fd/X .misspell-fixer.X.prepared.sed.all_rules
+	++++ grep -q illegal
+	++++ grep -v '\\b' .misspell-fixer.X.prepared.sed.all_rules
+	++++ grep -vh bin/sed /usr/share/misspell-fixer/rules/safe.X.sed
+	++++ iterate_through_prefiltered_files X .misspell-fixer.X.X
+	++++ iterate_through_targets list_files_from_find X '' /dev/null
+	++++ list_files_from_find ''
+	++++ local current_version
+	++++ local file_lister_function=list_files_from_find
+	++++ local file_lister_function=list_files_from_find
+	++++ local iteration=X
+	++++ local iteration=X
+	++++ local iteration_tmp_file=.misspell-fixer.X.X
+	++++ local iteration_tmp_file=.misspell-fixer.X.X
+	++++ local iteration_tmp_file=.misspell-fixer.X.X
+	++++ local iteration_tmp_file=.misspell-fixer.X.X
+	++++ local previously_matched_files=
+	++++ local previously_matched_files=
+	++++ local prev_matches=/dev/null
+	++++ local required_version=X.X
+	++++ local retval=X
+	++++ prepare_rules_for_prefiltering
+	++++ printf '%s\n%s\n' X.X X.X
+	++++ return X
+	++++ retval=X
+	++++ retval=X
+	++++ rm .misspell-fixer.X.prepared.grep.patterns .misspell-fixer.X.prepared.grep.patterns.word_limited .misspell-fixer.X.prepared.sed.all_rules
+	++++ rm .misspell-fixer.X.X.matched_files
+	++++ rm .misspell-fixer.X.X.matches .misspell-fixer.X.X.matches.word_limited .misspell-fixer.X.X.matches.all
+	++++ rm .misspell-fixer.X.X.sed.matched_rules
+	++++ sed -b
+	++++ sed -e 's/^s\///g' -e 's/\/.*g//g'
+	++++ sed -e 's/^s\///g' -e 's/\/.*g//g' -e 's/\\b//g'
+	++++ set +x
+	++++ smart_sed=X
+	++++ sort -u
+	++++ sort -u .misspell-fixer.X.X.matches .misspell-fixer.X.X.matches.word_limited
+	++++ sort -VC
+	++++ tee /dev/fd/X /dev/fd/X
+	++++ warning 'Iteration X: done.'
+	++++ warning 'Iteration X: prefiltering.'
+	++++ warning 'Iteration X: processing.'
+	++++ xargs -P X -n X -I '{}' bash -cx 'decorate_one_iteration            .misspell-fixer.X.X.matches.all            .misspell-fixer.X.X.sed.matched_rules            '\''{}'\''            X'
+	++++ xargs -X -P X -n X grep --text -F -noH -w -f .misspell-fixer.X.prepared.grep.patterns.word_limited
+	++++ [[ -f .misspell-fixer.X.X.matched_files ]]
+	++++ [[ -s .misspell-fixer.ignore ]]
+	++++ [[ -s .misspell-fixer.X.X.matches.all ]]
+	++++ [[ -s .misspell-fixer.X.X.matches.all ]]
+	++++ [[ X -lt X ]]
+	++++ [[ X = X ]]
+	++++ [[ X = X ]]
+	++++ [[ X = X ]]
+	++++ [[ X = X ]]
+	++++ [[ X = X ]]
+	++++ [[ X = X ]]
+	+++++ cat
+	+++++ cut -d : -f X .misspell-fixer.X.X.matches.all
+	+++++ grep --version
+	+++++ head -X
+	+++++ prefilter_progress_none
+	+++++ sed -e 's/.* //g'
+	+++++ xargs -X -P X -n X grep --text -F -noH -f .misspell-fixer.X.prepared.grep.patterns
+	+lower than
+	+successful
+	+successfully
+	-lower then
+	-succesful
+	-succesfully
+	@@ -X,X +X,X @@
+	misspell-fixer: -d Enable debug mode.
+	misspell-fixer: Iteration X: done.
+	misspell-fixer: Iteration X: prefiltering.
+	misspell-fixer: Iteration X: processing.
+	misspell-fixer: Real run (-r) has not been enabled. Files will not be changed. Use -r to override this.
+	misspell-fixer: Target directories: work
+	\ No newline at end of file
+	\ No newline at end of file'
