@@ -57,7 +57,6 @@
 	++++ grep --text -f /dev/fd/X .misspell-fixer.X.prepared.sed.all_rules
 	++++ grep -q illegal
 	++++ grep -v '\\b' .misspell-fixer.X.prepared.sed.all_rules
-	++++ grep -vh bin/sed /usr/share/misspell-fixer/rules/safe.X.sed
 	++++ iterate_through_prefiltered_files X .misspell-fixer.X.X
 	++++ iterate_through_targets list_files_from_find X '' /dev/null
 	++++ list_files_from_find ''
