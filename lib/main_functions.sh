@@ -1,12 +1,12 @@
 #!/usr/bin/env bash
 
 function prepare_rules_for_prefiltering {
-    grep\
+    $GREP\
         -vh\
         'bin/sed'\
         $enabled_rules\
         >"$tmpfile.prepared.sed.all_rules"
-    grep\
+    $GREP\
         '\\b'\
         "$tmpfile.prepared.sed.all_rules"|\
         sed\
@@ -14,7 +14,7 @@ function prepare_rules_for_prefiltering {
             -e 's/\/.*g//g'\
             -e 's/\\b//g'\
             >"$tmpfile.prepared.grep.patterns.word_limited"
-    grep\
+    $GREP\
         -v '\\b'\
         "$tmpfile.prepared.sed.all_rules"|\
         sed\
@@ -62,7 +62,7 @@ function execute_prefiltering {
                 -0\
                 $cmd_part_parallelism\
                 -n 100\
-                grep\
+                $GREP\
                     --text\
                     -F\
                     -noH\
@@ -74,7 +74,7 @@ function execute_prefiltering {
                 -0\
                 $cmd_part_parallelism\
                 -n 100\
-                grep\
+                $GREP\
                     --text\
                     -F\
                     -noH\
@@ -95,7 +95,7 @@ function apply_whitelist_on_prefiltered_list {
     if [[ -s "$opt_whitelist_filename" ]]; then
         warning "Skipping whitelisted entries based"\
             "on $opt_whitelist_filename."
-        grep\
+        $GREP\
             -v\
             -f "$opt_whitelist_filename"\
             "$iteration_tmp_file.matches.all"\
@@ -110,7 +110,7 @@ function iterate_through_prefiltered_files {
     local iteration=$1
     local iteration_tmp_file=$2
 
-    grep\
+    $GREP\
         --text\
         -f <(\
             cut\
@@ -244,10 +244,10 @@ function apply_rules_on_one_file {
     fi
 
     "${sed[@]}" -f <(
-        grep --text "$filename" "$all_matches"|\
+        $GREP --text "$filename" "$all_matches"|\
         cut -d ':' -f 2,3|\
         while IFS=: read -r line pattern; do
-            grep --text -e "$pattern" "$sed_rules_matched"|sed "s/^/$line/"
+            $GREP --text -e "$pattern" "$sed_rules_matched"|sed "s/^/$line/"
         done
     ) "$filename"
 }

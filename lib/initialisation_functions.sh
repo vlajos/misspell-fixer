@@ -73,6 +73,8 @@ function initialise_variables {
     export directories
 
     export tmpfile=.misspell-fixer.$$
+
+    export GREP=$(ggrep --version >/dev/null 2>&1 && echo 'ggrep' || echo 'grep')
 }
 
 function process_command_arguments {
@@ -234,7 +236,7 @@ function handle_parameter_conflicts {
 
 function check_grep_version {
     local current_version
-    current_version=$(grep --version|head -1|sed -e 's/.* //g')
+    current_version=$($GREP --version|head -1|sed -e 's/.* //g')
     local required_version="2.28"
     if printf '%s\n%s\n' "$required_version" "$current_version" | sort -VC
     then
@@ -249,7 +251,7 @@ function check_grep_version {
 }
 
 function check_sed_arguments {
-    if sed -b 2>&1 |grep -q illegal
+    if sed -b 2>&1 |$GREP -q illegal
     then
         # OS/X
         smart_sed=0
