@@ -1,5 +1,3 @@
-#!/usr/bin/env bash
-
 function warning {
     echo "misspell-fixer: $*" >&2
 }
@@ -74,7 +72,9 @@ function initialise_variables {
 
     export tmpfile=.misspell-fixer.$$
 
-    export GREP=$(ggrep --version >/dev/null 2>&1 && echo 'ggrep' || echo 'grep')
+    export GREP=$(ggrep --version >/dev/null 2>&1 && \
+        echo 'ggrep' || \
+        echo 'grep')
 }
 
 function process_command_arguments {

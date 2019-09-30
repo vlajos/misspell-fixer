@@ -1,5 +1,3 @@
-#!/usr/bin/env bash
-
 function prepare_rules_for_prefiltering {
     $GREP\
         -vh\

@@ -42,7 +42,8 @@ runAndCompareOutput(){
     assertTrue 'Expected output differs.' $?
 
     sed 's/[0-9]\+/X/g' "$TEST_OUTPUT" |\
-    grep -v -e kcov -e 'grep -vh bin/sed' -e "Your grep version is" >"$TEST_OUTPUT.standard"
+    grep -v -e kcov -e 'grep -vh bin/sed' -e "Your grep version is" \
+        >"$TEST_OUTPUT.standard"
     if [[ "$3" = "1" ]]; then
         sort -f "$TEST_OUTPUT.standard" >"$TEST_OUTPUT.standard.sorted"
         mv "$TEST_OUTPUT.standard.sorted" "$TEST_OUTPUT.standard"

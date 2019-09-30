@@ -1,12 +1,11 @@
 Source: misspell-fixer
 Section: devel
 Priority: optional
-Maintainer: Lajos Veres <vlajos@gmail.com>
+Maintainer: Lajos Veres <vlajos+debian@gmail.com>
 Build-Depends: debhelper (>= 9), ruby-ronn, dh-exec
-Standards-Version: 3.9.8
+Standards-Version: 4.4.0
 Homepage: https://github.com/vlajos/misspell-fixer
 #Vcs-Git: https://github.com/vlajos/misspell-fixer.git
-#Vcs-Browser: https://github.com/vlajos/misspell-fixer
 
 Package: misspell-fixer
 Architecture: all
