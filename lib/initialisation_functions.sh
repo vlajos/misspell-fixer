@@ -72,9 +72,10 @@ function initialise_variables {
 
     export tmpfile=.misspell-fixer.$$
 
-    export GREP=$(ggrep --version >/dev/null 2>&1 && \
+    GREP=$(ggrep --version >/dev/null 2>&1 && \
         echo 'ggrep' || \
         echo 'grep')
+    export GREP
 }
 
 function process_command_arguments {
