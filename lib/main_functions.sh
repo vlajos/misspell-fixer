@@ -60,7 +60,7 @@ function execute_prefiltering {
                 -0\
                 $cmd_part_parallelism\
                 -n 100\
-                $GREP\
+                "$GREP"\
                     --text\
                     -F\
                     -noH\
@@ -72,7 +72,7 @@ function execute_prefiltering {
                 -0\
                 $cmd_part_parallelism\
                 -n 100\
-                $GREP\
+                "$GREP"\
                     --text\
                     -F\
                     -noH\
