@@ -12,9 +12,9 @@ fi
 
 export rules_directory="${source_directory}rules"
 
-# shellcheck source=lib/initialisation_functions.sh
+# shellcheck source=lib/initialisation_functions.sh shell=bash
 source "${source_directory}/lib/initialisation_functions.sh"
-# shellcheck source=lib/main_functions.sh
+# shellcheck source=lib/main_functions.sh shell=bash
 source "${source_directory}/lib/main_functions.sh"
 
 initialise_variables
