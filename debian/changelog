@@ -2,4 +2,4 @@ misspell-fixer (0.1-1) unstable; urgency=medium
 
   * Initial release (Closes: #895712)
 
- -- Lajos Veres <vlajos+debian@gmail.com>  Wed, 07 Mar 2018 19:25:13 +0000
+ -- Lajos Veres <vlajos+debian@gmail.com>  Tue, 01 Oct 2019 23:20:13 +0100
