@@ -5,7 +5,8 @@ Maintainer: Lajos Veres <vlajos+debian@gmail.com>
 Build-Depends: debhelper (>= 12), ruby-ronn
 Standards-Version: 4.4.0
 Homepage: https://github.com/vlajos/misspell-fixer
-#Vcs-Git: https://github.com/vlajos/misspell-fixer.git
+Vcs-Browser: https://github.com/vlajos/misspell-fixer
+Vcs-Git: https://github.com/vlajos/misspell-fixer.git
 Rules-Requires-Root: no
 
 Package: misspell-fixer
