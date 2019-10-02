@@ -1,4 +1,3 @@
-#!/usr/bin/dh-exec
 misspell-fixer usr/bin
 lib /usr/share/misspell-fixer/
 rules /usr/share/misspell-fixer/
