@@ -11,15 +11,27 @@ rules/%.sed: dict/%.dict
 lint_dicts:
 	./util/lint-dicts.sh
 
-KCOV=/usr/local/bin/kcov --include-pattern=misspell-fixer/misspell-fixer,misspell-fixer/lib --path-strip-level=1
+ifeq ($(wildcard /usr/local/bin/kcov),)
+    KCOV_BIN = kcov
+else
+    KCOV_BIN = /usr/local/bin/kcov
+endif
+
+ifeq ($(wildcard shunit2-2.1.7),)
+    SHUNIT_PREFIX = ""
+else
+    SHUNIT_PREFIX = shunit2-2.1.7/
+endif
+
+KCOV=${KCOV_BIN} --include-pattern=misspell-fixer/misspell-fixer,misspell-fixer/lib --path-strip-level=1
 COV_DIR=/tmp/coverage
-KCOV_WITH_ENV=env -i COVERAGE_WRAPPER="${KCOV} ${COV_DIR}-forks $(CURDIR)/test/coverage_wrapper.sh" ${KCOV}
+KCOV_WITH_ENV=env -i COVERAGE_WRAPPER="${KCOV} ${COV_DIR}-forks $(CURDIR)/test/coverage_wrapper.sh" SHUNIT_PREFIX=${SHUNIT_PREFIX} ${KCOV}
 test:
 	${KCOV_WITH_ENV} ${COV_DIR}-main test/tests.sh &&\
 	${KCOV_WITH_ENV} --coveralls-id=${TRAVIS_JOB_ID} --merge ${COV_DIR} ${COV_DIR}-main ${COV_DIR}-forks
 
 test_self:
-	test/self-spelling-test.sh
+	env -i SHUNIT_PREFIX=${SHUNIT_PREFIX}test/self-spelling-test.sh
 
 prepare_environment:
 	sudo apt-get update -qq
