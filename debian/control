@@ -11,6 +11,7 @@ Rules-Requires-Root: no
 
 Package: misspell-fixer
 Architecture: all
+Multi-Arch: foreign
 Depends: grep (>= 2.28), ${misc:Depends}
 Description: Tool for fixing common misspellings, typos in source code
  Utility to fix common misspellings, typos in source code.
