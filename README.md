@@ -13,10 +13,10 @@ Utility to fix common misspellings, typos in source code. There are lots of typi
 Typically they are more eye-catching in the living code but they can easily hide in comments, examples, samples, notes and documentation.
 With this utility you can fix a large number of them very quickly.
 
-Be aware that the utility does not check or fix file names. It can easily happen that a misspelled word is fixed in a file name in a program's code, but
+Be aware that the utility does not check or fix file names. It could easily happen that a misspelled word is fixed in a file name in a program's code, but
 the file itself will not be renamed by this utility.
 
-Also important to be very careful when fixing public APIs!
+It is also important to be very careful when fixing public APIs!
 
 A manual review is always needed to verify that nothing has been broken.
 
@@ -36,7 +36,7 @@ Main options:
 * `-n` Disable backups. (By default the modified files' originals will be saved with the `.$$.BAK` suffix.)
 * `-P n` Enable processing on `n` forks. For example: `-P 4` processes the files in 4 threads. (`-s` option is not supported)
 * `-f` Fast mode. (Equivalent with `-P4`)
-* `-h` Help. Displays this usage.
+* `-h` Help.
 
 Performance note: `-s`, `-v` or the lack of `-n` or `-r` use a slower processing internal loop. So usually `-frn` without `-s` and `-v` are the highest performing
 combination.
@@ -87,12 +87,12 @@ Or a directory:
 The entries are listed/matched with the paths based on the current invocation. Reaching the same target with different path from
 the same working directory will not apply the whitelisted entries generated from the other invocation.
 In directory `x` the whitelist entries generated with target `.` will not be applied for target `../x`, although they are the same.
-This can be worked around with manually editing the whitelist to your needs.
+There is a workaround for this with manually editing the whitelist to your needs.
 (Patches are welcome for a more general solution...)
 
 ### Return values
 
-Generally the script tries to return with `0` if no typos or errors have been found/fixed.
+Generally the script tries to return with `0` if there were no typos or errors found/fixed.
 
 * `0` No typos found,
 * `1-5` Typos found. The return value shows the number of iterations executed.
@@ -104,7 +104,7 @@ Generally the script tries to return with `0` if no typos or errors have been fo
 ### Sample usage
 
 Without arguments, the script will not change anything and its output is minimal.
-Its return value can be used to detect if it found any typos.
+Its return value can be used to detect whether it found any typos or not.
 
     $ misspell-fixer target
 
@@ -162,7 +162,7 @@ You can also use the `dockered-fixer` wrapper from the source repository:
 
     $ dockered-fixer [arguments]
 
-Or if your shell supports functions, you can define a function to make the command a little shorter:
+In case your shell supports functions, you can define a function to make the command a little shorter:
 
     $ function misspell-fixer { docker run -ti --rm -v $(pwd):/work vlajos/misspell-fixer "$@"; }
 
@@ -182,7 +182,7 @@ You can build the container locally, although this should not be really needed:
 The script itself is just a misspelling database and some glue in `bash` between `grep` and `sed`.
 `grep`'s `-F` combined with `sed`'s line targeting makes the script quite efficient.
 `-F` enables parallel pattern matching with the https://en.wikipedia.org/wiki/Aho%E2%80%93Corasick_algorithm .
-Unfortunately this seem to work well with `-w` only in the newer (2.28+) versions of grep.
+Unfortunately only the newer (2.28+) versions of grep supports `-w` properly.
 
 A little more comprehensive list:
 

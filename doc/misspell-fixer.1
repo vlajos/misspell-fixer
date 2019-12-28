@@ -9,10 +9,10 @@ misspell-fixer - misspell-fixer
 Utility to fix common misspellings, typos in source code\. There are lots of typical misspellings in program code\. Typically they are more eye\-catching in the living code but they can easily hide in comments, examples, samples, notes and documentation\. With this utility you can fix a large number of them very quickly\.
 .
 .P
-Be aware that the utility does not check or fix file names\. It can easily happen that a misspelled word is fixed in a file name in a program\'s code, but the file itself will not be renamed by this utility\.
+Be aware that the utility does not check or fix file names\. It could easily happen that a misspelled word is fixed in a file name in a program\'s code, but the file itself will not be renamed by this utility\.
 .
 .P
-Also important to be very careful when fixing public APIs!
+It is also important to be very careful when fixing public APIs!
 .
 .P
 A manual review is always needed to verify that nothing has been broken\.
@@ -46,7 +46,7 @@ Main options:
 \fB\-f\fR Fast mode\. (Equivalent with \fB\-P4\fR)
 .
 .IP "\(bu" 4
-\fB\-h\fR Help\. Displays this usage\.
+\fB\-h\fR Help\.
 .
 .IP "" 0
 .
@@ -137,10 +137,10 @@ Or a directory:
 \fB^directory\fR
 .
 .P
-The entries are listed/matched with the paths based on the current invocation\. Reaching the same target with different path from the same working directory will not apply the whitelisted entries generated from the other invocation\. In directory \fBx\fR the whitelist entries generated with target \fB\.\fR will not be applied for target \fB\.\./x\fR, although they are the same\. This can be worked around with manually editing the whitelist to your needs\. (Patches are welcome for a more general solution\.\.\.)
+The entries are listed/matched with the paths based on the current invocation\. Reaching the same target with different path from the same working directory will not apply the whitelisted entries generated from the other invocation\. In directory \fBx\fR the whitelist entries generated with target \fB\.\fR will not be applied for target \fB\.\./x\fR, although they are the same\. There is a workaround for this with manually editing the whitelist to your needs\. (Patches are welcome for a more general solution\.\.\.)
 .
 .SS "Return values"
-Generally the script tries to return with \fB0\fR if no typos or errors have been found/fixed\.
+Generally the script tries to return with \fB0\fR if there were no typos or errors found/fixed\.
 .
 .IP "\(bu" 4
 \fB0\fR No typos found,
@@ -160,7 +160,7 @@ Generally the script tries to return with \fB0\fR if no typos or errors have bee
 .IP "" 0
 .
 .SS "Sample usage"
-Without arguments, the script will not change anything and its output is minimal\. Its return value can be used to detect if it found any typos\.
+Without arguments, the script will not change anything and its output is minimal\. Its return value can be used to detect whether it found any typos or not\.
 .
 .IP "" 4
 .
@@ -319,7 +319,7 @@ $ dockered\-fixer [arguments]
 .IP "" 0
 .
 .P
-Or if your shell supports functions, you can define a function to make the command a little shorter:
+In case your shell supports functions, you can define a function to make the command a little shorter:
 .
 .IP "" 4
 .
@@ -361,7 +361,7 @@ $ docker build \. \-t misspell\-fixer
 .IP "" 0
 .
 .SS "Dependencies \- \"On the shoulders of giants\""
-The script itself is just a misspelling database and some glue in \fBbash\fR between \fBgrep\fR and \fBsed\fR\. \fBgrep\fR\'s \fB\-F\fR combined with \fBsed\fR\'s line targeting makes the script quite efficient\. \fB\-F\fR enables parallel pattern matching with the https://en\.wikipedia\.org/wiki/Aho%E2%80%93Corasick_algorithm \. Unfortunately this seem to work well with \fB\-w\fR only in the newer (2\.28+) versions of grep\.
+The script itself is just a misspelling database and some glue in \fBbash\fR between \fBgrep\fR and \fBsed\fR\. \fBgrep\fR\'s \fB\-F\fR combined with \fBsed\fR\'s line targeting makes the script quite efficient\. \fB\-F\fR enables parallel pattern matching with the https://en\.wikipedia\.org/wiki/Aho%E2%80%93Corasick_algorithm \. Unfortunately only the newer (2\.28+) versions of grep supports \fB\-w\fR properly\.
 .
 .P
 A little more comprehensive list:
