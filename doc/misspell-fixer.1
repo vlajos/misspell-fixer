@@ -1,7 +1,7 @@
 .\" generated with Ronn/v0.7.3
 .\" http://github.com/rtomayko/ronn/tree/0.7.3
 .
-.TH "misspell-fixer" "" "October 2018" "" "misspell-fixer"
+.TH "misspell-fixer" "" "December 2019" "" "misspell-fixer"
 .SH NAME
 misspell-fixer - misspell-fixer
 .
@@ -74,7 +74,7 @@ Output control options:
 By default only a subset of rules are enabled (around 100)\. You can enable more rules with the following options:
 .
 .IP "\(bu" 4
-\fB\-u\fR Enable less safe rules\. (Manual review\'s importance is more significatnt\.\.\.) (Around ten rules\.)
+\fB\-u\fR Enable less safe rules\. (Manual review\'s importance is more significant\.\.\.) (Around ten rules\.)
 .
 .IP "\(bu" 4
 \fB\-g\fR Enable rules to convert British English to US English\. (These rules aren\'t exactly typos but sometimes they can be useful\.) (Around ten rules\.)
@@ -137,7 +137,7 @@ Or a directory:
 \fB^directory\fR
 .
 .P
-The entries are listed/matched with the paths based on the current invocation\. Reaching the same target with different path from the same working directory will will not apply the whitelisted entries geneated from the other invocation\. In directory \fBx\fR the whitelist entries generated with target \fB\.\fR will not be applied for target \fB\.\./x\fR, although they are the same\. This can be worked around with manually editing the whitelist to your needs\. (Patches are welcome for a more general solution\.\.\.)
+The entries are listed/matched with the paths based on the current invocation\. Reaching the same target with different path from the same working directory will not apply the whitelisted entries generated from the other invocation\. In directory \fBx\fR the whitelist entries generated with target \fB\.\fR will not be applied for target \fB\.\./x\fR, although they are the same\. This can be worked around with manually editing the whitelist to your needs\. (Patches are welcome for a more general solution\.\.\.)
 .
 .SS "Return values"
 Generally the script tries to return with \fB0\fR if no typos or errors have been found/fixed\.

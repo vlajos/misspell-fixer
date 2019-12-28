@@ -50,7 +50,7 @@ Output control options:
 
 By default only a subset of rules are enabled (around 100). You can enable more rules with the following options:
 
-* `-u` Enable less safe rules. (Manual review's importance is more significatnt...) (Around ten rules.)
+* `-u` Enable less safe rules. (Manual review's importance is more significant...) (Around ten rules.)
 * `-g` Enable rules to convert British English to US English. (These rules aren't exactly typos but sometimes they can be useful.) (Around ten rules.)
 * `-R` Enable rare rules. (Few hundred rules.)
 * `-V` Enable very rare rules. (Mostly from the wikipedia article.) (More than four thousand rules.)
@@ -85,7 +85,7 @@ Or a directory:
 `^directory`
 
 The entries are listed/matched with the paths based on the current invocation. Reaching the same target with different path from
-the same working directory will will not apply the whitelisted entries geneated from the other invocation.
+the same working directory will not apply the whitelisted entries generated from the other invocation.
 In directory `x` the whitelist entries generated with target `.` will not be applied for target `../x`, although they are the same.
 This can be worked around with manually editing the whitelist to your needs.
 (Patches are welcome for a more general solution...)
