@@ -1,3 +1,10 @@
+misspell-fixer (0.2-1) unstable; urgency=low
+
+  * Documentation updates
+  * Debian packaging tweaks.
+
+ -- Veres Lajos <vlajos+debian@gmail.com>  Sun, 29 Dec 2019 23:05:37 +0000
+
 misspell-fixer (0.1-1) unstable; urgency=medium
 
   * Initial release (Closes: #895712)
