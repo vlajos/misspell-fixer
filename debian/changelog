@@ -1,7 +1,12 @@
 misspell-fixer (0.2-1) unstable; urgency=low
 
   * Documentation updates
-  * Debian packaging tweaks.
+  * Debian packaging tweaks:
+    - Update to Standards-Version: 4.4.1
+    - Multi-Arch: foreign
+    - Remove redundant files
+    - Autopkgtest control file
+    - Transition to debhelper-compat build-dependency from debian/compat
 
  -- Lajos Veres <vlajos+debian@gmail.com>  Sun, 29 Dec 2019 23:05:37 +0000
 
