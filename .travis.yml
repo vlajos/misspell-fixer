@@ -8,4 +8,4 @@ before_script:
     - echo https://github.com/SimonKagstrom/kcov/issues/74
     - sed -i ':a;N;$!ba;s/\\\n/ /g' misspell-fixer lib/*sh
 script:
-    - make test && make test_self
+    - make test_with_coverage && make test_self

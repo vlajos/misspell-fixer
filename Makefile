@@ -26,9 +26,12 @@ endif
 KCOV=${KCOV_BIN} --include-pattern=misspell-fixer/misspell-fixer,misspell-fixer/lib --path-strip-level=1
 COV_DIR=/tmp/coverage
 KCOV_WITH_ENV=env -i COVERAGE_WRAPPER="${KCOV} ${COV_DIR}-forks $(CURDIR)/test/coverage_wrapper.sh" SHUNIT_PREFIX=${SHUNIT_PREFIX} ${KCOV}
-test:
+test_with_coverage:
 	${KCOV_WITH_ENV} ${COV_DIR}-main test/tests.sh &&\
 	${KCOV_WITH_ENV} --coveralls-id=${TRAVIS_JOB_ID} --merge ${COV_DIR} ${COV_DIR}-main ${COV_DIR}-forks
+
+test:
+	/bin/bash -c 'source test/tests.sh'
 
 test_self:
 	env -i SHUNIT_PREFIX=${SHUNIT_PREFIX}test/self-spelling-test.sh

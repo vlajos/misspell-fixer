@@ -14,4 +14,4 @@ jobs:
                   command: make prepare_environment
             - run:
                   name: Run tests
-                  command: make test
+                  command: make test_with_coverage
