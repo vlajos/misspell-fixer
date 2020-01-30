@@ -1,8 +1,8 @@
-misspell-fixer (0.3-1) UNRELEASED; urgency=low
+misspell-fixer (0.3-1) unstable; urgency=low
 
   * Default tests are executed without coverage report to depend less on kcov.
 
- -- Veres Lajos <vlajos+debian@gmail.com>  Thu, 30 Jan 2020 21:16:29 +0000
+ -- Lajos Veres <vlajos+debian@gmail.com>  Thu, 30 Jan 2020 21:16:29 +0000
 
 misspell-fixer (0.2-1) unstable; urgency=low
 
