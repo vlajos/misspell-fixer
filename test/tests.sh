@@ -41,7 +41,7 @@ runAndCompareOutput(){
     diff -ruwb $TEMP/expected/ $TEMP/work/
     assertTrue 'Expected output differs.' $?
 
-    sed 's/[0-9]\+/X/g' "$TEST_OUTPUT" |\
+    sed -e 's/[0-9]\+/X/g' -e 's/X -X$/X +X/g' "$TEST_OUTPUT" |\
     grep -v -e kcov -e 'grep -vh bin/sed' -e "Your grep version is" \
         >"$TEST_OUTPUT.standard"
     if [[ "$3" = "1" ]]; then
