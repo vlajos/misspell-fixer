@@ -52,7 +52,7 @@
 +++++ echo 'misspell-fixer: Iteration X: prefiltering.'
 +++++ echo 'misspell-fixer: Iteration X: processing.'
 +++++ execute_prefiltering list_files_from_find .misspell-fixer.X.X ''
-+++++ find work '(' -iname '.misspell-fixer.X*' -o -iname .misspell-fixer.ignore -o -iname '*.BAK' -o -iname .git -o -iname .svn -o -iname .hg -o -iname CVS -o -iname '*.gif' -o -iname '*.jpg' -o -iname '*.jpeg' -o -iname '*.png' -o -iname '*.zip' -o -iname '*.gz' -o -iname '*.bzX' -o -iname '*.xz' -o -iname '*.rar' -o -iname '*.po' -o -iname '*.pdf' -o -iname '*.woff' -o -iname yarn.lock -o -iname package-lock.json -o -iname composer.lock -o -iname '*.mo' ')' -prune -o -type f -and '(' -true ')' -and '(' -size -Xk ')' -printX
++++++ find work '(' -iname '.misspell-fixer.X*' -o -iname .misspell-fixer.ignore -o -iname '*.BAK' -o -iname .git -o -iname .svn -o -iname .hg -o -iname CVS -o -iname '*.gif' -o -iname '*.jpg' -o -iname '*.jpeg' -o -iname '*.png' -o -iname '*.zip' -o -iname '*.gz' -o -iname '*.bzX' -o -iname '*.xz' -o -iname '*.rar' -o -iname '*.po' -o -iname '*.pdf' -o -iname '*.woff' -o -iname '*.mov' -o -iname '*.mpX' -o -iname yarn.lock -o -iname package-lock.json -o -iname composer.lock -o -iname '*.mo' ')' -prune -o -type f -and '(' -true ')' -and '(' -size -Xk ')' -printX
 +++++ grep '\\b' .misspell-fixer.X.prepared.sed.all_rules
 +++++ grep --text -f /dev/fd/X .misspell-fixer.X.prepared.sed.all_rules
 +++++ grep -q illegal

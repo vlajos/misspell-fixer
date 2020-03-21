@@ -53,6 +53,8 @@ function initialise_variables {
         -o -iname *.po\
         -o -iname *.pdf\
         -o -iname *.woff\
+        -o -iname *.mov\
+        -o -iname *.mp4\
         -o -iname yarn.lock\
         -o -iname package-lock.json\
         -o -iname composer.lock\
