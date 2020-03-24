@@ -1,3 +1,13 @@
+misspell-fixer (0.4-1) unstable; urgency=medium
+
+  * Option to respect .gitignore
+  * Exclude .mov and .mp3
+  * Update debian Standards version
+  * Doc updates
+  * Make tests timezone sign independent
+
+ -- Veres Lajos <vlajos+debian@gmail.com>  Tue, 24 Mar 2020 21:47:20 +0000
+
 misspell-fixer (0.3-1) unstable; urgency=low
 
   * Default tests are executed without coverage report to depend less on kcov.

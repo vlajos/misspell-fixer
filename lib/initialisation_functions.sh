@@ -59,6 +59,7 @@ function initialise_variables {
         -o -iname package-lock.json\
         -o -iname composer.lock\
         -o -iname *.mo"
+    export cmd_part_ignore_gitignore=""
     export cmd_part_ignore
 
     export cmd_part_parallelism
@@ -82,7 +83,7 @@ function initialise_variables {
 
 function process_command_arguments {
     local OPTIND
-    while getopts ":dvorfsibnRVDmughWN:P:" opt; do
+    while getopts ":dvorfsibnRVDGmughWN:P:" opt; do
         case $opt in
             d)
                 warning "-d Enable debug mode."
@@ -118,6 +119,13 @@ function process_command_arguments {
             b)
                 warning "-i Disable binary ignoring."
                 cmd_part_ignore_bin=''
+            ;;
+            G)
+                warning "-G Respect .gitignore."
+                for i in $(git ls-files --others --ignored --exclude-standard)
+                do
+                    cmd_part_ignore_gitignore="$cmd_part_ignore_gitignore -o -name $i"
+                done
             ;;
             n)
                 warning "-n Disable backups."
@@ -202,7 +210,7 @@ function process_command_arguments {
         -iname $tmpfile*\
         -o -iname $opt_whitelist_filename\
         -o -iname *.BAK\
-        $cmd_part_ignore_scm $cmd_part_ignore_bin\
+        $cmd_part_ignore_scm $cmd_part_ignore_bin $cmd_part_ignore_gitignore\
         ) -prune -o "
     warning "Target directories: ${directories[*]}"
 

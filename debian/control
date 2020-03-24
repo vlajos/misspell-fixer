@@ -13,6 +13,7 @@ Package: misspell-fixer
 Architecture: all
 Multi-Arch: foreign
 Depends: grep (>= 2.28), ${misc:Depends}
+Recommends: git
 Description: Tool for fixing common misspellings, typos in source code
  Utility to fix common misspellings, typos in source code.
  There are lots of typical misspellings in program code.

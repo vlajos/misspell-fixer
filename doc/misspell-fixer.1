@@ -97,6 +97,9 @@ The processing speed decreases as you activate more rules\. But with newer greps
 File filtering options:
 .
 .IP "\(bu" 4
+\fB\-G\fR Respect \fB\.gitignore\fR files\. (Requires executable \fBgit\fR command\.) (experimental)
+.
+.IP "\(bu" 4
 \fB\-N\fR Enable file name filtering\. For example: \fB\-N \'*\.cpp\' \-N \'*\.h\'\fR
 .
 .IP "\(bu" 4
@@ -360,6 +363,9 @@ $ docker build \. \-t misspell\-fixer
 .
 .IP "" 0
 .
+.SS "With Github Actions"
+There\'s a Github Action \fIhttps://github\.com/sobolevn/misspell\-fixer\-action\fR to run \fBmisspell\-fixer\fR as well\. It even allows to automatically send PRs with the fixes\.
+.
 .SS "Dependencies \- \"On the shoulders of giants\""
 The script itself is just a misspelling database and some glue in \fBbash\fR between \fBgrep\fR and \fBsed\fR\. \fBgrep\fR\'s \fB\-F\fR combined with \fBsed\fR\'s line targeting makes the script quite efficient\. \fB\-F\fR enables parallel pattern matching with the https://en\.wikipedia\.org/wiki/Aho%E2%80%93Corasick_algorithm \. Unfortunately only the newer (2\.28+) versions of grep supports \fB\-w\fR properly\.
 .
@@ -395,6 +401,9 @@ rm, cp, mv
 .
 .IP "\(bu" 4
 xargs
+.
+.IP "\(bu" 4
+git (for respecting \.gitignore files)
 .
 .IP "" 0
 .

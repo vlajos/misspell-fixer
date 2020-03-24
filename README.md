@@ -58,6 +58,7 @@ The processing speed decreases as you activate more rules. But with newer greps 
 
 File filtering options:
 
+* `-G` Respect `.gitignore` files. (Requires executable `git` command.) (experimental)
 * `-N` Enable file name filtering. For example: `-N '*.cpp' -N '*.h'`
 * `-i` Walk through source code management system's internal directories. (do not ignore `.git`, `.svn`, `.hg`, `CVS`)
 * `-b` Process binary, generated files. (do not ignore `*.gif`, `*.jpg`, `*.jpeg`, `*.png`, `*.zip`, `*.gz`, `*.bz2`, `*.xz`, `*.rar`, `*.po`, `*.pdf`, `*.woff`, `yarn.lock`, `package-lock.json`, `composer.lock`, `*.mo`, `*.mov`, `*.mp4`)
@@ -199,6 +200,7 @@ A little more comprehensive list:
 * cut
 * rm, cp, mv
 * xargs
+* git (for respecting .gitignore files)
 
 ### Authors
 
