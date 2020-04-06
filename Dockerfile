@@ -1,7 +1,7 @@
 FROM alpine:3.8
 MAINTAINER Lajos Veres <vlajos@gmail.com>
 
-RUN apk --no-cache add bash grep sed findutils coreutils diffutils
+RUN apk --no-cache add bash grep sed findutils coreutils diffutils git
 
 RUN mkdir /misspell-fixer
 
