@@ -177,9 +177,9 @@ You can build the container locally, although this should not be really needed:
 
     $ docker build . -t misspell-fixer
 
-### With Github Actions
+### With GitHub Actions
 
-There's a [Github Action](https://github.com/sobolevn/misspell-fixer-action) to run `misspell-fixer` as well.
+There's a [GitHub Action](https://github.com/sobolevn/misspell-fixer-action) to run `misspell-fixer` as well.
 It even allows to automatically send PRs with the fixes.
 
 ### Dependencies - "On the shoulders of giants"
