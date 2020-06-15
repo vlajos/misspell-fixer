@@ -7,8 +7,6 @@
 [![Average time to resolve an issue](https://isitmaintained.com/badge/resolution/vlajos/misspell-fixer.svg)](https://isitmaintained.com/project/vlajos/misspell-fixer "Average time to resolve an issue")
 [![Percentage of issues still open](https://isitmaintained.com/badge/open/vlajos/misspell-fixer.svg)](https://isitmaintained.com/project/vlajos/misspell-fixer "Percentage of issues still open")
 
-==============
-
 Utility to fix common misspellings, typos in source code. There are lots of typical misspellings in program code.
 Typically they are more eye-catching in the living code but they can easily hide in comments, examples, samples, notes and documentation.
 With this utility you can fix a large number of them very quickly.
