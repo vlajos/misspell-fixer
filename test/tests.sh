@@ -169,13 +169,16 @@ testGitIgnoreRespected(){
     echo 0.txt >.gitignore
     cd -
     cp test/stubs/0.txt $TEMP/work/0.txt
+    cp test/stubs/0.txt $TEMP/work/1.txt
     cd $TEMP/work
     $RUN -rnG .
-    assertTrue $?
+    assertFalse $?
     cd -
     diff -ruwb test/stubs/0.txt $TEMP/work/0.txt
     assertTrue 'Gitignore not respected.' $?
-    rm -rf $TEMP/work/.git/ $TEMP/work/.gitignore $TEMP/work/0.txt
+    diff -ruwb test/expecteds/0.txt $TEMP/work/1.txt
+    assertTrue 'Fixing with gitignore enabled failed' $?
+    rm -rf $TEMP/work/.git/ $TEMP/work/.gitignore $TEMP/work/0.txt $TEMP/work/1.txt
 }
 
 testNamefilter(){

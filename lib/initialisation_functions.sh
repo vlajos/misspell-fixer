@@ -59,7 +59,6 @@ function initialise_variables {
         -o -iname package-lock.json\
         -o -iname composer.lock\
         -o -iname *.mo"
-    export cmd_part_ignore_gitignore=""
     export cmd_part_ignore
 
     export cmd_part_parallelism
@@ -74,6 +73,8 @@ function initialise_variables {
     export directories
 
     export tmpfile=.misspell-fixer.$$
+
+    echo >$tmpfile.git.ignore
 
     GREP=$(ggrep --version >/dev/null 2>&1 && \
         echo 'ggrep' || \
@@ -122,10 +123,11 @@ function process_command_arguments {
             ;;
             G)
                 warning "-G Respect .gitignore."
-                for i in $(git ls-files --others --ignored --exclude-standard)
-                do
-                    cmd_part_ignore_gitignore="$cmd_part_ignore_gitignore -o -name $i"
-                done
+                git ls-files --others --ignored --exclude-standard|\
+                while read -r filename; do
+                    printf './%s' "$filename"
+                done >$tmpfile.git.ignore
+                trap "rm -f $tmpfile.git.ignore" EXIT
             ;;
             n)
                 warning "-n Disable backups."
@@ -210,7 +212,7 @@ function process_command_arguments {
         -iname $tmpfile*\
         -o -iname $opt_whitelist_filename\
         -o -iname *.BAK\
-        $cmd_part_ignore_scm $cmd_part_ignore_bin $cmd_part_ignore_gitignore\
+        $cmd_part_ignore_scm $cmd_part_ignore_bin\
         ) -prune -o "
     warning "Target directories: ${directories[*]}"
 

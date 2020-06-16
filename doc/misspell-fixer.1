@@ -1,7 +1,7 @@
 .\" generated with Ronn/v0.7.3
 .\" http://github.com/rtomayko/ronn/tree/0.7.3
 .
-.TH "misspell-fixer" "" "March 2020" "" "misspell-fixer"
+.TH "misspell-fixer" "" "June 2020" "" "misspell-fixer"
 .SH NAME
 misspell-fixer - misspell-fixer
 .
@@ -363,8 +363,8 @@ $ docker build \. \-t misspell\-fixer
 .
 .IP "" 0
 .
-.SS "With Github Actions"
-There\'s a Github Action \fIhttps://github\.com/sobolevn/misspell\-fixer\-action\fR to run \fBmisspell\-fixer\fR as well\. It even allows to automatically send PRs with the fixes\.
+.SS "With GitHub Actions"
+There\'s a GitHub Action \fIhttps://github\.com/sobolevn/misspell\-fixer\-action\fR to run \fBmisspell\-fixer\fR as well\. It even allows to automatically send PRs with the fixes\.
 .
 .SS "Dependencies \- \"On the shoulders of giants\""
 The script itself is just a misspelling database and some glue in \fBbash\fR between \fBgrep\fR and \fBsed\fR\. \fBgrep\fR\'s \fB\-F\fR combined with \fBsed\fR\'s line targeting makes the script quite efficient\. \fB\-F\fR enables parallel pattern matching with the https://en\.wikipedia\.org/wiki/Aho%E2%80%93Corasick_algorithm \. Unfortunately only the newer (2\.28+) versions of grep supports \fB\-w\fR properly\.

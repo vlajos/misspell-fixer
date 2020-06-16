@@ -28,13 +28,11 @@ function list_files_from_find {
         -type f\
         -and \( $opt_name_filter \)\
         $cmd_size\
-        -print0
+        -print
 }
 
 function list_files_from_last_iteration {
-    while read -r filename; do
-        printf '%s\0' "$filename"
-    done <"$1"
+    cat $1
 }
 
 function prefilter_progress_none {
@@ -54,6 +52,10 @@ function execute_prefiltering {
 
     "$file_lister_function"\
         "$previously_matched_files"|\
+        grep -Fvx -f $tmpfile.git.ignore|\
+        while read -r filename; do
+            printf '%s\0' "$filename"
+        done|\
         tee\
             >($prefilter_progress_function)\
             >(xargs\

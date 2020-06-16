@@ -52,9 +52,10 @@
 +++++ echo 'misspell-fixer: Iteration X: prefiltering.'
 +++++ echo 'misspell-fixer: Iteration X: processing.'
 +++++ execute_prefiltering list_files_from_find .misspell-fixer.X.X ''
-+++++ find work '(' -iname '.misspell-fixer.X*' -o -iname .misspell-fixer.ignore -o -iname '*.BAK' -o -iname .git -o -iname .svn -o -iname .hg -o -iname CVS -o -iname '*.gif' -o -iname '*.jpg' -o -iname '*.jpeg' -o -iname '*.png' -o -iname '*.zip' -o -iname '*.gz' -o -iname '*.bzX' -o -iname '*.xz' -o -iname '*.rar' -o -iname '*.po' -o -iname '*.pdf' -o -iname '*.woff' -o -iname '*.mov' -o -iname '*.mpX' -o -iname yarn.lock -o -iname package-lock.json -o -iname composer.lock -o -iname '*.mo' ')' -prune -o -type f -and '(' -true ')' -and '(' -size -Xk ')' -printX
++++++ find work '(' -iname '.misspell-fixer.X*' -o -iname .misspell-fixer.ignore -o -iname '*.BAK' -o -iname .git -o -iname .svn -o -iname .hg -o -iname CVS -o -iname '*.gif' -o -iname '*.jpg' -o -iname '*.jpeg' -o -iname '*.png' -o -iname '*.zip' -o -iname '*.gz' -o -iname '*.bzX' -o -iname '*.xz' -o -iname '*.rar' -o -iname '*.po' -o -iname '*.pdf' -o -iname '*.woff' -o -iname '*.mov' -o -iname '*.mpX' -o -iname yarn.lock -o -iname package-lock.json -o -iname composer.lock -o -iname '*.mo' ')' -prune -o -type f -and '(' -true ')' -and '(' -size -Xk ')' -print
 +++++ grep '\\b' .misspell-fixer.X.prepared.sed.all_rules
 +++++ grep --text -f /dev/fd/X .misspell-fixer.X.prepared.sed.all_rules
++++++ grep -Fvx -f .misspell-fixer.X.git.ignore
 +++++ grep -q illegal
 +++++ grep -v '\\b' .misspell-fixer.X.prepared.sed.all_rules
 +++++ iterate_through_prefiltered_files X .misspell-fixer.X.X
@@ -76,10 +77,23 @@
 +++++ local retval=X
 +++++ prepare_rules_for_prefiltering
 +++++ printf '%s\n%s\n' X.X X.X
++++++ printf '%s\X' work/D.txt
++++++ printf '%s\X' work/g.txt
++++++ printf '%s\X' work/R.txt
++++++ printf '%s\X' work/u.txt
++++++ printf '%s\X' work/V.txt
++++++ printf '%s\X' work/X.txt
++++++ read -r filename
++++++ read -r filename
++++++ read -r filename
++++++ read -r filename
++++++ read -r filename
++++++ read -r filename
++++++ read -r filename
 +++++ return X
 +++++ retval=X
 +++++ retval=X
-+++++ rm .misspell-fixer.X.prepared.grep.patterns .misspell-fixer.X.prepared.grep.patterns.word_limited .misspell-fixer.X.prepared.sed.all_rules
++++++ rm .misspell-fixer.X.prepared.grep.patterns .misspell-fixer.X.prepared.grep.patterns.word_limited .misspell-fixer.X.prepared.sed.all_rules .misspell-fixer.X.git.ignore
 +++++ rm .misspell-fixer.X.X.matched_files
 +++++ rm .misspell-fixer.X.X.matches .misspell-fixer.X.X.matches.word_limited .misspell-fixer.X.X.matches.all
 +++++ rm .misspell-fixer.X.X.sed.matched_rules
