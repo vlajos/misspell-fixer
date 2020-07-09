@@ -184,7 +184,7 @@ It even allows to automatically send PRs with the fixes.
 
 The script itself is just a misspelling database and some glue in `bash` between `grep` and `sed`.
 `grep`'s `-F` combined with `sed`'s line targeting makes the script quite efficient.
-`-F` enables parallel pattern matching with the https://en.wikipedia.org/wiki/Aho%E2%80%93Corasick_algorithm .
+`-F` enables parallel pattern matching with the [Aho–Corasick algorithm](https://en.wikipedia.org/wiki/Aho%E2%80%93Corasick_algorithm) .
 Unfortunately only the newer (2.28+) versions of grep supports `-w` properly.
 
 A little more comprehensive list:
