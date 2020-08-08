@@ -1,7 +1,7 @@
 misspell-fixer (0.4-1) unstable; urgency=medium
 
   * Option to respect .gitignore
-  * Exclude .mov and .mp3
+  * Exclude .mov, .mp3 and .jar
   * Update debian Standards version
   * Doc updates
   * Make tests timezone sign independent
