@@ -30,6 +30,12 @@ fi
 
 if [[ $retval == 0 ]]
 then
+    handle_whitelist_configfile
+    retval=$?
+fi
+
+if [[ $retval == 0 ]]
+then
     if [[ $opt_debug = 1 ]]
     then
         set -x

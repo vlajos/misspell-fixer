@@ -25,6 +25,7 @@ function initialise_variables {
     export bash_arg
 
     export opt_whitelist_save=0
+
     export opt_whitelist_filename=".misspell-fixer.ignore"
 
     rules_safe0="${rules_directory}/safe.0.sed"
@@ -85,7 +86,7 @@ function initialise_variables {
 
 function process_command_arguments {
     local OPTIND
-    while getopts ":dvorfsibnRVDGmughWN:P:" opt; do
+    while getopts ":dvorfsibnRVDGmughWN:P:w:" opt; do
         case $opt in
             d)
                 warning "-d Enable debug mode."
@@ -180,8 +181,13 @@ function process_command_arguments {
                 fi
                 return 10
             ;;
+            w)
+                warning "-w Use $OPTARG as white list file instead of "\
+                    "$opt_whitelist_filename."
+                opt_whitelist_filename=$OPTARG
+            ;;
             W)
-                warning "-W Save found misspelled file entries into"\
+                warning "-W Save found misspelled file entries into "\
                     "$opt_whitelist_filename instead of fixing them."
                 opt_whitelist_save=1
             ;;
@@ -246,6 +252,18 @@ function handle_parameter_conflicts {
         return 104
     fi
     return 0
+}
+
+function handle_whitelist_configfile {
+    if [[ -s ".github/$opt_whitelist_filename" && -s "$opt_whitelist_filename" ]]; then
+        warning "We found both .github/$opt_whitelist_filename and $opt_whitelist_filename."\
+            " We can handle only one at the moment."
+        return 105
+    fi
+
+    if [[ -s ".github/$opt_whitelist_filename" ]]; then
+        opt_whitelist_filename=".github/$opt_whitelist_filename"
+    fi
 }
 
 function check_grep_version {

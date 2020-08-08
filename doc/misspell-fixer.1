@@ -75,11 +75,13 @@ File filtering options:
 .P
 Whitelisting files/entries:
 .P
-Misspell\-fixer automatically ignores the issues matching to the patterns listed in \fB\.misspell\-fixer\.ignore\fR\. The format of this file follows the prefiltering\'s temporary result format:
+Misspell\-fixer automatically ignores the issues matching to the patterns listed in \fB\.misspell\-fixer\.ignore\fR or \fB\.github/\.misspell\-fixer\.ignore\fR\. The format of this file follows the prefiltering\'s temporary result format:
 .P
 \fB^filename:line number:matched word\fR
 .IP "\[ci]" 4
 \fB\-W\fR can be used to append the found issues instead of fixing them based on the other settings\.
+.IP "\[ci]" 4
+\fB\-w filename\fR can be used to override the ignore file\'s name\.
 .IP "" 0
 .P
 The ignore file is interpreted as a \fBgrep\fR exclusion list\. It is applied after the prefiltering step as a set of grep expression\. So it is possible to exclude any prefixes or more specifically whole files with keeping only their file names:
