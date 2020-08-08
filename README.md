@@ -66,12 +66,13 @@ File filtering options:
 
 Whitelisting files/entries:
 
-Misspell-fixer automatically ignores the issues matching to the patterns listed in `.misspell-fixer.ignore`.
+Misspell-fixer automatically ignores the issues matching to the patterns listed in `.misspell-fixer.ignore` or `.github/.misspell-fixer.ignore`.
 The format of this file follows the prefiltering's temporary result format:
 
 `^filename:line number:matched word`
 
 * `-W` can be used to append the found issues instead of fixing them based on the other settings.
+* `-w filename` can be used to override the ignore file's name.
 
 The ignore file is interpreted as a `grep` exclusion list.
 It is applied after the prefiltering step as a set of grep expression.

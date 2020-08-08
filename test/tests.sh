@@ -300,10 +300,43 @@ testWhitelist(){
     cd -
 }
 
+testWhitelistWithFileNameOverride(){
+    cp test/stubs/0.txt $TEMP/work/0.txt
+    cp test/stubs/0.txt $TEMP/expected/0.txt
+    local whitelist=".misspell-fixer.ignore.override"
+    cd $TEMP
+    assertFalse 'Whitelist should not exist' "[ -s $whitelist ]"
+    $RUN "-Ww$whitelist" work
+    assertTrue 'Whitelist should exist' "[ -s $whitelist ]"
+    cd -
+    cp test/stubs/0.txt $TEMP/work/1.txt
+    cp test/expecteds/0.txt $TEMP/expected/1.txt
+    runAndCompare "-rnw$whitelist"
+    cd $TEMP
+    rm $whitelist
+    cd -
+}
+
+testWhitelistConflictWithDoubleWhitelist(){
+    echo x > $TEMP/.misspell-fixer.ignore
+    mkdir $TEMP/.github
+    echo x > $TEMP/.github/.misspell-fixer.ignore
+    runAndCompareOutput -r whitelist_vs_double_configs
+
+    cd $TEMP
+    $RUN -r .
+    assertSame 105 $?
+    cd -
+
+    rm -rf $TEMP/.github $TEMP/.misspell-fixer.ignore
+}
+
 suite(){
     export TEST_OUTPUT=$TEMP/output.default
     suite_addTest testWhitelist
+    suite_addTest testWhitelistWithFileNameOverride
     suite_addTest testWhitelistConflictWithRealRun
+    suite_addTest testWhitelistConflictWithDoubleWhitelist
     suite_addTest testShowDiff
     suite_addTest testErrors
     suite_addTest testOnlyDir

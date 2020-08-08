@@ -1,0 +1,3 @@
+misspell-fixer: -r Enable real run. Overwrite original files!
+misspell-fixer: Target directories: work
+misspell-fixer: We found both .github/.misspell-fixer.ignore and .misspell-fixer.ignore.  We can handle only one at the moment.
