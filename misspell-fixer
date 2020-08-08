@@ -40,7 +40,7 @@ then
     prepare_rules_for_prefiltering
     iterate_through_targets list_files_from_find 0 '' /dev/null
     retval=$?
-    rm $tmpfile.prepared.grep.patterns $tmpfile.prepared.grep.patterns.word_limited $tmpfile.prepared.sed.all_rules
+    rm $tmpfile.prepared.grep.patterns $tmpfile.prepared.grep.patterns.word_limited $tmpfile.prepared.sed.all_rules $tmpfile.git.ignore
     if [[ $opt_debug = 1 ]]
     then
         set +x

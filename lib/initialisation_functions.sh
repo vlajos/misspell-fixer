@@ -74,6 +74,8 @@ function initialise_variables {
 
     export tmpfile=.misspell-fixer.$$
 
+    echo >$tmpfile.git.ignore
+
     GREP=$(ggrep --version >/dev/null 2>&1 && \
         echo 'ggrep' || \
         echo 'grep')
@@ -82,7 +84,7 @@ function initialise_variables {
 
 function process_command_arguments {
     local OPTIND
-    while getopts ":dvorfsibnRVDmughWN:P:" opt; do
+    while getopts ":dvorfsibnRVDGmughWN:P:" opt; do
         case $opt in
             d)
                 warning "-d Enable debug mode."
@@ -118,6 +120,14 @@ function process_command_arguments {
             b)
                 warning "-i Disable binary ignoring."
                 cmd_part_ignore_bin=''
+            ;;
+            G)
+                warning "-G Respect .gitignore."
+                git ls-files --others --ignored --exclude-standard|\
+                while read -r filename; do
+                    printf './%s' "$filename"
+                done >$tmpfile.git.ignore
+                trap 'rm -f $tmpfile.git.ignore' EXIT
             ;;
             n)
                 warning "-n Disable backups."

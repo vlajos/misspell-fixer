@@ -148,6 +148,39 @@ testSCMdirstouched(){
     rm -rf $TEMP/work/.git/
 }
 
+testGitIgnoreNotRespected(){
+    cd $TEMP/work/
+    git init
+    echo 0.txt >.gitignore
+    cd -
+    cp test/stubs/0.txt $TEMP/work/0.txt
+    cd $TEMP/work
+    $RUN -rn .
+    assertFalse $?
+    cd -
+    diff -ruwb test/expecteds/0.txt $TEMP/work/0.txt
+    assertTrue 'Gitignore respected.' $?
+    rm -rf $TEMP/work/.git/ $TEMP/work/.gitignore $TEMP/work/0.txt
+}
+
+testGitIgnoreRespected(){
+    cd $TEMP/work/
+    git init
+    echo 0.txt >.gitignore
+    cd -
+    cp test/stubs/0.txt $TEMP/work/0.txt
+    cp test/stubs/0.txt $TEMP/work/1.txt
+    cd $TEMP/work
+    $RUN -rnG .
+    assertFalse $?
+    cd -
+    diff -ruwb test/stubs/0.txt $TEMP/work/0.txt
+    assertTrue 'Gitignore not respected.' $?
+    diff -ruwb test/expecteds/0.txt $TEMP/work/1.txt
+    assertTrue 'Fixing with gitignore enabled failed' $?
+    rm -rf $TEMP/work/.git/ $TEMP/work/.gitignore $TEMP/work/0.txt $TEMP/work/1.txt
+}
+
 testNamefilter(){
     cp test/stubs/0.txt $TEMP/work/0.aaa
     cp test/stubs/0.txt $TEMP/work/0.yyy
@@ -294,6 +327,13 @@ suite(){
         eval "testMainFast$allarg(){ runAndCompare -frn$allarg 0 $i; }"
         suite_addTest "testMainFast$allarg"
     done
+    if command -v git >/dev/null 2>/dev/null
+    then
+        suite_addTest testGitIgnoreNotRespected
+        suite_addTest testGitIgnoreRespected
+    else
+        echo 'Git is not available so we do not test .gitignore related functionality.'
+    fi
     if [[ "$COVERAGE_WRAPPER" = "" ]]; then
         suite_addTest testDebug
     else
