@@ -127,7 +127,7 @@ function process_command_arguments {
                 while read -r filename; do
                     printf './%s' "$filename"
                 done >$tmpfile.git.ignore
-                trap "rm -f $tmpfile.git.ignore" EXIT
+                trap 'rm -f $tmpfile.git.ignore' EXIT
             ;;
             n)
                 warning "-n Disable backups."

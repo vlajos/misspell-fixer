@@ -32,7 +32,7 @@ function list_files_from_find {
 }
 
 function list_files_from_last_iteration {
-    cat $1
+    cat "$1"
 }
 
 function prefilter_progress_none {
@@ -52,7 +52,7 @@ function execute_prefiltering {
 
     "$file_lister_function"\
         "$previously_matched_files"|\
-        grep -Fvx -f $tmpfile.git.ignore|\
+        grep -Fvx -f "$tmpfile.git.ignore"|\
         while read -r filename; do
             printf '%s\0' "$filename"
         done|\
