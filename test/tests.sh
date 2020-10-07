@@ -206,7 +206,7 @@ testKeepPermissionsNormal(){
         chmod "${i:0:3}" "$TEMP/work/${i:3}.txt"
     done
     cd $TEMP
-    $RUN -fnuVG work
+    $RUN -fnuV work
     cd -
     for i in ${tests[*]}; do
         chmod "${i:0:3}" "$TEMP/work/${i:3}.txt" |grep -q changed
@@ -223,7 +223,7 @@ testKeepPermissionsFast(){
         chmod "${i:0:3}" "$TEMP/work/${i:3}.txt"
     done
     cd $TEMP
-    $RUN -frnuVG work
+    $RUN -frnuV work
     cd -
     for i in ${tests[*]}; do
         chmod "${i:0:3}" "$TEMP/work/${i:3}.txt" |grep -q changed
