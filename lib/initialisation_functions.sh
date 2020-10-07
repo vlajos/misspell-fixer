@@ -76,7 +76,8 @@ function initialise_variables {
 
     export tmpfile=.misspell-fixer.$$
 
-    echo >$tmpfile.git.ignore
+    echo '/// ///' >$tmpfile.git.ignore
+    trap 'rm -f $tmpfile.git.ignore' EXIT
 
     GREP=$(ggrep --version >/dev/null 2>&1 && \
         echo 'ggrep' || \
@@ -129,7 +130,6 @@ function process_command_arguments {
                 while read -r filename; do
                     printf './%s' "$filename"
                 done >$tmpfile.git.ignore
-                trap 'rm -f $tmpfile.git.ignore' EXIT
             ;;
             n)
                 warning "-n Disable backups."
