@@ -48,4 +48,5 @@ man:
 	sed -i -e 's/README/misspell-fixer/g' -e '/travis/d' -e '/Jump to docker/d' README
 	sed -i '/.TH /a .SH NAME\
 	misspell-fixer \- misspell-fixer' README
-	mv README doc/misspell-fixer.1
+	sed -e "s/\\\'/'/g" README >doc/misspell-fixer.1
+	rm README

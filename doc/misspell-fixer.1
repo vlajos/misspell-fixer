@@ -6,7 +6,7 @@ misspell-fixer - misspell-fixer
 .P
 Utility to fix common misspellings, typos in source code\. There are lots of typical misspellings in program code\. Typically they are more eye\-catching in the living code but they can easily hide in comments, examples, samples, notes and documentation\. With this utility you can fix a large number of them very quickly\.
 .P
-Be aware that the utility does not check or fix file names\. It could easily happen that a misspelled word is fixed in a file name in a program\'s code, but the file itself will not be renamed by this utility\.
+Be aware that the utility does not check or fix file names\. It could easily happen that a misspelled word is fixed in a file name in a program's code, but the file itself will not be renamed by this utility\.
 .P
 It is also important to be very careful when fixing public APIs!
 .P
@@ -23,7 +23,7 @@ Main options:
 .IP "\[ci]" 4
 \fB\-r\fR Real run mode: Overwrites the original files with the fixed one\. Without this option the originals will be untouched\.
 .IP "\[ci]" 4
-\fB\-n\fR Disable backups\. (By default the modified files\' originals will be saved with the \fB\.$$\.BAK\fR suffix\.)
+\fB\-n\fR Disable backups\. (By default the modified files' originals will be saved with the \fB\.$$\.BAK\fR suffix\.)
 .IP "\[ci]" 4
 \fB\-P n\fR Enable processing on \fBn\fR forks\. For example: \fB\-P 4\fR processes the files in 4 threads\. (\fB\-s\fR option is not supported)
 .IP "\[ci]" 4
@@ -47,9 +47,9 @@ Output control options:
 .P
 By default only a subset of rules are enabled (around 100)\. You can enable more rules with the following options:
 .IP "\[ci]" 4
-\fB\-u\fR Enable less safe rules\. (Manual review\'s importance is more significant\|\.\|\.\|\.) (Around ten rules\.)
+\fB\-u\fR Enable less safe rules\. (Manual review's importance is more significant\|\.\|\.\|\.) (Around ten rules\.)
 .IP "\[ci]" 4
-\fB\-g\fR Enable rules to convert British English to US English\. (These rules aren\'t exactly typos but sometimes they can be useful\.) (Around ten rules\.)
+\fB\-g\fR Enable rules to convert British English to US English\. (These rules aren't exactly typos but sometimes they can be useful\.) (Around ten rules\.)
 .IP "\[ci]" 4
 \fB\-R\fR Enable rare rules\. (Few hundred rules\.)
 .IP "\[ci]" 4
@@ -64,9 +64,9 @@ File filtering options:
 .IP "\[ci]" 4
 \fB\-G\fR Respect \fB\.gitignore\fR files\. (Requires executable \fBgit\fR command\.) (experimental)
 .IP "\[ci]" 4
-\fB\-N\fR Enable file name filtering\. For example: \fB\-N \'*\.cpp\' \-N \'*\.h\'\fR
+\fB\-N\fR Enable file name filtering\. For example: \fB\-N '*\.cpp' \-N '*\.h'\fR
 .IP "\[ci]" 4
-\fB\-i\fR Walk through source code management system\'s internal directories\. (do not ignore \fB\.git\fR, \fB\.svn\fR, \fB\.hg\fR, \fBCVS\fR)
+\fB\-i\fR Walk through source code management system's internal directories\. (do not ignore \fB\.git\fR, \fB\.svn\fR, \fB\.hg\fR, \fBCVS\fR)
 .IP "\[ci]" 4
 \fB\-b\fR Process binary, generated files\. (do not ignore \fB*\.gif\fR, \fB*\.jpg\fR, \fB*\.jpeg\fR, \fB*\.png\fR, \fB*\.zip\fR, \fB*\.gz\fR, \fB*\.bz2\fR, \fB*\.xz\fR, \fB*\.rar\fR, \fB*\.po\fR, \fB*\.pdf\fR, \fB*\.woff\fR, \fByarn\.lock\fR, \fBpackage\-lock\.json\fR, \fBcomposer\.lock\fR, \fB*\.mo\fR, \fB*\.mov\fR, \fB*\.mp4\fR, \fB*\.jar\fR)
 .IP "\[ci]" 4
@@ -75,13 +75,13 @@ File filtering options:
 .P
 Whitelisting files/entries:
 .P
-Misspell\-fixer automatically ignores the issues matching to the patterns listed in \fB\.misspell\-fixer\.ignore\fR or \fB\.github/\.misspell\-fixer\.ignore\fR\. The format of this file follows the prefiltering\'s temporary result format:
+Misspell\-fixer automatically ignores the issues matching to the patterns listed in \fB\.misspell\-fixer\.ignore\fR or \fB\.github/\.misspell\-fixer\.ignore\fR\. The format of this file follows the prefiltering's temporary result format:
 .P
 \fB^filename:line number:matched word\fR
 .IP "\[ci]" 4
 \fB\-W\fR can be used to append the found issues instead of fixing them based on the other settings\.
 .IP "\[ci]" 4
-\fB\-w filename\fR can be used to override the ignore file\'s name\.
+\fB\-w filename\fR can be used to override the ignore file's name\.
 .IP "" 0
 .P
 The ignore file is interpreted as a \fBgrep\fR exclusion list\. It is applied after the prefiltering step as a set of grep expression\. So it is possible to exclude any prefixes or more specifically whole files with keeping only their file names:
@@ -173,7 +173,7 @@ $ docker pull vlajos/misspell\-fixer
 .fi
 .IP "" 0
 .P
-And fix \fBtargetdir\fR\'s content:
+And fix \fBtargetdir\fR's content:
 .IP "" 4
 .nf
 $ docker run \-ti \-\-rm \-v targetdir:/work vlajos/misspell\-fixer \-frunRVD \.
@@ -219,9 +219,9 @@ $ docker build \. \-t misspell\-fixer
 .fi
 .IP "" 0
 .SS "With GitHub Actions"
-There\'s a GitHub Action \fIhttps://github\.com/sobolevn/misspell\-fixer\-action\fR to run \fBmisspell\-fixer\fR as well\. It even allows to automatically send PRs with the fixes\.
+There's a GitHub Action \fIhttps://github\.com/sobolevn/misspell\-fixer\-action\fR to run \fBmisspell\-fixer\fR as well\. It even allows to automatically send PRs with the fixes\.
 .SS "Dependencies \- \"On the shoulders of giants\""
-The script itself is just a misspelling database and some glue in \fBbash\fR between \fBgrep\fR and \fBsed\fR\. \fBgrep\fR\'s \fB\-F\fR combined with \fBsed\fR\'s line targeting makes the script quite efficient\. \fB\-F\fR enables parallel pattern matching with the Aho–Corasick algorithm \fIhttps://en\.wikipedia\.org/wiki/Aho%E2%80%93Corasick_algorithm\fR \. Unfortunately only the newer (2\.28+) versions of grep supports \fB\-w\fR properly\.
+The script itself is just a misspelling database and some glue in \fBbash\fR between \fBgrep\fR and \fBsed\fR\. \fBgrep\fR's \fB\-F\fR combined with \fBsed\fR's line targeting makes the script quite efficient\. \fB\-F\fR enables parallel pattern matching with the Aho–Corasick algorithm \fIhttps://en\.wikipedia\.org/wiki/Aho%E2%80%93Corasick_algorithm\fR \. Unfortunately only the newer (2\.28+) versions of grep supports \fB\-w\fR properly\.
 .P
 A little more comprehensive list:
 .IP "\[ci]" 4
