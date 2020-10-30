@@ -180,7 +180,7 @@ You can build the container locally, although this should not be really needed:
 ### With GitHub Actions
 
 There's a [GitHub Action](https://github.com/sobolevn/misspell-fixer-action) to run `misspell-fixer` as well.
-It even allows to automatically send PRs with the fixes.
+It can even send PRs automatically with the fixes.
 
 ### Dependencies - "On the shoulders of giants"
 
