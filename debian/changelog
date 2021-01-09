@@ -8,7 +8,7 @@ misspell-fixer (0.4-1) unstable; urgency=medium
   * -w option to override whitelist file
   * Use .github/.misspell-fixer.ignore automatically if it exist
 
- -- Lajos Veres <vlajos+debian@gmail.com>  Tue, 24 Mar 2020 21:47:20 +0000
+ -- Lajos Veres <vlajos+debian@gmail.com>  Sat, 09 Jan 2021 09:30:35 +0000
 
 misspell-fixer (0.3-1) unstable; urgency=low
 
