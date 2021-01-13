@@ -129,8 +129,8 @@ function iterate_through_prefiltered_files {
     xargs\
         <"$iteration_tmp_file.matched_files"\
         $cmd_part_parallelism\
-        -n 1\
         -I '{}'\
+        -n 1\
         $COVERAGE_WRAPPER\
         bash\
             -c$bash_arg\

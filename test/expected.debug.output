@@ -109,7 +109,7 @@
 +++++ warning 'Iteration X: done.'
 +++++ warning 'Iteration X: prefiltering.'
 +++++ warning 'Iteration X: processing.'
-+++++ xargs -P X -n X -I '{}' bash -cx 'decorate_one_iteration            .misspell-fixer.X.X.matches.all            .misspell-fixer.X.X.sed.matched_rules            '\''{}'\''            X'
++++++ xargs -P X -I '{}' -n X bash -cx 'decorate_one_iteration            .misspell-fixer.X.X.matches.all            .misspell-fixer.X.X.sed.matched_rules            '\''{}'\''            X'
 +++++ xargs -X -P X -n X grep --text -F -noH -w -f .misspell-fixer.X.prepared.grep.patterns.word_limited
 +++++ [[ -f .misspell-fixer.X.X.matched_files ]]
 +++++ [[ -s .misspell-fixer.ignore ]]
