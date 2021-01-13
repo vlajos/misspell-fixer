@@ -43,6 +43,7 @@ runAndCompareOutput(){
 
     sed -e 's/[0-9]\+/X/g' -e 's/X -X$/X +X/g' "$TEST_OUTPUT" |\
     grep -v -e kcov -e 'grep -vh bin/sed' -e "Your grep version is" \
+        -e 'xargs: warning: options --max-args' \
         >"$TEST_OUTPUT.standard"
     if [[ "$3" = "1" ]]; then
         sort -f "$TEST_OUTPUT.standard" >"$TEST_OUTPUT.standard.sorted"
