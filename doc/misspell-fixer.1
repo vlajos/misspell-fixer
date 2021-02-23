@@ -1,6 +1,6 @@
 .\" generated with Ronn-NG/v0.9.1
 .\" http://github.com/apjanke/ronn-ng/tree/0.9.1
-.TH "misspell-fixer" "" "October 2020" "" "misspell-fixer"
+.TH "misspell-fixer" "" "February 2021" "" "misspell-fixer"
 .SH NAME
 misspell-fixer - misspell-fixer
 .P
@@ -45,7 +45,7 @@ Output control options:
 \fB\-d\fR Debug mode: shows all steps of the core logic\.
 .IP "" 0
 .P
-By default only a subset of rules are enabled (around 100)\. You can enable more rules with the following options:
+By default only a subset of rules is enabled (around 100)\. You can enable more rules with the following options:
 .IP "\[ci]" 4
 \fB\-u\fR Enable less safe rules\. (Manual review's importance is more significant\|\.\|\.\|\.) (Around ten rules\.)
 .IP "\[ci]" 4
@@ -84,7 +84,7 @@ Misspell\-fixer automatically ignores the issues matching to the patterns listed
 \fB\-w filename\fR can be used to override the ignore file's name\.
 .IP "" 0
 .P
-The ignore file is interpreted as a \fBgrep\fR exclusion list\. It is applied after the prefiltering step as a set of grep expression\. So it is possible to exclude any prefixes or more specifically whole files with keeping only their file names:
+The ignore file is interpreted as a \fBgrep\fR exclusion list\. It is applied after the prefiltering step as a set of grep expressions\. So it is possible to exclude any prefixes or more specifically whole files with keeping only their file names:
 .P
 \fB^filename\fR
 .P
@@ -92,9 +92,9 @@ Or a directory:
 .P
 \fB^directory\fR
 .P
-The entries are listed/matched with the paths based on the current invocation\. Reaching the same target with different path from the same working directory will not apply the whitelisted entries generated from the other invocation\. In directory \fBx\fR the whitelist entries generated with target \fB\.\fR will not be applied for target \fB\.\./x\fR, although they are the same\. There is a workaround for this with manually editing the whitelist to your needs\. (Patches are welcome for a more general solution\|\.\|\.\|\.)
+The entries are listed/matched with the paths based on the current invocation\. Reaching the same target with a different path from the same working directory will not apply the whitelisted entries generated from the other invocation\. In directory \fBx\fR the whitelist entries generated with target \fB\.\fR will not be applied for target \fB\.\./x\fR, although they are the same\. There is a workaround for this with manually editing the whitelist to your needs\. (Patches are welcome for a more general solution\|\.\|\.\|\.)
 .SS "Return values"
-Generally the script tries to return with \fB0\fR if there were no typos or errors found/fixed\.
+Generally, the script tries to return with \fB0\fR if there were no typos or errors found/fixed\.
 .IP "\[ci]" 4
 \fB0\fR No typos found,
 .IP "\[ci]" 4
@@ -210,7 +210,7 @@ $ misspell\-fixer [arguments]
 .fi
 .IP "" 0
 .P
-Through the wrapper and the function it can access only the folders below the current working directory as it is the only one passed to the container as a volume\.
+Through the wrapper and the function, it can access only the folders below the current working directory as it is the only one passed to the container as a volume\.
 .P
 You can build the container locally, although this should not be really needed:
 .IP "" 4
@@ -256,4 +256,4 @@ ka7
 .SS "Original source"
 https://github\.com/vlajos/misspell\-fixer
 .P
-Feel free to use!
+Feel free to use it!

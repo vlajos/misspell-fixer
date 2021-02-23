@@ -46,7 +46,7 @@ Output control options:
 * `-o` Verbose mode: shows progress (prints a dot for each file scanned, a comma for each file fix iteration/file.)
 * `-d` Debug mode: shows all steps of the core logic.
 
-By default only a subset of rules are enabled (around 100). You can enable more rules with the following options:
+By default only a subset of rules is enabled (around 100). You can enable more rules with the following options:
 
 * `-u` Enable less safe rules. (Manual review's importance is more significant...) (Around ten rules.)
 * `-g` Enable rules to convert British English to US English. (These rules aren't exactly typos but sometimes they can be useful.) (Around ten rules.)
@@ -75,7 +75,7 @@ The format of this file follows the prefiltering's temporary result format:
 * `-w filename` can be used to override the ignore file's name.
 
 The ignore file is interpreted as a `grep` exclusion list.
-It is applied after the prefiltering step as a set of grep expression.
+It is applied after the prefiltering step as a set of grep expressions.
 So it is possible to exclude any prefixes or more specifically whole files with keeping only their file names:
 
 `^filename`
@@ -84,7 +84,7 @@ Or a directory:
 
 `^directory`
 
-The entries are listed/matched with the paths based on the current invocation. Reaching the same target with different path from
+The entries are listed/matched with the paths based on the current invocation. Reaching the same target with a different path from
 the same working directory will not apply the whitelisted entries generated from the other invocation.
 In directory `x` the whitelist entries generated with target `.` will not be applied for target `../x`, although they are the same.
 There is a workaround for this with manually editing the whitelist to your needs.
@@ -92,7 +92,7 @@ There is a workaround for this with manually editing the whitelist to your needs
 
 ### Return values
 
-Generally the script tries to return with `0` if there were no typos or errors found/fixed.
+Generally, the script tries to return with `0` if there were no typos or errors found/fixed.
 
 * `0` No typos found,
 * `1-5` Typos found. The return value shows the number of iterations executed.
@@ -170,7 +170,7 @@ And fixing with the function:
 
     $ misspell-fixer [arguments]
 
-Through the wrapper and the function it can access only the folders below the current working directory
+Through the wrapper and the function, it can access only the folders below the current working directory
 as it is the only one passed to the container as a volume.
 
 You can build the container locally, although this should not be really needed:
@@ -212,4 +212,4 @@ A little more comprehensive list:
 
 https://github.com/vlajos/misspell-fixer
 
-Feel free to use!
+Feel free to use it!
