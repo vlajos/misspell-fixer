@@ -202,6 +202,7 @@ A little more comprehensive list:
 * rm, cp, mv
 * xargs
 * git (for respecting .gitignore files)
+* ugrep (for significant speed up, optional)
 
 ### Authors
 

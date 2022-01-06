@@ -79,9 +79,9 @@ function initialise_variables {
     echo '/// ///' >$tmpfile.git.ignore
     trap 'rm -f $tmpfile.git.ignore' EXIT
 
-    GREP=$(ggrep --version >/dev/null 2>&1 && \
-        echo 'ggrep' || \
-        echo 'grep')
+    GREP=$((ugrep --version >/dev/null 2>&1 && echo 'ugrep') \
+        || (ggrep --version >/dev/null 2>&1 && echo 'ggrep') \
+        || echo 'grep')
     export GREP
 }
 
@@ -278,7 +278,8 @@ function check_grep_version {
         warning "!! Your grep version is $current_version"\
             "which is less than the optimal: $required_version."\
             "This may degrade misspell fixer's performance"\
-            "significantly! (100x) !!"
+            "significantly! (100x) !! Alternatively install ugrep "\
+            "which is even quicker."
     fi
 }
 
