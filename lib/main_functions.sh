@@ -85,7 +85,8 @@ function execute_prefiltering {
     sort\
         -u\
         "$iteration_tmp_file.matches"\
-        "$iteration_tmp_file.matches.word_limited"\
+        "$iteration_tmp_file.matches.word_limited" |\
+    "$GREP" ':' \
         >"$iteration_tmp_file.matches.all"
 }
 

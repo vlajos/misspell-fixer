@@ -46,7 +46,6 @@
 +++++ apply_whitelist_on_prefiltered_list .misspell-fixer.X.X
 +++++ check_grep_version
 +++++ check_sed_arguments
-+++++ current_version=X.X
 +++++ cut -d : -f X .misspell-fixer.X.X.matches.all
 +++++ echo 'misspell-fixer: Iteration X: done.'
 +++++ echo 'misspell-fixer: Iteration X: prefiltering.'
@@ -58,6 +57,7 @@
 +++++ grep -Fvx -f .misspell-fixer.X.git.ignore
 +++++ grep -q illegal
 +++++ grep -v '\\b' .misspell-fixer.X.prepared.sed.all_rules
++++++ grep :
 +++++ iterate_through_prefiltered_files X .misspell-fixer.X.X
 +++++ iterate_through_targets list_files_from_find X '' /dev/null
 +++++ list_files_from_find ''
@@ -76,7 +76,6 @@
 +++++ local required_version=X.X
 +++++ local retval=X
 +++++ prepare_rules_for_prefiltering
-+++++ printf '%s\n%s\n' X.X X.X
 +++++ printf '%s\X' work/D.txt
 +++++ printf '%s\X' work/g.txt
 +++++ printf '%s\X' work/R.txt
