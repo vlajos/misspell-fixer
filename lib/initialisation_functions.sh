@@ -55,6 +55,8 @@ function initialise_variables {
         -o -iname *.pdf\
         -o -iname *.woff\
         -o -iname *.mov\
+        -o -iname *.svg\
+        -o -iname *.tiff\
         -o -iname *.mp4\
         -o -iname *.jar\
         -o -iname yarn.lock\

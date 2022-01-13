@@ -61,7 +61,7 @@ File filtering options:
 * `-G` Respect `.gitignore` files. (Requires executable `git` command.) (experimental)
 * `-N` Enable file name filtering. For example: `-N '*.cpp' -N '*.h'`
 * `-i` Walk through source code management system's internal directories. (do not ignore `.git`, `.svn`, `.hg`, `CVS`)
-* `-b` Process binary, generated files. (do not ignore `*.gif`, `*.jpg`, `*.jpeg`, `*.png`, `*.zip`, `*.gz`, `*.bz2`, `*.xz`, `*.rar`, `*.po`, `*.pdf`, `*.woff`, `yarn.lock`, `package-lock.json`, `composer.lock`, `*.mo`, `*.mov`, `*.mp4`, `*.jar`)
+* `-b` Process binary, generated files. (do not ignore `*.gif`, `*.jpg`, `*.jpeg`, `*.png`, `*.zip`, `*.svg`, `*.tiff`, `*.gz`, `*.bz2`, `*.xz`, `*.rar`, `*.po`, `*.pdf`, `*.woff`, `yarn.lock`, `package-lock.json`, `composer.lock`, `*.mo`, `*.mov`, `*.mp4`, `*.jar`)
 * `-m` Disable file size checks. Default is to ignore files > 1MB. (usually csv, compressed JS, ..)
 
 Whitelisting files/entries:
