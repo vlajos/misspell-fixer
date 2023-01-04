@@ -67,10 +67,8 @@ function execute_prefiltering {
                     -F\
                     -noH\
                     -f "$tmpfile.prepared.grep.patterns"\
-                >"$iteration_tmp_file.matches"\
             )\
-        |\
-            xargs\
+            >(xargs\
                 -0\
                 $cmd_part_parallelism\
                 -n 100\
@@ -80,12 +78,12 @@ function execute_prefiltering {
                     -noH\
                     -w\
                     -f "$tmpfile.prepared.grep.patterns.word_limited"\
-                >"$iteration_tmp_file.matches.word_limited"
-
+            )\
+            >/dev/null\
+        |\
     sort\
         -u\
-        "$iteration_tmp_file.matches"\
-        "$iteration_tmp_file.matches.word_limited" |\
+        |\
     "$GREP" ':' \
         >"$iteration_tmp_file.matches.all"
 }
@@ -214,8 +212,6 @@ function iterate_through_targets {
         rm "$iteration_tmp_file.matched_files"
     fi
     rm\
-        "$iteration_tmp_file.matches"\
-        "$iteration_tmp_file.matches.word_limited"\
         "$iteration_tmp_file.matches.all"
     return $retval
 }
