@@ -2,8 +2,18 @@
 arch:
     - amd64
     - ppc64le
-language: bash
-sudo: required
+language: shell
+os:
+    - linux
+dist: xenial
+
+addons:
+  apt:
+    packages:
+      - openssl
+
+before_install:
+    - git config --global http.postBuffer 1048576000
 
 before_script:
     - make prepare_environment
