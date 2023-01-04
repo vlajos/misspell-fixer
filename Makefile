@@ -17,10 +17,10 @@ else
     KCOV_BIN = /usr/local/bin/kcov
 endif
 
-ifeq ($(wildcard shunit2-2.1.7),)
+ifeq ($(wildcard shunit2-2.1.8),)
     SHUNIT_PREFIX = ""
 else
-    SHUNIT_PREFIX = shunit2-2.1.7/
+    SHUNIT_PREFIX = shunit2-2.1.8/
 endif
 
 KCOV=${KCOV_BIN} --include-pattern=misspell-fixer/misspell-fixer,misspell-fixer/lib --path-strip-level=1
@@ -39,7 +39,7 @@ test_self:
 prepare_environment:
 	sudo apt-get update -qq
 	sudo apt-get install -y elfutils libdw1 libasm1 libdw-dev libelf-dev libcurl4-openssl-dev cmake g++ zlib1g-dev python3 libssl-dev
-	curl -L "https://github.com/kward/shunit2/archive/v2.1.7.tar.gz" | tar zx
+	curl -L "https://github.com/kward/shunit2/archive/v2.1.8.tar.gz" | tar zx
 	cd /tmp;git clone https://github.com/SimonKagstrom/kcov
 	cd /tmp/kcov;cmake ./;make;sudo make install
 
