@@ -94,7 +94,7 @@
 +++++ retval=X
 +++++ rm .misspell-fixer.X.prepared.grep.patterns .misspell-fixer.X.prepared.grep.patterns.word_limited .misspell-fixer.X.prepared.sed.all_rules .misspell-fixer.X.git.ignore
 +++++ rm .misspell-fixer.X.X.matched_files
-+++++ rm .misspell-fixer.X.X.matches .misspell-fixer.X.X.matches.word_limited .misspell-fixer.X.X.matches.all
++++++ rm .misspell-fixer.X.X.matches.all
 +++++ rm .misspell-fixer.X.X.sed.matched_rules
 +++++ sed -b
 +++++ sed -e 's/^s\///g' -e 's/\/.*g//g'
@@ -102,14 +102,13 @@
 +++++ set +x
 +++++ smart_sed=X
 +++++ sort -u
-+++++ sort -u .misspell-fixer.X.X.matches .misspell-fixer.X.X.matches.word_limited
++++++ sort -u
 +++++ sort -VC
-+++++ tee /dev/fd/X /dev/fd/X
++++++ tee /dev/fd/X /dev/fd/X /dev/fd/X
 +++++ warning 'Iteration X: done.'
 +++++ warning 'Iteration X: prefiltering.'
 +++++ warning 'Iteration X: processing.'
 +++++ xargs -P X -I '{}' -n X bash -cx 'decorate_one_iteration            .misspell-fixer.X.X.matches.all            .misspell-fixer.X.X.sed.matched_rules            '\''{}'\''            X'
-+++++ xargs -X -P X -n X grep --text -F -noH -w -f .misspell-fixer.X.prepared.grep.patterns.word_limited
 +++++ [[ -f .misspell-fixer.X.X.matched_files ]]
 +++++ [[ -s .misspell-fixer.ignore ]]
 +++++ [[ -s .misspell-fixer.X.X.matches.all ]]
@@ -128,6 +127,7 @@
 ++++++ prefilter_progress_none
 ++++++ sed -e 's/.* //g'
 ++++++ xargs -X -P X -n X grep --text -F -noH -f .misspell-fixer.X.prepared.grep.patterns
+++++++ xargs -X -P X -n X grep --text -F -noH -w -f .misspell-fixer.X.prepared.grep.patterns.word_limited
 +lower than
 +successful
 +successfully
