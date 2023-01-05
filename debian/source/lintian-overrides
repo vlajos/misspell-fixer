@@ -1,0 +1,2 @@
+# False positives (long lines that are clearly no issue)
+misspell-fixer source: very-long-line-length-in-source-file 623 > 512 [test/expected.debug.output:54]
