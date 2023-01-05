@@ -88,7 +88,7 @@ The entries are listed/matched with the paths based on the current invocation. R
 the same working directory will not apply the whitelisted entries generated from the other invocation.
 In directory `x` the whitelist entries generated with target `.` will not be applied for target `../x`, although they are the same.
 There is a workaround for this with manually editing the whitelist to your needs.
-(Patches are welcome for a more general solution...)
+(Patches are welcome...)
 
 ### Return values
 

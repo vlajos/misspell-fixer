@@ -3,7 +3,9 @@ misspell-fixer (0.5-1) unstable; urgency=medium
   * Use ugrep if available. (#1002509)
   * Update docs.
   * Treat tiff, svg files as binary.
-  * Fix debian Bugs #1026664, #1026771. (Fixed process substitution race condition.)
+  * Fix debian Bugs #1026664, #1026771.
+    (Fixed process substitution race condition.)
+  * Update debian Standards-Version.
 
  -- Lajos Veres <vlajos+debian@gmail.com>  Wed, 04 Jan 2023 00:01:32 +0000
 
