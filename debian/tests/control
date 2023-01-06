@@ -1,3 +1,3 @@
 Test-command: make test
-Depends: shunit2 (>= 2.1.6-1.1), git
+Depends: git, shunit2 (>= 2.1.6-1.1)
 Restrictions: allow-stderr
