@@ -21,7 +21,7 @@ A manual review is always needed to verify that nothing has been broken.
 [Jump to docker notes](#with-docker)
 
 ### Synopsis
-    
+
     misspell-fixer	[OPTION] target[s]
 
 ### Options, Arguments
@@ -64,7 +64,7 @@ File filtering options:
 * `-b` Process binary, generated files. (do not ignore `*.gif`, `*.jpg`, `*.jpeg`, `*.png`, `*.zip`, `*.svg`, `*.tiff`, `*.gz`, `*.bz2`, `*.xz`, `*.rar`, `*.po`, `*.pdf`, `*.woff`, `yarn.lock`, `package-lock.json`, `composer.lock`, `*.mo`, `*.mov`, `*.mp4`, `*.jar`)
 * `-m` Disable file size checks. Default is to ignore files > 1MB. (usually csv, compressed JS, ..)
 
-Whitelisting files/entries:
+Allowlisting files/entries:
 
 Misspell-fixer automatically ignores the issues matching to the patterns listed in `.misspell-fixer.ignore` or `.github/.misspell-fixer.ignore`.
 The format of this file follows the prefiltering's temporary result format:
@@ -85,9 +85,9 @@ Or a directory:
 `^directory`
 
 The entries are listed/matched with the paths based on the current invocation. Reaching the same target with a different path from
-the same working directory will not apply the whitelisted entries generated from the other invocation.
-In directory `x` the whitelist entries generated with target `.` will not be applied for target `../x`, although they are the same.
-There is a workaround for this with manually editing the whitelist to your needs.
+the same working directory will not apply the allowlisted entries generated from the other invocation.
+In directory `x` the allowlist entries generated with target `.` will not be applied for target `../x`, although they are the same.
+There is a workaround for this with manually editing the allowlist to your needs.
 (Patches are welcome...)
 
 ### Return values
@@ -97,7 +97,7 @@ Generally, the script tries to return with `0` if there were no typos or errors 
 * `0` No typos found,
 * `1-5` Typos found. The return value shows the number of iterations executed.
 * `10` Help successfully printed.
-* `11` Whitelist successfully saved.
+* `11` Allowlist successfully saved.
 * `100-` Parameter errors. (invalid, missing, conflicting)
 
 

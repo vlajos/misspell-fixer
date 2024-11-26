@@ -1,4 +1,4 @@
 misspell-fixer: -r Enable real run. Overwrite original files!
 misspell-fixer: -W Save found misspelled file entries into .misspell-fixer.ignore instead of fixing them.
 misspell-fixer: Target directories: work
-misspell-fixer: Whitelist cannot be generated in real run mode. => Exiting.
+misspell-fixer: Allowlist cannot be generated in real run mode. => Exiting.

@@ -88,19 +88,19 @@ function execute_prefiltering {
         >"$iteration_tmp_file.matches.all"
 }
 
-function apply_whitelist_on_prefiltered_list {
+function apply_allowlist_on_prefiltered_list {
     local iteration_tmp_file=$1
 
-    if [[ -s "$opt_whitelist_filename" ]]; then
-        warning "Skipping whitelisted entries based"\
-            "on $opt_whitelist_filename."
+    if [[ -s "$opt_allowlist_filename" ]]; then
+        warning "Skipping allowlisted entries based"\
+            "on $opt_allowlist_filename."
         "$GREP"\
             -v\
-            -f "$opt_whitelist_filename"\
+            -f "$opt_allowlist_filename"\
             "$iteration_tmp_file.matches.all"\
-            >"$iteration_tmp_file.matches.all.only_non_whitelisted"
+            >"$iteration_tmp_file.matches.all.only_non_allowlisted"
         mv\
-            "$iteration_tmp_file.matches.all.only_non_whitelisted"\
+            "$iteration_tmp_file.matches.all.only_non_allowlisted"\
             "$iteration_tmp_file.matches.all"
     fi
 }
@@ -160,7 +160,7 @@ function iterate_through_targets {
         "$iteration_tmp_file"\
         "$previously_matched_files"
 
-    apply_whitelist_on_prefiltered_list "$iteration_tmp_file"
+    apply_allowlist_on_prefiltered_list "$iteration_tmp_file"
 
     if [[ $opt_verbose = 1 ]]; then
         verbose "Results of prefiltering: (filename:line:pattern)"
@@ -168,12 +168,12 @@ function iterate_through_targets {
     fi
 
     if [[ -s $iteration_tmp_file.matches.all ]]; then
-        if [[ $opt_whitelist_save = 1 ]]; then
-            warning "Saving found misspells into $opt_whitelist_filename."
+        if [[ $opt_allowlist_save = 1 ]]; then
+            warning "Saving found misspells into $opt_allowlist_filename."
             sed\
                 -e 's/^/^/'\
                 "$iteration_tmp_file.matches.all"\
-                >> "$opt_whitelist_filename"
+                >> "$opt_allowlist_filename"
             retval=11
         else
             iterate_through_prefiltered_files\

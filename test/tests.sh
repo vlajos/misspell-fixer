@@ -288,49 +288,49 @@ testMNoChange(){
     rm -rf $TEMP/work/nochange.txt $TEMP/expected/nochange.txt
 }
 
-testWhitelistConflictWithRealRun(){
-    runAndCompareOutput -rW whitelist_vs_real
+testAllowlistConflictWithRealRun(){
+    runAndCompareOutput -rW allowlist_vs_real
 }
 
-testWhitelist(){
+testAllowlist(){
     cp test/stubs/0.txt $TEMP/work/0.txt
     cp test/stubs/0.txt $TEMP/expected/0.txt
-    local whitelist=".misspell-fixer.ignore"
+    local allowlist=".misspell-fixer.ignore"
     cd $TEMP
-    assertFalse 'Whitelist should not exist' "[ -s $whitelist ]"
+    assertFalse 'Allowlist should not exist' "[ -s $allowlist ]"
     $RUN -W work
-    assertTrue 'Whitelist should exist' "[ -s $whitelist ]"
+    assertTrue 'Allowlist should exist' "[ -s $allowlist ]"
     cd -
     cp test/stubs/0.txt $TEMP/work/1.txt
     cp test/expecteds/0.txt $TEMP/expected/1.txt
     runAndCompare -rn
     cd $TEMP
-    rm $whitelist
+    rm $allowlist
     cd -
 }
 
-testWhitelistWithFileNameOverride(){
+testAllowlistWithFileNameOverride(){
     cp test/stubs/0.txt $TEMP/work/0.txt
     cp test/stubs/0.txt $TEMP/expected/0.txt
-    local whitelist=".misspell-fixer.ignore.override"
+    local allowlist=".misspell-fixer.ignore.override"
     cd $TEMP
-    assertFalse 'Whitelist should not exist' "[ -s $whitelist ]"
-    $RUN "-Ww$whitelist" work
-    assertTrue 'Whitelist should exist' "[ -s $whitelist ]"
+    assertFalse 'Allowlist should not exist' "[ -s $allowlist ]"
+    $RUN "-Ww$allowlist" work
+    assertTrue 'Allowlist should exist' "[ -s $allowlist ]"
     cd -
     cp test/stubs/0.txt $TEMP/work/1.txt
     cp test/expecteds/0.txt $TEMP/expected/1.txt
-    runAndCompare "-rnw$whitelist"
+    runAndCompare "-rnw$allowlist"
     cd $TEMP
-    rm $whitelist
+    rm $allowlist
     cd -
 }
 
-testWhitelistConflictWithDoubleWhitelist(){
+testAllowlistConflictWithDoubleAllowlist(){
     echo x > $TEMP/.misspell-fixer.ignore
     mkdir $TEMP/.github
     echo x > $TEMP/.github/.misspell-fixer.ignore
-    runAndCompareOutput -r whitelist_vs_double_configs
+    runAndCompareOutput -r allowlist_vs_double_configs
 
     cd $TEMP
     $RUN -r .
@@ -342,10 +342,10 @@ testWhitelistConflictWithDoubleWhitelist(){
 
 suite(){
     export TEST_OUTPUT=$TEMP/output.default
-    suite_addTest testWhitelist
-    suite_addTest testWhitelistWithFileNameOverride
-    suite_addTest testWhitelistConflictWithRealRun
-    suite_addTest testWhitelistConflictWithDoubleWhitelist
+    suite_addTest testAllowlist
+    suite_addTest testAllowlistWithFileNameOverride
+    suite_addTest testAllowlistConflictWithRealRun
+    suite_addTest testAllowlistConflictWithDoubleAllowlist
     suite_addTest testShowDiff
     suite_addTest testErrors
     suite_addTest testOnlyDir

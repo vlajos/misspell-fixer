@@ -43,7 +43,7 @@
 ++ sed 's/^/X/'
 ++ sed 's/^/X/'
 +++ work/X.txt.X	X-X-X X:X:X.X +X
-+++++ apply_whitelist_on_prefiltered_list .misspell-fixer.X.X
++++++ apply_allowlist_on_prefiltered_list .misspell-fixer.X.X
 +++++ check_grep_version
 +++++ check_sed_arguments
 +++++ cut -d : -f X .misspell-fixer.X.X.matches.all
