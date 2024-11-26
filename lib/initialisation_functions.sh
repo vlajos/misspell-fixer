@@ -24,9 +24,9 @@ function initialise_variables {
     export opt_dots=0
     export bash_arg
 
-    export opt_whitelist_save=0
+    export opt_allowlist_save=0
 
-    export opt_whitelist_filename=".misspell-fixer.ignore"
+    export opt_allowlist_filename=".misspell-fixer.ignore"
 
     rules_safe0="${rules_directory}/safe.0.sed"
     rules_safe1="${rules_directory}/safe.1.sed"
@@ -185,13 +185,13 @@ function process_command_arguments {
             ;;
             w)
                 warning "-w Use $OPTARG as white list file instead of "\
-                    "$opt_whitelist_filename."
-                opt_whitelist_filename=$OPTARG
+                    "$opt_allowlist_filename."
+                opt_allowlist_filename=$OPTARG
             ;;
             W)
                 warning "-W Save found misspelled file entries into "\
-                    "$opt_whitelist_filename instead of fixing them."
-                opt_whitelist_save=1
+                    "$opt_allowlist_filename instead of fixing them."
+                opt_allowlist_save=1
             ;;
             \?)
                 warning "Invalid option: -$OPTARG"
@@ -219,7 +219,7 @@ function process_command_arguments {
     directories=( "$@" )
     cmd_part_ignore="(\
         -iname $tmpfile*\
-        -o -iname $opt_whitelist_filename\
+        -o -iname $opt_allowlist_filename\
         -o -iname *.BAK\
         $cmd_part_ignore_scm $cmd_part_ignore_bin\
         ) -prune -o "
@@ -237,11 +237,11 @@ function process_command_arguments {
 }
 
 function handle_parameter_conflicts {
-    if [[ $opt_whitelist_save = 1 && $opt_real_run = 1 ]]; then
-        warning "Whitelist cannot be generated in real run mode. => Exiting."
+    if [[ $opt_allowlist_save = 1 && $opt_real_run = 1 ]]; then
+        warning "Allowlist cannot be generated in real run mode. => Exiting."
         return 103
     fi
-    if [[ $opt_whitelist_save = 0 && $opt_real_run = 0 ]]; then
+    if [[ $opt_allowlist_save = 0 && $opt_real_run = 0 ]]; then
         warning "Real run (-r) has not been enabled."\
             "Files will not be changed. Use -r to override this."
     fi
@@ -256,15 +256,15 @@ function handle_parameter_conflicts {
     return 0
 }
 
-function handle_whitelist_configfile {
-    if [[ -s ".github/$opt_whitelist_filename" && -s "$opt_whitelist_filename" ]]; then
-        warning "We found both .github/$opt_whitelist_filename and $opt_whitelist_filename."\
+function handle_allowlist_configfile {
+    if [[ -s ".github/$opt_allowlist_filename" && -s "$opt_allowlist_filename" ]]; then
+        warning "We found both .github/$opt_allowlist_filename and $opt_allowlist_filename."\
             " We can handle only one at the moment."
         return 105
     fi
 
-    if [[ -s ".github/$opt_whitelist_filename" ]]; then
-        opt_whitelist_filename=".github/$opt_whitelist_filename"
+    if [[ -s ".github/$opt_allowlist_filename" ]]; then
+        opt_allowlist_filename=".github/$opt_allowlist_filename"
     fi
 }
 

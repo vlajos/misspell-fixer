@@ -16,7 +16,7 @@ misspell-fixer (0.4-1) unstable; urgency=medium
   * Update debian Standards version
   * Doc updates
   * Make tests timezone sign independent
-  * -w option to override whitelist file
+  * -w option to override allowlist file
   * Use .github/.misspell-fixer.ignore automatically if it exist
 
  -- Lajos Veres <vlajos+debian@gmail.com>  Sat, 09 Jan 2021 09:30:35 +0000

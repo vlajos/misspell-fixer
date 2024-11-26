@@ -30,7 +30,7 @@ fi
 
 if [[ $retval == 0 ]]
 then
-    handle_whitelist_configfile
+    handle_allowlist_configfile
     retval=$?
 fi
 
