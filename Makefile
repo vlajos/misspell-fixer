@@ -38,7 +38,9 @@ test_self:
 
 prepare_environment:
 	sudo apt-get update -qq
-	sudo apt-get install -y kcov shunit2
+	sudo apt-get install -y elfutils libdw1 libasm1 libdw-dev libelf-dev libcurl4-openssl-dev cmake g++ zlib1g-dev python3 libssl-dev shunit2
+	cd /tmp;git clone https://github.com/SimonKagstrom/kcov
+	cd /tmp/kcov;cmake ./;make;sudo make install
 
 man:
 	ronn --roff --manual=misspell-fixer README.md
