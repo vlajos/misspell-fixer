@@ -1,6 +1,7 @@
 misspell-fixer (0.6-1) unstable; urgency=medium
 
-  * Disable the debug output's automated test since that's bash version specific. Closes: #1114207.
+  * Disable the debug output's automated test since that's bash
+    version specific. Closes: #1114207.
   * Update docs.
   * Update debian Standards-Version.
 
