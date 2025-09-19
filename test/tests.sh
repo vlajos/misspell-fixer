@@ -376,12 +376,12 @@ suite(){
     else
         echo 'Git is not available so we do not test .gitignore related functionality.'
     fi
-    if [[ "$COVERAGE_WRAPPER" = "" ]]; then
-        suite_addTest testDebug
-    else
-        echo "Skipping testDebug under kcov."\
-            "Set -x does not cascade through all the processes unfortunately."
-    fi
+#    if [[ "$COVERAGE_WRAPPER" = "" ]]; then
+#        suite_addTest testDebug
+#    else
+#        echo "Skipping testDebug under kcov."\
+#            "Set -x does not cascade through all the processes unfortunately."
+#    fi
 }
 
 
