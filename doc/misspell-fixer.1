@@ -1,155 +1,149 @@
 .\" generated with Ronn-NG/v0.9.1
 .\" http://github.com/apjanke/ronn-ng/tree/0.9.1
-.TH "misspell-fixer" "" "January 2023" "" "misspell-fixer"
+.TH "misspell-fixer" "" "September 2025" "" "misspell-fixer"
 .SH NAME
 misspell-fixer - misspell-fixer
 .P
-Utility to fix common misspellings, typos in source code\. There are lots of typical misspellings in program code\. Typically they are more eye\-catching in the living code but they can easily hide in comments, examples, samples, notes and documentation\. With this utility you can fix a large number of them very quickly\.
+Misspell Fixer is a command\-line utility designed to automatically detect and correct common misspellings and typos in source code\. The tool addresses frequent spelling errors that commonly appear in program code, including those found in comments, documentation, examples, and code samples\. This utility enables rapid correction of numerous spelling errors across large codebases\.
 .P
-Be aware that the utility does not check or fix file names\. It could easily happen that a misspelled word is fixed in a file name in a program's code, but the file itself will not be renamed by this utility\.
+Please note that this utility does not modify file names\. If a misspelled word appears in both a file's content and its name, only the content will be corrected; the file must be manually renamed\.
 .P
-It is also important to be very careful when fixing public APIs!
+Exercise extreme caution when applying corrections to public APIs, as spelling changes may introduce breaking changes for dependent systems\.
 .P
-A manual review is always needed to verify that nothing has been broken\.
+Manual code review is always required after running this tool to ensure that corrections have not introduced unintended changes or broken functionality\.
 .P
+\fIJump to Docker usage\fR
 .SS "Synopsis"
 .nf
 misspell\-fixer	[OPTION] target[s]
 .fi
-.SS "Options, Arguments"
-\fBtarget[s]\fR can be any file[s] or directory/ies\.
-.P
-Main options:
+.SS "Options and Arguments"
+\fBtarget[s]\fR can be any combination of files or directories\.
 .IP "\[ci]" 4
-\fB\-r\fR Real run mode: Overwrites the original files with the fixed one\. Without this option the originals will be untouched\.
+\fB\-r\fR Execute in real mode: Overwrites original files with corrected versions\. Without this option, original files remain unmodified\.
 .IP "\[ci]" 4
-\fB\-n\fR Disable backups\. (By default the modified files' originals will be saved with the \fB\.$$\.BAK\fR suffix\.)
+\fB\-n\fR Disable backup creation\. By default, modified files are backed up with a \fB\.$$\.BAK\fR suffix\.
 .IP "\[ci]" 4
-\fB\-P n\fR Enable processing on \fBn\fR forks\. For example: \fB\-P 4\fR processes the files in 4 threads\. (\fB\-s\fR option is not supported)
+\fB\-P n\fR Enable parallel processing using \fBn\fR worker processes\. Example: \fB\-P 4\fR processes files using 4 threads\. Note: \fB\-s\fR option is incompatible with parallel processing\.
 .IP "\[ci]" 4
-\fB\-f\fR Fast mode\. (Equivalent with \fB\-P4\fR)
+\fB\-f\fR Enable fast mode (equivalent to \fB\-P4\fR)\.
 .IP "\[ci]" 4
-\fB\-h\fR Help\.
+\fB\-h\fR Display help information\.
 .IP "" 0
 .P
-Performance note: \fB\-s\fR, \fB\-v\fR or the lack of \fB\-n\fR or \fB\-r\fR use a slower processing internal loop\. So usually \fB\-frn\fR without \fB\-s\fR and \fB\-v\fR are the highest performing combination\.
-.P
-Output control options:
+Performance considerations: The \fB\-s\fR, \fB\-v\fR options, or absence of \fB\-n\fR or \fB\-r\fR utilize slower internal processing loops\. For optimal performance, use \fB\-frn\fR without \fB\-s\fR and \fB\-v\fR\.
 .IP "\[ci]" 4
-\fB\-s\fR Shows diffs of changes\.
+\fB\-s\fR Display diff output showing proposed changes\.
 .IP "\[ci]" 4
-\fB\-v\fR Verbose mode: shows the iterated files\. (Without the prefiltering step)
+\fB\-v\fR Enable verbose mode: Display each file as it is processed (excludes prefiltering step)\.
 .IP "\[ci]" 4
-\fB\-o\fR Verbose mode: shows progress (prints a dot for each file scanned, a comma for each file fix iteration/file\.)
+\fB\-o\fR Enable progress mode: Display processing progress (prints a dot for each scanned file, comma for each fix iteration)\.
 .IP "\[ci]" 4
-\fB\-d\fR Debug mode: shows all steps of the core logic\.
+\fB\-d\fR Enable debug mode: Display detailed information about core logic steps\.
 .IP "" 0
 .P
-By default only a subset of rules is enabled (around 100)\. You can enable more rules with the following options:
+By default, approximately 100 carefully selected rules are enabled\. Additional rule sets can be activated using the following options:
 .IP "\[ci]" 4
-\fB\-u\fR Enable less safe rules\. (Manual review's importance is more significant\|\.\|\.\|\.) (Around ten rules\.)
+\fB\-u\fR Enable less conservative rules (requires more careful manual review)\. Adds approximately 10 rules\.
 .IP "\[ci]" 4
-\fB\-g\fR Enable rules to convert British English to US English\. (These rules aren't exactly typos but sometimes they can be useful\.) (Around ten rules\.)
+\fB\-g\fR Enable British English to US English conversion rules\. These address regional spelling differences rather than actual errors\. Adds approximately 10 rules\.
 .IP "\[ci]" 4
-\fB\-R\fR Enable rare rules\. (Few hundred rules\.)
+\fB\-R\fR Enable rare misspelling rules\. Adds several hundred additional rules\.
 .IP "\[ci]" 4
-\fB\-V\fR Enable very rare rules\. (Mostly from the wikipedia article\.) (More than four thousand rules\.)
+\fB\-V\fR Enable very rare misspelling rules, primarily sourced from Wikipedia articles\. Adds over 4,000 rules\.
 .IP "\[ci]" 4
-\fB\-D\fR Enable rules based on lintian\.debian\.org ( git:ebac9a7, ~2300 )
+\fB\-D\fR Enable rules derived from lintian\.debian\.org (git:ebac9a7)\. Adds approximately 2,300 rules\.
 .IP "" 0
 .P
-The processing speed decreases as you activate more rules\. But with newer greps this is much less significant\.
-.P
-File filtering options:
+Processing performance decreases with additional rule sets enabled, though modern grep implementations significantly mitigate this impact\.
 .IP "\[ci]" 4
-\fB\-G\fR Respect \fB\.gitignore\fR files\. (Requires executable \fBgit\fR command\.) (experimental)
+\fB\-G\fR Respect \fB\.gitignore\fR files (requires \fBgit\fR command in PATH)\. This feature is experimental\.
 .IP "\[ci]" 4
-\fB\-N\fR Enable file name filtering\. For example: \fB\-N '*\.cpp' \-N '*\.h'\fR
+\fB\-N\fR Enable filename pattern filtering\. Example: \fB\-N '*\.cpp' \-N '*\.h'\fR processes only C++ source files\.
 .IP "\[ci]" 4
-\fB\-i\fR Walk through source code management system's internal directories\. (do not ignore \fB\.git\fR, \fB\.svn\fR, \fB\.hg\fR, \fBCVS\fR)
+\fB\-i\fR Include version control system directories (process \fB\.git\fR, \fB\.svn\fR, \fB\.hg\fR, \fBCVS\fR directories)\.
 .IP "\[ci]" 4
-\fB\-b\fR Process binary, generated files\. (do not ignore \fB*\.gif\fR, \fB*\.jpg\fR, \fB*\.jpeg\fR, \fB*\.png\fR, \fB*\.zip\fR, \fB*\.svg\fR, \fB*\.tiff\fR, \fB*\.gz\fR, \fB*\.bz2\fR, \fB*\.xz\fR, \fB*\.rar\fR, \fB*\.po\fR, \fB*\.pdf\fR, \fB*\.woff\fR, \fByarn\.lock\fR, \fBpackage\-lock\.json\fR, \fBcomposer\.lock\fR, \fB*\.mo\fR, \fB*\.mov\fR, \fB*\.mp4\fR, \fB*\.jar\fR)
+\fB\-b\fR Process binary and generated files (do not ignore \fB*\.gif\fR, \fB*\.jpg\fR, \fB*\.jpeg\fR, \fB*\.png\fR, \fB*\.zip\fR, \fB*\.svg\fR, \fB*\.tiff\fR, \fB*\.gz\fR, \fB*\.bz2\fR, \fB*\.xz\fR, \fB*\.rar\fR, \fB*\.po\fR, \fB*\.pdf\fR, \fB*\.woff\fR, \fByarn\.lock\fR, \fBpackage\-lock\.json\fR, \fBcomposer\.lock\fR, \fB*\.mo\fR, \fB*\.mov\fR, \fB*\.mp4\fR, \fB*\.jar\fR)\.
 .IP "\[ci]" 4
-\fB\-m\fR Disable file size checks\. Default is to ignore files > 1MB\. (usually csv, compressed JS, \.\.)
+\fB\-m\fR Disable file size filtering\. Default behavior ignores files larger than 1MB (typically CSV files, minified JavaScript, etc\.)\.
 .IP "" 0
 .P
-Whitelisting files/entries:
-.P
-Misspell\-fixer automatically ignores the issues matching to the patterns listed in \fB\.misspell\-fixer\.ignore\fR or \fB\.github/\.misspell\-fixer\.ignore\fR\. The format of this file follows the prefiltering's temporary result format:
+Misspell Fixer automatically excludes issues matching patterns listed in \fB\.misspell\-fixer\.ignore\fR or \fB\.github/\.misspell\-fixer\.ignore\fR\. The ignore file format follows the prefiltering temporary result format:
 .P
 \fB^filename:line number:matched word\fR
 .IP "\[ci]" 4
-\fB\-W\fR can be used to append the found issues instead of fixing them based on the other settings\.
+\fB\-W\fR Append discovered issues to the ignore file instead of applying fixes based on other settings\.
 .IP "\[ci]" 4
-\fB\-w filename\fR can be used to override the ignore file's name\.
+\fB\-w filename\fR Specify a custom ignore file path (overrides default ignore file locations)\.
 .IP "" 0
 .P
-The ignore file is interpreted as a \fBgrep\fR exclusion list\. It is applied after the prefiltering step as a set of grep expressions\. So it is possible to exclude any prefixes or more specifically whole files with keeping only their file names:
+The ignore file functions as a grep exclusion list, applied after the prefiltering step\. This enables exclusion of specific prefixes or entire files\. To exclude complete files, use only the filename:
 .P
 \fB^filename\fR
 .P
-Or a directory:
+To exclude an entire directory:
 .P
 \fB^directory\fR
 .P
-The entries are listed/matched with the paths based on the current invocation\. Reaching the same target with a different path from the same working directory will not apply the whitelisted entries generated from the other invocation\. In directory \fBx\fR the whitelist entries generated with target \fB\.\fR will not be applied for target \fB\.\./x\fR, although they are the same\. There is a workaround for this with manually editing the whitelist to your needs\. (Patches are welcome\|\.\|\.\|\.)
-.SS "Return values"
-Generally, the script tries to return with \fB0\fR if there were no typos or errors found/fixed\.
+Path matching is based on the current invocation context\. Accessing the same target via different paths from the same working directory may not apply whitelist entries consistently\. For example, in directory \fBx\fR, whitelist entries created with target \fB\.\fR will not apply to target \fB\.\./x\fR, despite referencing identical content\. Manual editing of the whitelist file can work around this limitation\.
+.SS "Exit Codes"
+The script returns exit code \fB0\fR when no typos or errors are found or fixed\.
 .IP "\[ci]" 4
-\fB0\fR No typos found,
+\fB0\fR No typos detected
 .IP "\[ci]" 4
-\fB1\-5\fR Typos found\. The return value shows the number of iterations executed\.
+\fB1\-5\fR Typos found and processed\. The return value indicates the number of processing iterations executed
 .IP "\[ci]" 4
-\fB10\fR Help successfully printed\.
+\fB10\fR Help information successfully displayed
 .IP "\[ci]" 4
-\fB11\fR Whitelist successfully saved\.
+\fB11\fR Whitelist file successfully saved
 .IP "\[ci]" 4
-\fB100\-\fR Parameter errors\. (invalid, missing, conflicting)
+\fB100+\fR Parameter errors (invalid, missing, or conflicting options)
 .IP "" 0
-.SS "Sample usage"
-Without arguments, the script will not change anything and its output is minimal\. Its return value can be used to detect whether it found any typos or not\.
+.SS "Usage Examples"
+.P
+Check for typos without making changes (minimal output): Return value can be used to detect whether it found any typos or not\.
 .IP "" 4
 .nf
 $ misspell\-fixer target
 .fi
 .IP "" 0
 .P
-Fixing the files with displaying each fixed file:
+Apply fixes with verbose file reporting:
 .IP "" 4
 .nf
 $ misspell\-fixer \-rv target
 .fi
 .IP "" 0
 .P
-Showing only the diffs without modifying the originals:
+Display proposed changes without modifying files:
 .IP "" 4
 .nf
 $ misspell\-fixer \-sv target
 .fi
 .IP "" 0
 .P
-Showing the diffs with progress and fixing the found typos:
+Display changes with progress indicators and apply fixes:
 .IP "" 4
 .nf
 $ misspell\-fixer \-rsv target
 .fi
 .IP "" 0
 .P
-Fast mode example, no backups: (highest performance)
+Maximum performance mode (fast processing, no backups):
 .IP "" 4
 .nf
 $ misspell\-fixer \-frn target
 .fi
 .IP "" 0
 .P
-The previous with all rules enabled:
+Maximum performance with all rule sets enabled:
 .IP "" 4
 .nf
 $ misspell\-fixer \-frunRVD target
 .fi
 .IP "" 0
-.P
-It is based on the following sources for common misspellings:
+.SS "Data Sources"
+This tool incorporates misspelling databases from the following sources:
 .IP "\[ci]" 4
 https://en\.wikipedia\.org/wiki/Commonly_misspelled_words
 .IP "\[ci]" 4
@@ -163,67 +157,65 @@ http://www\.how\-do\-you\-spell\.com/
 .IP "\[ci]" 4
 http://www\.wrongspelled\.com/
 .IP "" 0
-.SS "With Docker"
-In some environments the dependencies may cause some trouble\. (Mac, Windows, older linux versions\.) In this case, you can use misspell\-fixer as a docker container image\.
+.SS "Docker Usage"
+For environments where dependency management presents challenges (macOS, Windows, legacy Linux distributions), Misspell Fixer is available as a Docker container image\.
 .P
-Pull the latest version:
+Pull the latest container image:
 .IP "" 4
 .nf
 $ docker pull vlajos/misspell\-fixer
 .fi
 .IP "" 0
 .P
-And fix \fBtargetdir\fR's content:
+Process the contents of \fBtargetdir\fR:
 .IP "" 4
 .nf
 $ docker run \-ti \-\-rm \-v targetdir:/work vlajos/misspell\-fixer \-frunRVD \.
 .fi
 .IP "" 0
 .P
-General execution directly with docker:
+Standard Docker execution:
 .IP "" 4
 .nf
 $ docker run \-ti \-\-rm \-v targetdir:/work vlajos/misspell\-fixer [arguments]
 .fi
 .IP "" 0
 .P
-\fBtargetdir\fR becomes the current working directory in the container, so you can reference it as \fB\.\fR in the arguments list\.
+The \fBtargetdir\fR becomes the working directory within the container and can be referenced as \fB\.\fR in the arguments\.
 .P
-You can also use the \fBdockered\-fixer\fR wrapper from the source repository:
+Using the included \fBdockered\-fixer\fR wrapper script:
 .IP "" 4
 .nf
 $ dockered\-fixer [arguments]
 .fi
 .IP "" 0
 .P
-In case your shell supports functions, you can define a function to make the command a little shorter:
+Creating a shell function for convenience (bash/zsh):
 .IP "" 4
 .nf
 $ function misspell\-fixer { docker run \-ti \-\-rm \-v $(pwd):/work vlajos/misspell\-fixer "$@"; }
 .fi
 .IP "" 0
 .P
-And fixing with the function:
+Using the shell function:
 .IP "" 4
 .nf
 $ misspell\-fixer [arguments]
 .fi
 .IP "" 0
 .P
-Through the wrapper and the function, it can access only the folders below the current working directory as it is the only one passed to the container as a volume\.
+Both the wrapper script and shell function can only access directories below the current working directory, as only the current directory is mounted as a volume in the container\.
 .P
-You can build the container locally, although this should not be really needed:
+To build the container locally:
 .IP "" 4
 .nf
 $ docker build \. \-t misspell\-fixer
 .fi
 .IP "" 0
-.SS "With GitHub Actions"
-There's a GitHub Action \fIhttps://github\.com/sobolevn/misspell\-fixer\-action\fR to run \fBmisspell\-fixer\fR as well\. It can even send PRs automatically with the fixes\.
-.SS "Dependencies \- \"On the shoulders of giants\""
-The script itself is just a misspelling database and some glue in \fBbash\fR between \fBgrep\fR and \fBsed\fR\. \fBgrep\fR's \fB\-F\fR combined with \fBsed\fR's line targeting makes the script quite efficient\. \fB\-F\fR enables parallel pattern matching with the Aho–Corasick algorithm \fIhttps://en\.wikipedia\.org/wiki/Aho%E2%80%93Corasick_algorithm\fR \. Unfortunately only the newer (2\.28+) versions of grep supports \fB\-w\fR properly\.
-.P
-A little more comprehensive list:
+.SS "GitHub Actions Integration"
+A GitHub Action \fIhttps://github\.com/sobolevn/misspell\-fixer\-action\fR is available for integrating Misspell Fixer into CI/CD workflows\. The action supports automatic pull request creation with proposed fixes\.
+.SS "Dependencies"
+Misspell Fixer is implemented as a bash script that coordinates between established Unix utilities (mainly \fBgrep\fR and \fBsed\fR\. The core functionality leverages \fBgrep\fR's \fB\-F\fR flag for efficient parallel pattern matching using the Aho–Corasick algorithm \fIhttps://en\.wikipedia\.org/wiki/Aho%E2%80%93Corasick_algorithm\fR, combined with \fBsed\fR's targeted line modifications\. Proper \fB\-w\fR (whole word) support requires grep version 2\.28 or later\.
 .IP "\[ci]" 4
 bash
 .IP "\[ci]" 4
@@ -231,7 +223,7 @@ find
 .IP "\[ci]" 4
 sed
 .IP "\[ci]" 4
-grep
+grep (version 2\.28+ recommended)
 .IP "\[ci]" 4
 diff
 .IP "\[ci]" 4
@@ -244,10 +236,11 @@ cut
 rm, cp, mv
 .IP "\[ci]" 4
 xargs
+.IP "" 0
 .IP "\[ci]" 4
-git (for respecting \.gitignore files)
+git (required for \fB\.gitignore\fR file support)
 .IP "\[ci]" 4
-ugrep (for significant speed up, optional)
+ugrep (provides significant performance improvements when available)
 .IP "" 0
 .SS "Authors"
 .IP "\[ci]" 4
@@ -255,7 +248,7 @@ Veres Lajos
 .IP "\[ci]" 4
 ka7
 .IP "" 0
-.SS "Original source"
+.SS "Project Repository"
 https://github\.com/vlajos/misspell\-fixer
 .P
-Feel free to use it!
+This project is open source and freely available for use\.
