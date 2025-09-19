@@ -1,3 +1,11 @@
+misspell-fixer (0.6-1) unstable; urgency=medium
+
+  * Disable the debug output's automated testsince that's bash version specific. Closes: #1114207.
+  * Update docs.
+  * Update debian Standards-Version.
+
+ -- Lajos Veres <vlajos+debian@gmail.com>  Fri, 19 Sep 2025 22:06:32 +0000
+
 misspell-fixer (0.5-1) unstable; urgency=medium
 
   * Use ugrep if available. Closes: #1002509.
